@@ -12,15 +12,16 @@ const CustomStepper = () => {
                 title={'Öğrenci Bilgileri'}
                 icon={<MdAccountCircle size={24} color='white' />}
                 active={true}
+                isLast
             />
             <IconCircle
                 title={'Üniversite Bilgileri'}
-                icon={<MdSchool size={24} />}
-                active={false}
+                icon={<MdSchool size={24} color='white' />}
+                active={true}
             />
             <IconCircle
                 title={'Giriş Bilgileri'}
-                icon={<FiLogIn size={24} />}
+                icon={<FiLogIn size={24} color='white' />}
                 active={false}
             />
         </div>
