@@ -1,0 +1,209 @@
+[
+    {
+      "id": 1,
+      "province": "KONYA",
+      "universities":[
+        {
+          "name": "Selçuk University",
+          "phone": "0 (322) 455 00 01",
+          "fax": "0 (322) 455 00 02",
+          "website": "http://www.adanabtu.edu.tr",
+          "email": "@ogr.selcuk.edu.tr",
+          "adress": "Gültepe Mahallesi, Çatalan Caddesi No:201/5 01250 Sarıçam/ADANA",
+          "rector": "MEHMET TÜMAY",
+          "faculties":[
+            {
+                "name": "Faculty of Technology",
+                "departments":[
+                    {
+                        "name": "Computer Engineering"
+                    },
+                    {
+                        "name": "Mechanical Enginering"
+                    },
+                    {
+                        "name": "Mechatronics Engineering"
+                    },
+                    {
+                        "name": "Biomedical Enginering"
+                    },
+                    {
+                        "name": "test Engineering"
+                    }
+                ]
+            },
+            {
+                "name": "Faculty of Medicine",
+                "departments":[
+                    {
+                        "name": "Basic Medical Science"
+                    },
+                    {
+                        "name": "Internal Medicine Science"
+                    },
+                    {
+                        "name": "Surgical Medicine Science"
+                    }
+                ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+        "id": 2,
+        "province": "TRABZON",
+        "universities":[
+          {
+            "name": "Karadeniz Technical University",
+            "phone": "0 (322) 455 00 01",
+            "fax": "0 (322) 455 00 02",
+            "website": "http://www.adanabtu.edu.tr",
+            "email": "@ktu.edu.tr",
+            "adress": "TRABZON",
+            "rector": "MEHMET TÜMAY",
+            "faculties":[
+              {
+                  "name": "Faculty of Engineering",
+                  "departments":[
+                      {
+                          "name": "Computer Engineering"
+                      },
+                      {
+                          "name": "Industrial Enginering"
+                      }
+                  ]
+              },
+              {
+                  "name": "Faculty of Pharmacy",
+                  "departments":[
+                      {
+                          "name": "X Department"
+                      },
+                      {
+                          "name": "Y Department"
+                      }
+                  ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "province": "ISTANBUL",
+        "universities":[
+          {
+            "name": "Boğaziçi Üniversitesi",
+            "phone": "0 (322) 455 00 01",
+            "fax": "0 (322) 455 00 02",
+            "website": "http://www.adanabtu.edu.tr",
+            "email": "@boun.edu.tr",
+            "adress": "TRABZON",
+            "rector": "MEHMET TÜMAY",
+            "faculties":[
+              {
+                  "name": "Engineering Faculty",
+                  "departments":[
+                      {
+                          "name": "Computer Engineering"
+                      },
+                      {
+                          "name": "Mechanical Enginering"
+                      }
+                  ]
+              },
+              {
+                  "name": "X Faculty",
+                  "departments":[
+                      {
+                          "name": "X Department"
+                      },
+                      {
+                          "name": "Y Department"
+                      }
+                  ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "province": "ISTANBUL",
+        "universities":[
+          {
+            "name": "İstanbul Teknik Üniversitesi",
+            "phone": "0 (322) 455 00 01",
+            "fax": "0 (322) 455 00 02",
+            "website": "http://www.adanabtu.edu.tr",
+            "email": "@itu.edu.tr",
+            "adress": "TRABZON",
+            "rector": "MEHMET TÜMAY",
+            "faculties":[
+              {
+                  "name": "Engineering Faculty",
+                  "departments":[
+                      {
+                          "name": "Computer Engineering"
+                      },
+                      {
+                          "name": "Mechanical Enginering"
+                      }
+                  ]
+              },
+              {
+                  "name": "X Faculty",
+                  "departments":[
+                      {
+                          "name": "X Department"
+                      },
+                      {
+                          "name": "Y Department"
+                      }
+                  ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "province": "ISTANBUL",
+        "universities":[
+          {
+            "name": "Yıldız Teknik Üniversitesi",
+            "phone": "0 (322) 455 00 01",
+            "fax": "0 (322) 455 00 02",
+            "website": "http://www.adanabtu.edu.tr",
+            "email": "rektorluk@adanabtu.edu.tr",
+            "adress": "TRABZON",
+            "rector": "MEHMET TÜMAY",
+            "faculties":[
+              {
+                  "name": "Engineering Faculty",
+                  "departments":[
+                      {
+                          "name": "Computer Engineering"
+                      },
+                      {
+                          "name": "Mechanical Enginering"
+                      }
+                  ]
+              },
+              {
+                  "name": "X Faculty",
+                  "departments":[
+                      {
+                          "name": "X Department"
+                      },
+                      {
+                          "name": "Y Department"
+                      }
+                  ]
+              }
+            ]
+          }
+        ]
+      }
+]

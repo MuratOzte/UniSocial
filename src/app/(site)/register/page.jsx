@@ -1,12 +1,15 @@
 'use client';
 
 import CustomStepper from '@/app/components/Register/CustomStepper/CustomStepper';
+import Inputs1 from '@/app/components/Register/Pages/page1';
+import Inputs2 from '@/app/components/Register/Pages/page2';
 
 const Register = () => {
     return (
-        <div>
+        <div className="">
             <CustomStepper />
-            <h1>Register</h1>
+            <Inputs1 />
+            <Inputs2 />
         </div>
     );
 };
