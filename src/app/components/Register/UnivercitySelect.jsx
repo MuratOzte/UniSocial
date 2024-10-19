@@ -14,9 +14,10 @@ import {
     Button,
 } from '@mui/material';
 //functions
-import { IoMdSearch } from "react-icons/io";
+import { IoMdSearch } from 'react-icons/io';
 //datas
 import data from '../../../app/data/uniData.json';
+import registerSlice from '@/store/Slices/RegisterSlice';
 
 const containsText = (text, searchUniText) =>
     text.toLowerCase().indexOf(searchUniText.toLowerCase()) > -1;
@@ -50,9 +51,11 @@ const UnivercitySelect = (props) => {
         setSelectedUniOption(event.target.value);
         setSelectedDepOption('');
         dispatch(
-            registerActions.univercityNameChangeHandler(event.target.value)
+            registerSlice.actions.univercityNameChangeHandler(
+                event.target.value
+            )
         );
-        dispatch(registerActions.departmenNameChangeHandler(''));
+        dispatch(registerSlice.actions.departmenNameChangeHandler(''));
     };
 
     //department section
@@ -85,7 +88,7 @@ const UnivercitySelect = (props) => {
     const departmentChangeHandler = (event) => {
         setSelectedDepOption(event.target.value);
         dispatch(
-            registerActions.departmenNameChangeHandler(event.target.value)
+            registerSlice.actions.departmenNameChangeHandler(event.target.value)
         );
     };
 
@@ -106,6 +109,10 @@ const UnivercitySelect = (props) => {
             setIsDisable(true);
         }
     }, [selectedUniOption, selectedDepOption]);
+
+    const stepChangeHandler = (step) => {
+        dispatch(registerSlice.actions.stepChangeHandler(step));
+    };
 
     return (
         <>
@@ -190,7 +197,7 @@ const UnivercitySelect = (props) => {
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
-                                            <SearchIcon />
+                                            <IoMdSearch />
                                         </InputAdornment>
                                     ),
                                 }}
@@ -221,13 +228,17 @@ const UnivercitySelect = (props) => {
             >
                 <Button
                     variant="contained"
-                    onClick={props.activeStepDecrementHandler}
+                    onClick={() => {
+                        stepChangeHandler(1);
+                    }}
                 >
                     Previous step
                 </Button>
                 <Button
                     variant="contained"
-                    onClick={props.activeStepIncrementHandler}
+                    onClick={() => {
+                        stepChangeHandler(3);
+                    }}
                     disabled={isDisable}
                 >
                     Next Step

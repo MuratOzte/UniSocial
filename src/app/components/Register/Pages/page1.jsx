@@ -1,3 +1,4 @@
+import registerSlice from '@/store/Slices/RegisterSlice';
 import {
     Grid,
     CssBaseline,
@@ -11,6 +12,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Inputs1 = (props) => {
+    const dispatch = useDispatch();
     //name statements
     const [enteredName, setEnteredName] = useState('');
     //surname statements
@@ -18,9 +20,9 @@ const Inputs1 = (props) => {
 
     //button handler
     const buttonHandler = () => {
-        props.activeStepIncrementHandler();
+        dispatch(registerSlice.actions.stepChangeHandler(2))
         dispatch(
-            registerActions.nameAndSurnameChangeHandler({
+            registerSlice.actions.nameAndSurnameChangeHandler({
                 name: enteredName,
                 surname: enteredSurname,
             })
