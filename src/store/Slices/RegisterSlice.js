@@ -8,6 +8,11 @@ const registerSlice = createSlice({
         maxStep: 1,
         isKvkk: false,
         isRequestPending: false,
+        isFirstOpen: {
+            first: true,
+            second: true,
+            third: true,
+        },
         //first step constants
         nameValue: '',
         surnameValue: '',
@@ -56,6 +61,9 @@ const registerSlice = createSlice({
         },
         isRequestPendingHandler(state, action) {
             state.isRequestPending = action.payload;
+        },
+        isFirstOpenHandler(state, action) {
+            state.isFirstOpen = action.payload;
         },
     },
 });

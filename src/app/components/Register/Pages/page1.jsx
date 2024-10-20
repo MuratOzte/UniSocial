@@ -7,10 +7,10 @@ import {
     TextField,
     Button,
 } from '@mui/material';
-//hooks
+// hooks
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-//functions
+import { motion } from 'framer-motion';
 
 const Inputs1 = (props) => {
     const dispatch = useDispatch();
@@ -18,13 +18,14 @@ const Inputs1 = (props) => {
     const enteredSurnameRedux = useSelector(
         (state) => state.register.surnameValue
     );
+    const isFirstOpen = useSelector((state) => state.register.isFirstOpen);
 
-    //name statements
+    // Name statements
     const [enteredName, setEnteredName] = useState(enteredNameRedux);
-    //surname statements
+    // Surname statements
     const [enteredSurname, setEnteredSurname] = useState(enteredSurnameRedux);
 
-    //button handler
+    // Button handler
     const buttonHandler = () => {
         dispatch(registerSlice.actions.stepChangeHandler(2));
         dispatch(
@@ -35,14 +36,19 @@ const Inputs1 = (props) => {
         );
     };
 
-    //animations
-    const isFirstLoad = useSelector((state) => state.register.isFirstLoad);
+    useEffect(() => {
+        dispatch(
+            registerSlice.actions.isFirstOpenHandler({
+                first: false,
+                second: true,
+                third: true,
+            })
+        );
+    }, [dispatch]);
 
     useEffect(() => {
-        setTimeout(() => {
-            dispatch(registerSlice.actions.isFirstLoadHandler(false));
-        }, 1000);
-    }, [isFirstLoad]);
+        console.log(isFirstOpen);
+    }, [isFirstOpen]);
 
     return (
         <Grid item xs={12}>
@@ -53,55 +59,99 @@ const Inputs1 = (props) => {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
+                    width: '100%',
+                    minWidth: '400px',
                 }}
             >
-                
-                <Typography
-                    component="h1"
-                    variant="h6"
-                    sx={{ userSelect: 'none' }}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{
+                        duration: 0.5,
+                        delay: isFirstOpen ? 0.4 : 0.1, // Shortened delay after first open
+                    }}
                 >
-                    Enter your name and surname
-                </Typography>
-                <Box component="form" onSubmit={props.submitHandler} noValidate>
-                    <TextField
-                        margin="normal"
-                        fullWidth
-                        id="name"
-                        label="Name"
-                        name="name"
-                        autoComplete="email"
-                        autoFocus
-                        value={enteredName}
-                        onChange={(event) => {
-                            setEnteredName(
-                                event.currentTarget.value.trimStart()
-                            );
+                    <Typography
+                        component="h1"
+                        variant="h6"
+                        sx={{ userSelect: 'none' }}
+                    >
+                        Enter your name and surname
+                    </Typography>
+                </motion.div>
+                <Box
+                    component="form"
+                    onSubmit={props.submitHandler}
+                    noValidate
+                    className="w-full"
+                >
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{
+                            duration: 0.5,
+                            delay: isFirstOpen ? 0.6 : 0.2, // Shortened delay after first open
                         }}
-                    />
-
-                    <TextField
-                        margin="normal"
-                        fullWidth
-                        name="Soyad"
-                        label="Surname"
-                        type="text"
-                        id="surname"
-                        value={enteredSurname}
-                        onChange={(event) => {
-                            setEnteredSurname(event.currentTarget.value.trim());
+                        className="w-full"
+                    >
+                        <TextField
+                            margin="normal"
+                            fullWidth
+                            id="name"
+                            label="Name"
+                            name="name"
+                            autoComplete="email"
+                            autoFocus
+                            value={enteredName}
+                            onChange={(event) => {
+                                setEnteredName(
+                                    event.currentTarget.value.trimStart()
+                                );
+                            }}
+                        />
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, x: 30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{
+                            duration: 0.5,
+                            delay: isFirstOpen ? 0.8 : 0.3, // Shortened delay after first open
                         }}
-                    />
+                    >
+                        <TextField
+                            margin="normal"
+                            fullWidth
+                            name="Soyad"
+                            label="Surname"
+                            type="text"
+                            id="surname"
+                            value={enteredSurname}
+                            onChange={(event) => {
+                                setEnteredSurname(
+                                    event.currentTarget.value.trim()
+                                );
+                            }}
+                        />
+                    </motion.div>
 
                     <Grid container textAlign={'center'} mt={2}>
                         <Grid item xs={12}>
-                            <Button
-                                disabled={!enteredName || !enteredSurname}
-                                variant="contained"
-                                onClick={buttonHandler}
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{
+                                    duration: 0.5,
+                                    delay: isFirstOpen ? 1.0 : 0.4, // Shortened delay after first open
+                                }}
                             >
-                                Next Step
-                            </Button>
+                                <Button
+                                    disabled={!enteredName || !enteredSurname}
+                                    variant="contained"
+                                    onClick={buttonHandler}
+                                >
+                                    Next Step
+                                </Button>
+                            </motion.div>
                         </Grid>
                     </Grid>
                     <Grid

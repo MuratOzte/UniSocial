@@ -9,6 +9,7 @@ import Inputs3 from '@/app/components/Register/Pages/page3';
 import logo from '@/assets/logo/logo.png';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
+import { motion } from 'framer-motion';
 
 const Register = () => {
     const step = useSelector((state) => state.register.step);
@@ -26,14 +27,19 @@ const Register = () => {
             </div>
             {/* İçerik alanı */}
             <div className="w-5/12 bg-white shadow-xl rounded-xl flex justify-center flex-col items-center my-8 z-50 pb-6 px-4">
-                <div className="relative w-2/5 h-[120px] flex justify-center items-center text-center">
+                <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: '40%' }}
+                    transition={{ duration: 0.5 }}
+                    className="relative h-[120px] flex justify-center items-center text-center origin-left overflow-hidden"
+                >
                     <Image
                         src={logo}
                         alt="logo"
                         layout="fill" // Görseli tam kırpmak için fill kullanıyoruz
                         objectFit="cover" // Görseli kırpmak için
                     />
-                </div>
+                </motion.div>
                 <CustomStepper />
                 {step === 1 && <Inputs1 />}
                 {step === 2 && <Inputs2 />}
