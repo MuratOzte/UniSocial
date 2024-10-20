@@ -10,17 +10,23 @@ import {
 //hooks
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+//functions
 
 const Inputs1 = (props) => {
     const dispatch = useDispatch();
+    const enteredNameRedux = useSelector((state) => state.register.nameValue);
+    const enteredSurnameRedux = useSelector(
+        (state) => state.register.surnameValue
+    );
+
     //name statements
-    const [enteredName, setEnteredName] = useState('');
+    const [enteredName, setEnteredName] = useState(enteredNameRedux);
     //surname statements
-    const [enteredSurname, setEnteredSurname] = useState('');
+    const [enteredSurname, setEnteredSurname] = useState(enteredSurnameRedux);
 
     //button handler
     const buttonHandler = () => {
-        dispatch(registerSlice.actions.stepChangeHandler(2))
+        dispatch(registerSlice.actions.stepChangeHandler(2));
         dispatch(
             registerSlice.actions.nameAndSurnameChangeHandler({
                 name: enteredName,
@@ -28,6 +34,16 @@ const Inputs1 = (props) => {
             })
         );
     };
+
+    //animations
+    const isFirstLoad = useSelector((state) => state.register.isFirstLoad);
+
+    useEffect(() => {
+        setTimeout(() => {
+            dispatch(registerSlice.actions.isFirstLoadHandler(false));
+        }, 1000);
+    }, [isFirstLoad]);
+
     return (
         <Grid item xs={12}>
             <CssBaseline />

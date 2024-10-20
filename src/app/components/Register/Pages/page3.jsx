@@ -58,8 +58,12 @@ const Inputs3 = (props) => {
 
     const emailChangeHandler = (event) => {
         setEnteredEmail(event.currentTarget.value);
-        dispatch(registerSlice.actions.emailChangeHandler(event.currentTarget.value));
-        dispatch(registerSlice.actions.emailExtensionChangeHandler(emailExtension));
+        dispatch(
+            registerSlice.actions.emailChangeHandler(event.currentTarget.value)
+        );
+        dispatch(
+            registerSlice.actions.emailExtensionChangeHandler(emailExtension)
+        );
         // let emailValidation = emailRegex.test(event.currentTarget.value);
         let emailValidation = enteredEmail > 5 ? true : false;
         setIsEmailValid(emailValidation);
@@ -128,6 +132,10 @@ const Inputs3 = (props) => {
             setIsFormValid(false);
         }
     }, [enteredEmail, enteredPassword, isPasswordValid, isEmailValid]);
+
+    const stepDecrementHandler = () => {
+        dispatch(registerSlice.actions.stepChangeHandler(2));
+    };
 
     return (
         <>
@@ -222,7 +230,7 @@ const Inputs3 = (props) => {
                         <Grid item xs={6}>
                             <Button
                                 variant="contained"
-                                onClick={props.activeStepDecrementHandler}
+                                onClick={stepDecrementHandler}
                             >
                                 Previous Step
                             </Button>
