@@ -137,8 +137,8 @@ const Inputs1 = (props) => {
                     <Grid container textAlign={'center'} mt={2}>
                         <Grid item xs={12}>
                             <motion.div
-                                initial={{ opacity: 0, scale: 0.7 }}
-                                animate={{ opacity: 1, scale: 1 }}
+                                initial={{ opacity: 0, y: 15 }}
+                                animate={{ opacity: 1, y: 0 }}
                                 transition={{
                                     duration: 0.5,
                                     delay: isFirstOpen ? 1.0 : 0.4, // Shortened delay after first open

@@ -21,6 +21,7 @@ import { EyeEndAdornment } from '../Adornments/EyeEndAdornment';
 import data from '@/app/data/uniData.json';
 import PasswordStrengthBar from '../PasswordStrenghtbar';
 import registerSlice from '@/store/Slices/RegisterSlice';
+import { motion } from 'framer-motion';
 
 // const emailRegex =
 //     /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
@@ -147,105 +148,131 @@ const Inputs3 = (props) => {
                     alignItems: 'center',
                 }}
             >
-                <Typography
-                    component="h1"
-                    variant="h5"
-                    sx={{ userSelect: 'none' }}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
                 >
-                    E-posta ve Yeni şifrenizi giriniz
-                </Typography>
-                <Box component="form" onSubmit={props.submitHandler} noValidate>
-                    <TextField
-                        margin="normal"
-                        fullWidth
-                        id="email"
-                        label="E-mail"
-                        name="uniEmail"
-                        autoComplete="email"
-                        value={enteredEmail}
-                        onChange={emailChangeHandler}
-                        onBlur={emailBlurHandler}
-                        error={isEmailEntered && !isEmailValid}
-                        InputProps={{
-                            endAdornment: (
-                                <>
-                                    <Divider
-                                        orientation="vertical"
-                                        variant="fullWidth"
-                                        sx={{
-                                            bgcolor: '#e3e5e8',
-                                            py: 3.5,
-                                        }}
-                                    />
-                                    <Typography sx={{ ml: 1.5, mr: 0.5 }}>
-                                        {emailExtension}
-                                    </Typography>
-                                </>
-                            ),
-                        }}
-                        autoFocus
-                    />
-
-                    <TextField
-                        margin="normal"
-                        fullWidth
-                        name="password"
-                        label="Enter New Password"
-                        type={passwordType}
-                        id="surname"
-                        error={!isPasswordValid && isPasswordEntered}
-                        onChange={passwordChangeHandler}
-                        onBlur={passwordBlurHandler}
-                        value={enteredPassword}
-                        InputProps={{
-                            endAdornment: (
-                                <EyeEndAdornment
-                                    isPasswordVisible={isPasswordVisible}
-                                    visibilityToggleHandler={
-                                        visibilityToggleHandler
-                                    }
-                                    visible={enteredPassword}
-                                />
-                            ),
-                        }}
-                    />
-
-                    <PasswordStrengthBar
-                        password={enteredPassword}
-                        isStrenghtBarOpen={isStrenghtBarOpen}
-                    />
-                    <FormControlLabel
-                        required
-                        control={<Switch />}
-                        label={
-                            <Typography fontSize={15} color={'GrayText'}>
-                                I read KVKK form and i agree
-                            </Typography>
-                        }
+                    <Typography
+                        component="h1"
+                        variant="h5"
                         sx={{ userSelect: 'none' }}
-                        onClick={kvkkHandler}
-                        checked={isKvkk}
-                    />
+                    >
+                        E-posta ve Yeni şifrenizi giriniz
+                    </Typography>
+                </motion.div>
+                <Box component="form" onSubmit={props.submitHandler} noValidate>
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ transition: 0.5, delay: 0.2 }}
+                    >
+                        <TextField
+                            margin="normal"
+                            fullWidth
+                            id="email"
+                            label="E-mail"
+                            name="uniEmail"
+                            autoComplete="email"
+                            value={enteredEmail}
+                            onChange={emailChangeHandler}
+                            onBlur={emailBlurHandler}
+                            error={isEmailEntered && !isEmailValid}
+                            InputProps={{
+                                endAdornment: (
+                                    <>
+                                        <Divider
+                                            orientation="vertical"
+                                            variant="fullWidth"
+                                            sx={{
+                                                bgcolor: '#e3e5e8',
+                                                py: 3.5,
+                                            }}
+                                        />
+                                        <Typography sx={{ ml: 1.5, mr: 0.5 }}>
+                                            {emailExtension}
+                                        </Typography>
+                                    </>
+                                ),
+                            }}
+                            autoFocus
+                        />
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, x: 30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ transition: 0.5, delay: 0.4 }}
+                    >
+                        <TextField
+                            margin="normal"
+                            fullWidth
+                            name="password"
+                            label="Enter New Password"
+                            type={passwordType}
+                            id="surname"
+                            error={!isPasswordValid && isPasswordEntered}
+                            onChange={passwordChangeHandler}
+                            onBlur={passwordBlurHandler}
+                            value={enteredPassword}
+                            InputProps={{
+                                endAdornment: (
+                                    <EyeEndAdornment
+                                        isPasswordVisible={isPasswordVisible}
+                                        visibilityToggleHandler={
+                                            visibilityToggleHandler
+                                        }
+                                        visible={enteredPassword}
+                                    />
+                                ),
+                            }}
+                        />
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, scaleX: 0 }}
+                        animate={{
+                            opacity: enteredPassword ? 1 : 0,
+                            scaleX: enteredPassword ? 1 : 0,
+                        }}
+                        transition={{ transition: 0.5 }}
+                        className="origin-center"
+                    >
+                        <PasswordStrengthBar
+                            password={enteredPassword}
+                            isStrenghtBarOpen={isStrenghtBarOpen}
+                        />
+                    </motion.div>
                     <Grid container textAlign={'center'} mt={1.5}>
                         <Grid item xs={6}>
-                            <Button
-                                variant="contained"
-                                onClick={stepDecrementHandler}
+                            <motion.div
+                                initial={{ opacity: 0, x: -30 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ transition: 0.5, delay: 0.6 }}
                             >
-                                Previous Step
-                            </Button>
+                                <Button
+                                    variant="contained"
+                                    onClick={stepDecrementHandler}
+                                >
+                                    Previous Step
+                                </Button>
+                            </motion.div>
                         </Grid>
                         <Grid item xs={6}>
-                            <Button
-                                variant="contained"
-                                color="success"
-                                onClick={props.formSubmit}
-                                disabled={!isFormValid}
-                                role="progressbar"
-                                loading={isRequestPending}
+                            <motion.div
+                                initial={{ opacity: 0, x: 30 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ transition: 0.5, delay: 0.8 }}
                             >
-                                Register
-                            </Button>
+                                <Button
+                                    variant="contained"
+                                    color="success"
+                                    onClick={props.formSubmit}
+                                    disabled={!isFormValid}
+                                    role="progressbar"
+                                    loading={isRequestPending}
+                                >
+                                    Register
+                                </Button>
+                            </motion.div>
                         </Grid>
                     </Grid>
                 </Box>
