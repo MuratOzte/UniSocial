@@ -14,12 +14,18 @@ module.exports = {
             },
             animation: {
                 ripple: 'ripple 10s infinite',
+                scaleUp: 'scaleUp 0.7s',
             },
             keyframes: {
                 ripple: {
                     '0%, 100%': { transform: 'scale(0.90)', opacity: '0.8' },
                     '50%': { transform: 'scale(1.05)', opacity: '1' },
                 },
+                scaleUp:{
+                    '0%': { transform: 'scale(1)' },
+                    '50%': { transform: 'scale(1.05)' },
+                    '100%': { transform: 'scale(1)' },
+                }
             },
         },
     },

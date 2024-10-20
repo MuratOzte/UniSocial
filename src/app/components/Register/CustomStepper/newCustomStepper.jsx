@@ -2,7 +2,7 @@
 // hooks
 import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { motion } from 'framer-motion'; // Import framer-motion
+import { animate, motion } from 'framer-motion'; // Import framer-motion
 // material UI components
 import {
     Stack,
@@ -17,12 +17,14 @@ import { FiLogIn } from 'react-icons/fi';
 import { MdAccountCircle } from 'react-icons/md';
 import { MdSchool } from 'react-icons/md';
 import registerSlice from '@/store/Slices/RegisterSlice';
+import { useEffect, useState } from 'react';
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     [`&.${stepConnectorClasses.alternativeLabel}`]: {
         top: 22,
         left: 'calc(-50% + 24px)',
         right: 'calc(50% + 24px)',
+        zIndex: 1,
     },
     [`&.${stepConnectorClasses.active}`]: {
         [`& .${stepConnectorClasses.line}`]: {
@@ -85,7 +87,13 @@ function ColorlibStepIcon(props) {
 
 const CustomStepper = () => {
     const dispatch = useDispatch();
+    const [animatedIcon, setAnimatedIcon] = useState(1);
+
     const activeStep = useSelector((state) => state.register.step);
+
+    useEffect(() => {
+        setAnimatedIcon(activeStep);
+    }, [activeStep]);
 
     return (
         <Stack sx={{ width: '100%' }}>
@@ -108,7 +116,11 @@ const CustomStepper = () => {
                     </motion.div>
                 }
             >
-                <Step>
+                <Step
+                    className={`${
+                        animatedIcon == 1 ? 'animate-scaleUp duration-500' : ''
+                    } z-50`}
+                >
                     <StepLabel StepIconComponent={ColorlibStepIcon}>
                         <motion.div
                             initial={{ opacity: 0, scale: 0 }}
@@ -124,7 +136,11 @@ const CustomStepper = () => {
                         </motion.div>
                     </StepLabel>
                 </Step>
-                <Step>
+                <Step
+                    className={`${
+                        animatedIcon == 2 ? 'animate-scaleUp duration-500' : ''
+                    } z-50`}
+                >
                     <StepLabel StepIconComponent={ColorlibStepIcon}>
                         <motion.div
                             initial={{ opacity: 0, scale: 0 }}
@@ -141,7 +157,11 @@ const CustomStepper = () => {
                         </motion.div>
                     </StepLabel>
                 </Step>
-                <Step>
+                <Step
+                    className={`${
+                        animatedIcon == 3 ? 'animate-scaleUp duration-500' : ''
+                    } z-50`}
+                >
                     <StepLabel StepIconComponent={ColorlibStepIcon}>
                         <motion.div
                             initial={{ opacity: 0, scale: 0 }}
