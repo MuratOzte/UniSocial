@@ -1,6 +1,6 @@
 import LinearProgress from '@mui/material/LinearProgress';
 import { Grid } from '@mui/material';
-import { IoShieldCheckmark } from 'react-icons/io5';
+import GppGoodIcon from '@mui/icons-material/GppGood';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import registerSlice from '@/store/Slices/RegisterSlice';
@@ -44,13 +44,13 @@ const PasswordStrengthBar = ({ password, isStrenghtBarOpen }) => {
 
     const getPasswordStrengthColor = (strength) => {
         if (strength < 25) {
-            return 'red';
+            return 'error';
         } else if (strength < 50) {
-            return 'yellow';
+            return 'warning';
         } else if (strength < 75) {
-            return 'blue';
+            return 'info';
         } else {
-            return 'green';
+            return 'success';
         }
     };
 
@@ -74,7 +74,7 @@ const PasswordStrengthBar = ({ password, isStrenghtBarOpen }) => {
                         justifyContent: 'center',
                     }}
                 >
-                    <IoShieldCheckmark color={strengthColor} />
+                    <GppGoodIcon color={strengthColor} />
                 </Grid>
                 <Grid item xs={11}>
                     <LinearProgress
