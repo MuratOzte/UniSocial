@@ -1,8 +1,9 @@
-//hooks
+'use client';
+// hooks
 import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
-//material ui components
+import { motion } from 'framer-motion'; // Import framer-motion
+// material UI components
 import {
     Stack,
     Stepper,
@@ -11,10 +12,11 @@ import {
     StepConnector,
     stepConnectorClasses,
 } from '@mui/material';
-//icons
+// icons
 import { FiLogIn } from 'react-icons/fi';
 import { MdAccountCircle } from 'react-icons/md';
 import { MdSchool } from 'react-icons/md';
+import registerSlice from '@/store/Slices/RegisterSlice';
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -27,7 +29,6 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
             backgroundColor: '#ccc',
         },
     },
-    //connector between icons
     [`&.${stepConnectorClasses.completed}`]: {
         [`& .${stepConnectorClasses.line}`]: {
             backgroundColor: '#4583BD',
@@ -41,7 +42,7 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     },
 }));
 
-const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
+const ColorlibStepIconRoot = styled(motion.div)(({ theme, ownerState }) => ({
     backgroundColor:
         theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
     zIndex: 1,
@@ -52,11 +53,9 @@ const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
     borderRadius: '50%',
     justifyContent: 'center',
     alignItems: 'center',
-    //next step
     ...(ownerState.active && {
         backgroundColor: '#ccc',
     }),
-    // completed step
     ...(ownerState.completed && {
         backgroundColor: '#1976d2',
     }),
@@ -75,39 +74,18 @@ function ColorlibStepIcon(props) {
         <ColorlibStepIconRoot
             ownerState={{ completed, active }}
             className={className}
+            initial={{ scale: 0 }} // Initial scale for animation
+            animate={{ scale: 1 }} // Scale to 1 for animation
+            transition={{ duration: 0.3 }} // Adjust duration as needed
         >
             {icons[String(props.icon)]}
         </ColorlibStepIconRoot>
     );
 }
 
-const steps = ['Öğrenci bilgileri', 'Üniversite Bilgileri', 'Giriş Bilgileri'];
-
 const CustomStepper = () => {
     const dispatch = useDispatch();
     const activeStep = useSelector((state) => state.register.step);
-    const maxStep = useSelector((state) => state.register.maxStep);
-
-    const stepHandler = (index) => {
-        if (maxStep > index) {
-            dispatch(registerActions.stepChangeHandler(index + 1));
-        } else {
-            return;
-        }
-    };
-
-    //wait for page loading
-    const [loaded, setLoaded] = useState(false);
-    useEffect(() => {
-        window.addEventListener('load', () => {
-            setLoaded(true);
-        });
-        return () => {
-            window.removeEventListener('load', () => {
-                setLoaded(true);
-            });
-        };
-    }, []);
 
     return (
         <Stack sx={{ width: '100%' }}>
@@ -117,30 +95,67 @@ const CustomStepper = () => {
                 }}
                 alternativeLabel
                 activeStep={activeStep}
-                connector={<ColorlibConnector />}
+                connector={
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{
+                            duration: 0.5,
+                            delay: 0.8,
+                        }}
+                    >
+                        <ColorlibConnector />
+                    </motion.div>
+                }
             >
-                <Step key={'Student Informations'}>
-                    <StepLabel
-                        onClick={stepHandler.bind(null, 0)}
-                        StepIconComponent={ColorlibStepIcon}
-                    >
-                        {'Student Informations'}
+                <Step>
+                    <StepLabel StepIconComponent={ColorlibStepIcon}>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0 }}
+                            animate={{
+                                opacity: activeStep >= 0 ? 1 : 0,
+                                scale: 1,
+                            }}
+                            transition={{
+                                duration: 0.6,
+                            }}
+                        >
+                            Öğrenci bilgileri
+                        </motion.div>
                     </StepLabel>
                 </Step>
-                <Step key={'University Informations'}>
-                    <StepLabel
-                        onClick={stepHandler.bind(null, 1)}
-                        StepIconComponent={ColorlibStepIcon}
-                    >
-                        {'University Informations'}
+                <Step>
+                    <StepLabel StepIconComponent={ColorlibStepIcon}>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0 }}
+                            animate={{
+                                opacity: activeStep >= 1 ? 1 : 0,
+                                scale: 1,
+                            }}
+                            transition={{
+                                duration: 0.5,
+                                delay: 0.2,
+                            }}
+                        >
+                            Üniversite Bilgileri
+                        </motion.div>
                     </StepLabel>
                 </Step>
-                <Step key={'Login Informations'}>
-                    <StepLabel
-                        onClick={stepHandler.bind(null, 2)}
-                        StepIconComponent={ColorlibStepIcon}
-                    >
-                        {'Login Informations'}
+                <Step>
+                    <StepLabel StepIconComponent={ColorlibStepIcon}>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0 }}
+                            animate={{
+                                opacity: activeStep >= 1 ? 1 : 0,
+                                scale: 1,
+                            }}
+                            transition={{
+                                duration: 0.5,
+                                delay: 0.4,
+                            }}
+                        >
+                            Giriş Bilgileri
+                        </motion.div>
                     </StepLabel>
                 </Step>
             </Stepper>

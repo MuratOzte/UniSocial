@@ -55,6 +55,7 @@ const Inputs1 = (props) => {
                     alignItems: 'center',
                 }}
             >
+                
                 <Typography
                     component="h1"
                     variant="h6"
