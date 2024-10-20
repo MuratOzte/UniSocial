@@ -26,7 +26,7 @@ const Register = () => {
                 <div className="absolute bg-[#c8e6c9] rounded-full shadow-[0_0_1px_0px_#508fb9] animate-ripple opacity-90 w-[288px] h-[288px] -left-[144px] -bottom-[144px]"></div>
             </div>
             {/* İçerik alanı */}
-            <div className="w-5/12 bg-white shadow-xl rounded-xl flex justify-center flex-col items-center my-8 z-50 pb-6 px-4">
+            <div className="w-5/12 h-[550px] bg-white shadow-xl rounded-xl flex justify-center flex-col items-center my-8 z-50 pb-6 px-4">
                 <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: '40%' }}

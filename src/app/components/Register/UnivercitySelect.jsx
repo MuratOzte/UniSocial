@@ -18,6 +18,7 @@ import { IoMdSearch } from 'react-icons/io';
 //datas
 import data from '../../../app/data/uniData.json';
 import registerSlice from '@/store/Slices/RegisterSlice';
+import { motion } from 'framer-motion';
 
 const containsText = (text, searchUniText) =>
     text.toLowerCase().indexOf(searchUniText.toLowerCase()) > -1;
@@ -116,109 +117,126 @@ const UnivercitySelect = (props) => {
 
     return (
         <>
-            <Box sx={{ width: 350, my: 2.5 }}>
-                <FormControl fullWidth>
-                    <InputLabel id="search-select-label" sx={{ fontSize: 14 }}>
-                        Univercity
-                    </InputLabel>
-                    <Select
-                        MenuProps={{ autoFocus: false }}
-                        labelId="search-select-label"
-                        id="search-select"
-                        fullWidth={true}
-                        value={selectedUniOption}
-                        label="Options"
-                        defaultValue=""
-                        onChange={univercityChangeHandler}
-                        onClose={() => setSearchUniText('')}
-                        renderValue={() => selectedUniOption}
-                    >
-                        <ListSubheader>
-                            <TextField
-                                size="small"
-                                autoFocus
-                                placeholder="Type to search..."
-                                fullWidth
-                                sx={{ my: 1 }}
-                                variant="standard"
-                                defaultValue=""
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <IoMdSearch />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                                onChange={(e) =>
-                                    setSearchUniText(e.target.value)
-                                }
-                                onKeyDown={(e) => {
-                                    if (e.key !== 'Escape') {
-                                        e.stopPropagation();
+            <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ transition: 0.5, delay: 0.3 }}
+            >
+                <Box sx={{ width: 350, my: 2.5 }}>
+                    <FormControl fullWidth>
+                        <InputLabel
+                            id="search-select-label"
+                            sx={{ fontSize: 14 }}
+                        >
+                            Univercity
+                        </InputLabel>
+                        <Select
+                            MenuProps={{ autoFocus: false }}
+                            labelId="search-select-label"
+                            id="search-select"
+                            fullWidth={true}
+                            value={selectedUniOption}
+                            label="Options"
+                            defaultValue=""
+                            onChange={univercityChangeHandler}
+                            onClose={() => setSearchUniText('')}
+                            renderValue={() => selectedUniOption}
+                        >
+                            <ListSubheader>
+                                <TextField
+                                    size="small"
+                                    autoFocus
+                                    placeholder="Type to search..."
+                                    fullWidth
+                                    sx={{ my: 1 }}
+                                    variant="standard"
+                                    defaultValue=""
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <IoMdSearch />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                    onChange={(e) =>
+                                        setSearchUniText(e.target.value)
                                     }
-                                }}
-                            />
-                        </ListSubheader>
-                        {displayedUniOptions.map((option, i) => (
-                            <MenuItem key={i} value={option}>
-                                {option}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-            </Box>
-
-            <Box sx={{ width: 350 }}>
-                <FormControl fullWidth>
-                    <InputLabel id="search-select-label" sx={{ fontSize: 14 }}>
-                        Department
-                    </InputLabel>
-                    <Select
-                        MenuProps={{ autoFocus: false }}
-                        disabled={!selectedUniOption}
-                        labelId="search-select-label"
-                        id="search-select"
-                        fullWidth={true}
-                        value={selectedDepOption}
-                        label="Options"
-                        defaultValue=""
-                        onChange={departmentChangeHandler}
-                        onClose={() => setSearchDepText('')}
-                        renderValue={() => selectedDepOption}
-                    >
-                        <ListSubheader>
-                            <TextField
-                                size="small"
-                                autoFocus
-                                placeholder="Type to search..."
-                                fullWidth
-                                sx={{ my: 1 }}
-                                variant="standard"
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <IoMdSearch />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                                onChange={(e) =>
-                                    setSearchDepText(e.target.value)
-                                }
-                                onKeyDown={(e) => {
-                                    if (e.key !== 'Escape') {
-                                        e.stopPropagation();
+                                    onKeyDown={(e) => {
+                                        if (e.key !== 'Escape') {
+                                            e.stopPropagation();
+                                        }
+                                    }}
+                                />
+                            </ListSubheader>
+                            {displayedUniOptions.map((option, i) => (
+                                <MenuItem key={i} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Box>
+            </motion.div>
+            <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ transition: 0.5, delay: 0.5 }}
+            >
+                <Box sx={{ width: 350 }}>
+                    <FormControl fullWidth>
+                        <InputLabel
+                            id="search-select-label"
+                            sx={{ fontSize: 14 }}
+                        >
+                            Department
+                        </InputLabel>
+                        <Select
+                            MenuProps={{ autoFocus: false }}
+                            disabled={!selectedUniOption}
+                            labelId="search-select-label"
+                            id="search-select"
+                            fullWidth={true}
+                            value={selectedDepOption}
+                            label="Options"
+                            defaultValue=""
+                            onChange={departmentChangeHandler}
+                            onClose={() => setSearchDepText('')}
+                            renderValue={() => selectedDepOption}
+                        >
+                            <ListSubheader>
+                                <TextField
+                                    size="small"
+                                    autoFocus
+                                    placeholder="Type to search..."
+                                    fullWidth
+                                    sx={{ my: 1 }}
+                                    variant="standard"
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <IoMdSearch />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                    onChange={(e) =>
+                                        setSearchDepText(e.target.value)
                                     }
-                                }}
-                            />
-                        </ListSubheader>
-                        {displayedDepOptions.map((option, i) => (
-                            <MenuItem key={i} value={option}>
-                                {option}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-            </Box>
+                                    onKeyDown={(e) => {
+                                        if (e.key !== 'Escape') {
+                                            e.stopPropagation();
+                                        }
+                                    }}
+                                />
+                            </ListSubheader>
+                            {displayedDepOptions.map((option, i) => (
+                                <MenuItem key={i} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Box>
+            </motion.div>
             <Box
                 sx={{
                     my: 3,
@@ -226,23 +244,35 @@ const UnivercitySelect = (props) => {
                     justifyContent: 'space-between',
                 }}
             >
-                <Button
-                    variant="contained"
-                    onClick={() => {
-                        stepChangeHandler(1);
-                    }}
+                <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ transition: 0.5, delay: 0.7 }}
                 >
-                    Previous step
-                </Button>
-                <Button
-                    variant="contained"
-                    onClick={() => {
-                        stepChangeHandler(3);
-                    }}
-                    disabled={isDisable}
+                    <Button
+                        variant="contained"
+                        onClick={() => {
+                            stepChangeHandler(1);
+                        }}
+                    >
+                        Previous step
+                    </Button>
+                </motion.div>
+                <motion.div
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ transition: 0.5, delay: 0.8 }}
                 >
-                    Next Step
-                </Button>
+                    <Button
+                        variant="contained"
+                        onClick={() => {
+                            stepChangeHandler(3);
+                        }}
+                        disabled={isDisable}
+                    >
+                        Next Step
+                    </Button>
+                </motion.div>
             </Box>
         </>
     );
