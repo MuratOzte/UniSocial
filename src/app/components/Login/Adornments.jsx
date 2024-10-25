@@ -1,32 +1,36 @@
 //icons
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ErrorIcon from '@mui/icons-material/Error';
+import { MdVisibility } from 'react-icons/md';
+import { MdVisibilityOff } from 'react-icons/md';
+import { FaCircleCheck } from 'react-icons/fa6';
+import { MdError } from 'react-icons/md';
 //packages
 import { IconButton, InputAdornment, Tooltip } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-export const EyeEndAdornment = (props) => {
+export const EyeEndAdornment = ({
+    visibilityToggleHandler,
+    isPasswordVisible,
+    visible,
+}) => {
     return (
         <InputAdornment position="end">
-            <IconButton onClick={props.visibilityToggleHandler}>
-                {props.isPasswordVisible && props.visible && <VisibilityIcon />}
-                {!props.isPasswordVisible && props.visible && (
-                    <VisibilityOffIcon />
+            <IconButton onClick={visibilityToggleHandler}>
+                {isPasswordVisible && visible && <MdVisibility />}
+                {!isPasswordVisible && visible && (
+                    <MdVisibilityOff />
                 )}
             </IconButton>
         </InputAdornment>
     );
 };
 
-export const SuccessAdornment = (props) => {
+export const SuccessAdornment = () => {
     const isEmailValid = useSelector((state) => state.login.isEmailValid);
 
     return (
         <InputAdornment position="end">
-            {isEmailValid && <CheckCircleIcon color="success" />}
-            {!isEmailValid && <ErrorIcon color="error" />}
+            {isEmailValid && <FaCircleCheck color='green'/>}
+            {!isEmailValid && <MdError color="red" />}
         </InputAdornment>
     );
 };
@@ -35,7 +39,7 @@ export const ErrorAdornment = () => {
     return (
         <Tooltip title={'Lütfen geçerli bir e-posta adresi yazınız'}>
             <InputAdornment position="end">
-                <ErrorIcon color="error" />
+                <MdError color="red" />
             </InputAdornment>
         </Tooltip>
     );

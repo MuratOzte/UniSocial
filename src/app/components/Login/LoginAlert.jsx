@@ -3,17 +3,18 @@ import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
-import CloseIcon from '@mui/icons-material/Close';
-import Error from '@mui/icons-material/Error';
 
-const LoginAlert = (props) => {
-    const [open, setOpen] = useState(props.isRequestError);
+import { IoMdClose } from 'react-icons/io';
+import { MdError } from 'react-icons/md';
+
+const LoginAlert = ({ isRequestError, errorText }) => {
+    const [open, setOpen] = useState(isRequestError);
 
     return (
         <Box sx={{ width: '100%' }}>
             <Collapse in={open}>
                 <Alert
-                    icon={<Error />}
+                    icon={<MdError />}
                     color="error"
                     action={
                         <IconButton
@@ -24,12 +25,12 @@ const LoginAlert = (props) => {
                                 setOpen(false);
                             }}
                         >
-                            <CloseIcon fontSize="inherit" />
+                            <IoMdClose />
                         </IconButton>
                     }
                     sx={{ mb: 2 }}
                 >
-                    {props.errorText}
+                    {errorText}
                 </Alert>
             </Collapse>
         </Box>

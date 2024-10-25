@@ -1,7 +1,6 @@
 import { TextField, keyframes } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { loginActions } from '../../../store/loginSlice';
 import { ErrorAdornment } from './Adornments';
 import loginSlice from '@/store/Slices/LoginSlice';
 
@@ -20,7 +19,7 @@ const spin = keyframes`
     }
 `;
 
-const LoginEmailInput = (props) => {
+const LoginEmailInput = ({ isEmailShake }) => {
     const dispatch = useDispatch();
     const isEmailValid = useSelector((state) => state.login.isEmailValid);
     const isEmailEntered = useSelector((state) => state.login.isEmailEntered);
@@ -52,12 +51,12 @@ const LoginEmailInput = (props) => {
                 autoComplete="email"
                 onBlur={emailBlurHandler}
                 onChange={emailChangeHandler}
-                error={props.isEmailShake}
+                error={isEmailShake}
                 value={enteredEmail}
                 sx={{
-                    animation: props.isEmailShake ? `${spin} 0.3s 4 ease` : '',
+                    animation: isEmailShake ? `${spin} 0.3s 4 ease` : '',
                 }}
-                className={props.isEmailShake ? '' : ''}
+                className={isEmailShake ? '' : ''}
                 InputProps={{
                     endAdornment:
                         !isEmailValid && isEmailEntered ? (

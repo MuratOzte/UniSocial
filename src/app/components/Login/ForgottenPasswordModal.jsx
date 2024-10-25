@@ -14,11 +14,10 @@ import { useState } from 'react';
 //components
 import CustomizedSwitches from './SmsEmailSwitch';
 //functions
-import { loginActions } from '../../../store/loginSlice';
 import TelephoneInput from './TelephoneInput';
 import loginSlice from '@/store/Slices/LoginSlice';
 
-const ForgottenPasswordModal = (props) => {
+const ForgottenPasswordModal = ({ submitHandler }) => {
     const dispatch = useDispatch();
     const isModalOpen = useSelector((state) => state.login.isModalOpen);
     const isSms = useSelector((state) => state.login.isSms);
@@ -64,9 +63,7 @@ const ForgottenPasswordModal = (props) => {
                         onChange={emailChangeHandler}
                     />
                 )}
-                {isSms && (
-                    <TelephoneInput submitHandler={props.submitHandler} />
-                )}
+                {isSms && <TelephoneInput submitHandler={submitHandler} />}
             </DialogContent>
             <DialogActions>
                 <Button onClick={closeBtnHandler}>Close</Button>
