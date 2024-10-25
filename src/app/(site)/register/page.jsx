@@ -28,8 +28,8 @@ const Register = () => {
                     <Image
                         src={logo}
                         alt="logo"
-                        layout="fill" // Görseli tam kırpmak için fill kullanıyoruz
-                        objectFit="cover" // Görseli kırpmak için
+                        layout="fill" 
+                        objectFit="cover"
                     />
                 </motion.div>
                 <CustomStepper />
