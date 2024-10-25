@@ -28,7 +28,7 @@ const Register = () => {
                     <Image
                         src={logo}
                         alt="logo"
-                        layout="fill" 
+                        layout="fill"
                         objectFit="cover"
                     />
                 </motion.div>

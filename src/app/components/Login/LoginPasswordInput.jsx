@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField, keyframes } from '@mui/material';
 import { EyeEndAdornment } from './Adornments';
-import { loginActions } from '../../../store/loginSlice';
 
 const spin = keyframes`
     25% {
