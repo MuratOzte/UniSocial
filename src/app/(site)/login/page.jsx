@@ -10,6 +10,7 @@ import {
     Typography,
     Container,
 } from '@mui/material';
+import { motion } from 'framer-motion';
 // hooks
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -26,6 +27,8 @@ import { loginRequest } from '@/util/authService';
 import loginSlice from '@/store/Slices/LoginSlice';
 import Loading from '@/app/components/common/Loading';
 import AuthBackground from '@/app/components/common/authBackground';
+import logo from '@/assets/logo/logo.png';
+import Image from 'next/image';
 
 const LoginPage = () => {
     const dispatch = useDispatch();
@@ -94,75 +97,130 @@ const LoginPage = () => {
                         boxShadow: 3,
                         backgroundColor: 'white',
                         width: '50%',
-                        height:'80vh'
+                        height: '80vh',
                     }}
                 >
-                    <Typography component="h1" variant="h5">
-                        Sign in
-                    </Typography>
+                    <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: '60%' }}
+                        transition={{ duration: 0.5 }}
+                        className="relative h-[120px] flex justify-center items-center text-center origin-left overflow-hidden"
+                    >
+                        <Image
+                            src={logo}
+                            alt="logo"
+                            layout="fill"
+                            objectFit="cover"
+                        />
+                    </motion.div>
                     <Box
                         component="form"
                         onSubmit={submitHandler}
                         noValidate
-                        className="flex flex-col items-center mt-4 w-full"
+                        className="flex flex-col items-center mt-2 w-full"
                     >
-                        <LoginEmailInput isEmailShake={isEmailShake} />
-                        <LoginPasswordInput isPasswordShake={isPasswordShake} />
-                        <Button
-                            variant="contained"
-                            className="px-12 w-full"
-                            type="submit"
-                            sx={{
-                                marginY: 4,
-                            }}
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            className="w-full"
                         >
-                            {isRequestPending ? <Loading /> : 'Sign In'}
-                        </Button>
+                            <LoginEmailInput isEmailShake={isEmailShake} />
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, x: 50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5, delay: 0.4 }}
+                            className="w-full"
+                        >
+                            <LoginPasswordInput
+                                isPasswordShake={isPasswordShake}
+                            />
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, width: '50%' }}
+                            animate={{ opacity: 1, width: '100%' }}
+                            transition={{ duration: 0.5, delay: 0.6 }}
+                        >
+                            <Button
+                                variant="contained"
+                                className="px-12 w-full"
+                                type="submit"
+                                sx={{
+                                    marginY: 4,
+                                }}
+                            >
+                                {isRequestPending ? <Loading /> : 'Sign In'}
+                            </Button>
+                        </motion.div>
                         {isRequestError && (
                             <LoginAlert
                                 errorText={errorText}
                                 isRequestError={isRequestError}
                             />
                         )}
+                        <div></div>
                         <Grid
                             container
                             justifyContent="center"
-                            className="text-center"
+                            className="text-center flex flex-col"
                         >
-                            <Grid item xs={12}>
-                                <Button
-                                    disableRipple
-                                    onClick={forgotPasswordHandler}
-                                    sx={{
-                                        textTransform: 'capitalize',
-                                        color: 'primary.main',
-                                        ':hover': { bgcolor: 'transparent' },
-                                    }}
-                                >
-                                    Forgot password?
-                                </Button>
-                            </Grid>
-                            <Divider
-                                sx={{
-                                    width: '100%',
-                                    my: 2,
-                                    bgcolor: 'grey-300',
-                                }}
-                            />
-                            <Grid item xs={12} mt={2}>
-                                <Link href={'/register'}>
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: 0.8 }}
+                            >
+                                <Grid item xs={12}>
                                     <Button
-                                        variant="contained"
+                                        disableRipple
+                                        onClick={forgotPasswordHandler}
                                         sx={{
-                                            bgcolor: '#42b72a',
-                                            ':hover': { bgcolor: '#2D8D1A' },
+                                            textTransform: 'capitalize',
+                                            color: 'primary.main',
+                                            ':hover': {
+                                                bgcolor: 'transparent',
+                                            },
                                         }}
-                                        fullWidth
                                     >
-                                        Create an account
+                                        Forgot password?
                                     </Button>
-                                </Link>
-                            </Grid>
+                                </Grid>
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.5, delay: 1 }}
+                            >
+                                <Divider
+                                    sx={{
+                                        width: '100%',
+                                        my: 2,
+                                        bgcolor: 'grey-300',
+                                    }}
+                                />
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: 1.2 }}
+                            >
+                                <Grid item xs={12} mt={2}>
+                                    <Link href={'/register'}>
+                                        <Button
+                                            variant="contained"
+                                            sx={{
+                                                bgcolor: '#42b72a',
+                                                ':hover': {
+                                                    bgcolor: '#2D8D1A',
+                                                },
+                                            }}
+                                            fullWidth
+                                        >
+                                            Create an account
+                                        </Button>
+                                    </Link>
+                                </Grid>
+                            </motion.div>
                         </Grid>
                     </Box>
                 </Box>
