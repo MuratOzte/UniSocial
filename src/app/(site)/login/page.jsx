@@ -1,6 +1,6 @@
 'use client';
 
-//packages
+// packages
 import {
     Divider,
     Button,
@@ -10,18 +10,18 @@ import {
     Typography,
     Container,
 } from '@mui/material';
-//hooks
+// hooks
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-//components
+// components
 import {
     LoginEmailInput,
     LoginPasswordInput,
     ForgottenPasswordModal,
     LoginAlert,
 } from '@/app/components/Login/index';
-//functions
+// functions
 import { loginRequest } from '@/util/authService';
 import loginSlice from '@/store/Slices/LoginSlice';
 import Loading from '@/app/components/common/Loading';
@@ -29,73 +29,57 @@ import AuthBackground from '@/app/components/common/authBackground';
 
 const LoginPage = () => {
     const dispatch = useDispatch();
-    //Error text state
+    // Error and loading state
     const [errorText, setErrorText] = useState('');
-    //login button loading state
     const [isRequestPending, setIsRequestPending] = useState(false);
     const [isRequestError, setIsRequestError] = useState(false);
 
-    //is credentials invalid
     const isEmailValid = useSelector((state) => state.login.isEmailValid);
     const isPasswordValid = useSelector((state) => state.login.isPasswordValid);
-
     const enteredEmail = useSelector((state) => state.login.emailValue);
     const enteredPassword = useSelector((state) => state.login.passwordValue);
 
     const [isEmailShake, setIsEmailShake] = useState(false);
     const [isPasswordShake, setIsPasswordShake] = useState(false);
-
-    //forgotten password statements
     const isModalOpen = useSelector((state) => state.login.isModalOpen);
+
     const forgotPasswordHandler = () => {
         dispatch(loginSlice.actions.modalToggleHandler());
     };
 
-    //submit redux statementss
     const submitHandler = async (event) => {
-        try {
-            event.preventDefault();
-            if (!isEmailValid) {
-                setIsEmailShake(true);
-                setTimeout(() => {
-                    setIsEmailShake(false);
-                }, 500);
-            }
-            if (!isPasswordValid) {
-                setIsPasswordShake(true);
-                setTimeout(() => {
-                    setIsPasswordShake(false);
-                }, 500);
-            } else {
-                setIsRequestError(false);
+        event.preventDefault();
+        if (!isEmailValid) {
+            setIsEmailShake(true);
+            setTimeout(() => setIsEmailShake(false), 500);
+        }
+        if (!isPasswordValid) {
+            setIsPasswordShake(true);
+            setTimeout(() => setIsPasswordShake(false), 500);
+        } else {
+            try {
                 setIsRequestPending(true);
                 const data = await loginRequest(enteredEmail, enteredPassword);
                 localStorage.setItem('token', data.token);
-
                 dispatch(loginSlice.actions.resetAllData());
                 setIsRequestPending(false);
-                setIsRequestError(false);
-                return;
+            } catch (error) {
+                console.log(error.message);
+                setIsRequestPending(false);
+                setIsRequestError(true);
+                setErrorText(error.message);
             }
-        } catch (error) {
-            console.log(error.message);
-            setIsRequestPending(false);
-            setIsRequestError(true);
-            setErrorText(error.message);
         }
     };
 
     return (
-        <>
+        <div className="w-full h-screen overflow-hidden">
             {isModalOpen && <ForgottenPasswordModal open={isModalOpen} />}
             <AuthBackground />
             <Container
                 component="main"
                 maxWidth="xs"
-                className="bg-slate-500 shadow-xl rounded-md p-3"
-                sx={{
-                    backgroundColor:'#fff'
-                }}
+                className="relative z-10 h-screen overflow-hidden"
             >
                 <CssBaseline />
                 <Box
@@ -104,8 +88,13 @@ const LoginPage = () => {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
+                        padding: 4,
+                        minWidth: 200,
+                        paddingX: 8,
+                        borderRadius: 2,
+                        boxShadow: 3,
+                        backgroundColor: 'white',
                     }}
-                    className="bg-fff w-full h-full"
                 >
                     <Typography component="h1" variant="h5">
                         Sign in
@@ -114,19 +103,19 @@ const LoginPage = () => {
                         component="form"
                         onSubmit={submitHandler}
                         noValidate
-                        sx={{ mt: 1 }}
-                        className="flex justify-center flex-col items-center"
+                        className="flex flex-col items-center mt-4"
                     >
-                        {/* {login Inputs} */}
-
                         <LoginEmailInput isEmailShake={isEmailShake} />
                         <LoginPasswordInput isPasswordShake={isPasswordShake} />
-
                         <Button
                             variant="contained"
-                            className="px-12 w-3/5 my-4"
+                            className="px-12 w-full"
+                            type="submit"
+                            sx={{
+                                marginY: 4,
+                            }}
                         >
-                            <Loading />
+                            {isRequestPending ? <Loading /> : 'Sign In'}
                         </Button>
                         {isRequestError && (
                             <LoginAlert
@@ -134,17 +123,19 @@ const LoginPage = () => {
                                 isRequestError={isRequestError}
                             />
                         )}
-                        <Grid container className="justify-center text-center">
+                        <Grid
+                            container
+                            justifyContent="center"
+                            className="text-center"
+                        >
                             <Grid item xs={12}>
                                 <Button
                                     disableRipple
                                     onClick={forgotPasswordHandler}
-                                    size="medium"
                                     sx={{
                                         textTransform: 'capitalize',
-                                        ':hover': {
-                                            bgcolor: 'transparent',
-                                        },
+                                        color: 'primary.main',
+                                        ':hover': { bgcolor: 'transparent' },
                                     }}
                                 >
                                     Forgot password?
@@ -152,23 +143,20 @@ const LoginPage = () => {
                             </Grid>
                             <Divider
                                 sx={{
-                                    bgcolor: '#e3e5e8',
-                                    px: 25,
-                                    py: 0.05,
-                                    my: 1,
+                                    width: '100%',
+                                    my: 2,
+                                    bgcolor: 'grey-300',
                                 }}
                             />
-                            <Grid item marginY={2}>
+                            <Grid item xs={12} mt={2}>
                                 <Link href={'/register'}>
                                     <Button
                                         variant="contained"
                                         sx={{
                                             bgcolor: '#42b72a',
-                                            pt: '4',
-                                            ':hover': {
-                                                bgcolor: '#2D8D1A',
-                                            },
+                                            ':hover': { bgcolor: '#2D8D1A' },
                                         }}
+                                        fullWidth
                                     >
                                         Create an account
                                     </Button>
@@ -178,7 +166,7 @@ const LoginPage = () => {
                     </Box>
                 </Box>
             </Container>
-        </>
+        </div>
     );
 };
 

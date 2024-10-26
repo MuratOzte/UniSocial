@@ -1,4 +1,8 @@
-import Adornments from './Adornments';
+import {
+    ErrorAdornment,
+    EyeEndAdornment,
+    SuccessAdornment,
+} from './Adornments';
 import ForgottenPasswordModal from './ForgottenPasswordModal';
 import LoginAlert from './LoginAlert';
 import LoginEmailInput from './LoginEmailInput';
@@ -7,7 +11,9 @@ import CustomizedSwitches from './SmsEmailSwitch';
 import TelephoneInput from './TelephoneInput';
 
 export {
-    Adornments,
+    ErrorAdornment,
+    EyeEndAdornment,
+    SuccessAdornment,
     CustomizedSwitches,
     ForgottenPasswordModal,
     LoginAlert,
