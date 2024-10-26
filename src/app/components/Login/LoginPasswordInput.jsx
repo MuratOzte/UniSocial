@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField, keyframes } from '@mui/material';
 import { EyeEndAdornment } from './Adornments';
+import loginSlice from '@/store/Slices/LoginSlice';
 
 const spin = keyframes`
     25% {
@@ -29,8 +30,8 @@ const LoginPasswordInput = ({ isPasswordShake }) => {
     );
 
     const passwordBlurHandler = (event) => {
-        dispatch(loginActions.passwordChanger(event.currentTarget.value));
-        dispatch(loginActions.isPasswordEntered());
+        dispatch(loginSlice.actions.passwordChanger(event.currentTarget.value));
+        dispatch(loginSlice.actions.isPasswordEntered());
     };
     const visibilityToggleHandler = () => {
         if (isPasswordEntered) {
@@ -44,9 +45,9 @@ const LoginPasswordInput = ({ isPasswordShake }) => {
 
     const passwordChangeHandler = (event) => {
         setEnteredPassword(event.currentTarget.value);
-        dispatch(loginActions.passwordChanger(event.currentTarget.value));
-        dispatch(loginActions.isPasswordEntered());
-        dispatch(loginActions.isPasswordValid(event.currentTarget.value));
+        dispatch(loginSlice.actions.passwordChanger(event.currentTarget.value));
+        dispatch(loginSlice.actions.isPasswordEntered());
+        dispatch(loginSlice.actions.isPasswordValid(event.currentTarget.value));
     };
 
     return (
