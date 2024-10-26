@@ -39,7 +39,7 @@ export const ErrorAdornment = () => {
     return (
         <Tooltip title={'Lütfen geçerli bir e-posta adresi yazınız'}>
             <InputAdornment position="end">
-                <MdError color="red" />
+                <MdError color="red" size={24} className='mr-[6px]' />
             </InputAdornment>
         </Tooltip>
     );

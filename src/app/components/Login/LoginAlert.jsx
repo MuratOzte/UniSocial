@@ -20,7 +20,6 @@ const LoginAlert = ({ isRequestError, errorText }) => {
                         <IconButton
                             aria-label="close"
                             color="inherit"
-                            size="small"
                             onClick={() => {
                                 setOpen(false);
                             }}

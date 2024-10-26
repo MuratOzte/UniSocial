@@ -78,7 +78,6 @@ const LoginPage = () => {
             <AuthBackground />
             <Container
                 component="main"
-                maxWidth="xs"
                 className="relative z-10 h-screen flex justify-center py-0"
             >
                 <CssBaseline />
@@ -94,8 +93,8 @@ const LoginPage = () => {
                         borderRadius: 2,
                         boxShadow: 3,
                         backgroundColor: 'white',
-                        width: '45%',
-                        height:'75vh'
+                        width: '50%',
+                        height:'80vh'
                     }}
                 >
                     <Typography component="h1" variant="h5">
@@ -105,7 +104,7 @@ const LoginPage = () => {
                         component="form"
                         onSubmit={submitHandler}
                         noValidate
-                        className="flex flex-col items-center mt-4 w-4/5"
+                        className="flex flex-col items-center mt-4 w-full"
                     >
                         <LoginEmailInput isEmailShake={isEmailShake} />
                         <LoginPasswordInput isPasswordShake={isPasswordShake} />
