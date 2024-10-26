@@ -79,7 +79,7 @@ const LoginPage = () => {
             <Container
                 component="main"
                 maxWidth="xs"
-                className="relative z-10 h-screen overflow-hidden"
+                className="relative z-10 h-screen"
             >
                 <CssBaseline />
                 <Box
@@ -87,13 +87,16 @@ const LoginPage = () => {
                         marginTop: 16,
                         display: 'flex',
                         flexDirection: 'column',
+                        alignContent: 'center',
                         alignItems: 'center',
                         padding: 4,
-                        minWidth: 200,
-                        paddingX: 8,
+                        minWidth: 500,
+                        maxWidth: 600,
+                        paddingX: 10,
                         borderRadius: 2,
                         boxShadow: 3,
                         backgroundColor: 'white',
+                        width: '100%',
                     }}
                 >
                     <Typography component="h1" variant="h5">
