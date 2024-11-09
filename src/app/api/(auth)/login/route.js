@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 //localhost:3000/api/register
 
-export async function GET(req, res) {
-    return NextResponse.json({ message: 'Register route' });
+export async function POST(req, res) {
+    const { email, password } = await req.json();
+    return NextResponse.json({ message: 'Login successful', email, password });
 }
