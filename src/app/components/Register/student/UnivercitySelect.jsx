@@ -16,7 +16,7 @@ import {
 //functions
 import { IoMdSearch } from 'react-icons/io';
 //datas
-import data from '../../../app/data/uniData.json';
+import data from '@/app/data/uniData.json';
 import registerSlice from '@/store/Slices/RegisterSlice';
 import { motion } from 'framer-motion';
 

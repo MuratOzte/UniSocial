@@ -8,6 +8,7 @@ module.exports = {
     theme: {
         extend: {
             colors: {
+                authGray: '#1f2d3d',
                 registerBlue: '#1976d2',
                 registerGray: '#cccccc',
                 fff: '#ffffff',
@@ -21,11 +22,11 @@ module.exports = {
                     '0%, 100%': { transform: 'scale(0.90)', opacity: '0.8' },
                     '50%': { transform: 'scale(1.05)', opacity: '1' },
                 },
-                scaleUp:{
+                scaleUp: {
                     '0%': { transform: 'scale(1)' },
                     '50%': { transform: 'scale(1.05)' },
                     '100%': { transform: 'scale(1)' },
-                }
+                },
             },
         },
     },

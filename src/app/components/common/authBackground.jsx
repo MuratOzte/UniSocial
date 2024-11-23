@@ -1,6 +1,6 @@
 const AuthBackground = () => {
     return (
-        <div className="z-[-1] w-full h-screen absolute bg-[#1f2d3d] overflow-hidden">
+        <div className="z-[-1] w-full h-screen absolute bg-authGray overflow-hidden">
             <div className="absolute bg-[#4db33d] rounded-full shadow-[0_0_1px_0px_#508fb9] animate-ripple opacity-20 w-[1440px] h-[1440px] -left-[720px] -bottom-[720px]"></div>
             <div className="absolute bg-[#66bb6a] rounded-full shadow-[0_0_1px_0px_#508fb9] animate-ripple opacity-50 w-[1152px] h-[1152px] -left-[576px] -bottom-[576px]"></div>
             <div className="absolute bg-[#81c784] rounded-full shadow-[0_0_1px_0px_#508fb9] animate-ripple opacity-70 w-[864px] h-[864px] -left-[432px] -bottom-[432px]"></div>
