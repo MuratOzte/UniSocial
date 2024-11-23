@@ -4,17 +4,17 @@ import Image from 'next/image';
 import { RxAvatar } from 'react-icons/rx';
 import { RiSearchLine } from 'react-icons/ri';
 import { IoCloseSharp } from 'react-icons/io5';
-import { useState } from 'react';
+
+import useNav from '@/hooks/useNav';
 
 const Nav = () => {
-    // Search bar states
-    const [isSearchBarFocused, setIsSearchBarFocused] = useState(false);
-    const toggleSearchBar = () => setIsSearchBarFocused((prev) => !prev);
-
-    const [searchQuery, setSearchQuery] = useState('');
-    const handleSearch = (e) => setSearchQuery(e.target.value);
-
-    const clearSearch = () => setSearchQuery('');
+    const {
+        isSearchBarFocused,
+        searchQuery,
+        toggleSearchBar,
+        handleSearch,
+        clearSearch,
+    } = useNav();
 
     return (
         <nav className="flex items-center justify-between px-4 py-2 bg-white shadow-md">
