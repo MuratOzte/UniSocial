@@ -31,7 +31,7 @@ model User {
     email      String
     password   String
     univercity String
-    faculty    String
+    department String
 
     token     String?
     createdAt DateTime @default(now())

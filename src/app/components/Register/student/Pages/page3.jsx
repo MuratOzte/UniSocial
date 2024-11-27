@@ -29,6 +29,7 @@ import Loading from '../../../common/Loading';
 
 const Inputs3 = (props) => {
     const dispatch = useDispatch();
+
     const isRequestPending = useSelector(
         (state) => state.register.isRequestPending
     );
@@ -137,6 +138,45 @@ const Inputs3 = (props) => {
 
     const stepDecrementHandler = () => {
         dispatch(registerSlice.actions.stepChangeHandler(2));
+    };
+
+    const {
+        nameValue,
+        surnameValue,
+        univercityValue,
+        departmentValue,
+        emailValue,
+        passwordValue,
+    } = useSelector((state) => state.register);
+
+    const formSubmit = () => {
+        console.log(
+            nameValue,
+            surnameValue,
+            univercityValue,
+            departmentValue,
+            emailValue,
+            passwordValue
+        );
+
+        try {
+            fetch('/api/register/student', {
+                method: 'POST',
+                body: JSON.stringify({
+                    name: nameValue,
+                    surname: surnameValue,
+                    univercity: univercityValue,
+                    department: departmentValue,
+                    email: emailValue,
+                    password: passwordValue,
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => console.log(data));
+        } catch (error) {}
     };
 
     return (
@@ -266,7 +306,7 @@ const Inputs3 = (props) => {
                                 <Button
                                     variant="contained"
                                     color="success"
-                                    onClick={props.formSubmit}
+                                    onClick={formSubmit}
                                     disabled={!isFormValid}
                                     role="progressbar"
                                     className="w-[140px] h-10"

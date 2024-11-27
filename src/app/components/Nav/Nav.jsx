@@ -1,16 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import { RxAvatar } from 'react-icons/rx';
-import { RiSearchLine } from 'react-icons/ri';
-import { IoCloseSharp } from 'react-icons/io5';
-import { SiGooglemessages } from 'react-icons/si';
-import { IoSettingsSharp } from 'react-icons/io5';
-import { TbMessages } from 'react-icons/tb';
 import { FaUserCircle } from 'react-icons/fa';
+import { IoCloseSharp, IoSettingsSharp } from 'react-icons/io5';
+import { RiSearchLine } from 'react-icons/ri';
+import { TbMessages } from 'react-icons/tb';
 
 import useNav from '@/hooks/useNav';
-import { Tooltip } from '@mui/material';
 import Icons from './Icons';
 
 const Nav = () => {
