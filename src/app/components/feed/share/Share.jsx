@@ -1,6 +1,7 @@
 import { TbSend } from 'react-icons/tb';
 import { FaImage } from 'react-icons/fa';
-import { MdOutlineEventNote } from "react-icons/md";
+import { MdOutlineEventNote } from 'react-icons/md';
+import { MdEmojiEmotions } from 'react-icons/md';
 import { useState } from 'react';
 import Image from 'next/image';
 
@@ -10,7 +11,7 @@ const Share = () => {
     const handleShare = () => {
         if (content.trim() !== '') {
             console.log('Shared content:', content);
-            setContent(''); 
+            setContent('');
         }
     };
 
@@ -30,7 +31,7 @@ const Share = () => {
                     placeholder="Share your thoughts..."
                     className="flex-1 bg-gray-700 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                <TbSend className="ml-2" size={24} />
+                <TbSend className="ml-2 cursor-pointer" size={24} />
             </div>
 
             <div className="flex items-center justify-evenly">
@@ -43,8 +44,8 @@ const Share = () => {
                     Event
                 </button>
                 <button className="flex items-center px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600">
-                    <div className="w-5 h-5 bg-gray-500 rounded-full mr-2"></div>
-                    
+                    <MdEmojiEmotions className="mr-2" />
+                    Activity
                 </button>
             </div>
         </div>
