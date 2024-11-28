@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
-
-import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
-export async function POST(req, res) {
+export async function POST(req) {
     const { name, surname, univercity, department, email, password } =
         await req.json();
 
@@ -15,11 +15,16 @@ export async function POST(req, res) {
     });
 
     if (ifExist) {
-        return NextResponse.json({
-            message: 'This email already exist',
-            status: 400,
-        });
+        return NextResponse.json(
+            {
+                message: 'This email already exists',
+                status: 400,
+            },
+            { status: 400 }
+        );
     }
+
+    const hashedPassword = await bcrypt.hash(password, 10); 
 
     const student = await prisma.user.create({
         data: {
@@ -28,17 +33,19 @@ export async function POST(req, res) {
             univercity,
             department,
             email,
-            password,
+            password: hashedPassword, 
         },
     });
 
     return NextResponse.json({
-        message: 'student register successful',
-        name,
-        surname,
-        univercity,
-        department,
-        email,
-        password,
+        message: 'Student registered successfully',
+        user: {
+            id: student.id,
+            name: student.name,
+            surname: student.surname,
+            univercity: student.univercity,
+            department: student.department,
+            email: student.email,
+        },
     });
 }
