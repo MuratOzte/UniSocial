@@ -11,6 +11,7 @@ module.exports = {
                 authGray: '#1f2d3d',
                 registerBlue: '#1976d2',
                 registerGray: '#cccccc',
+                navgray: '#0f0f10',
                 fff: '#ffffff',
             },
             animation: {

@@ -24,12 +24,12 @@ const buttons = [
 
 const Buttons = () => {
     return (
-        <div className="flex flex-col bg-blue-200 pt-4 pb-2 rounded-bl-md rounded-br-md">
+        <div className="flex flex-col bg-gray-800 pt-4 pb-2 rounded-bl-md rounded-br-md">
             <div className="w-[300px] h-[1px] bg-gray-400 my-3 mt-0 mx-6" />{' '}
             {buttons.map((button, index) => (
                 <div
                     key={index}
-                    className="relative flex items-center justify-start w-[350px] h-12 p-4 bg-blue-200 cursor-pointer group hover:text-white px-6"
+                    className="relative flex items-center justify-start w-[350px] h-12 p-4 bg-gray-800 cursor-pointer group hover:text-white px-6 text-gray-300"
                 >
                     <div className="text-xl mr-4 z-50">{button.icon}</div>
                     <p className="text-lg font-medium z-50 leading-tight px-2">

@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaThumbsUp, FaCommentAlt, FaShare } from 'react-icons/fa';
 import { IoIosSend } from 'react-icons/io';
 
 const Post = () => {
     const [showModal, setShowModal] = useState(false);
+
     const post = {
         user: {
             name: 'Surat Turat',
@@ -43,6 +44,27 @@ const Post = () => {
             likes: 0,
         },
     ];
+
+    // Modal dışına tıklayınca kapanma ve Esc ile kapanma
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                setShowModal(false);
+            }
+        };
+
+        if (showModal) {
+            document.body.style.overflow = 'hidden'; // Scroll devre dışı bırak
+            window.addEventListener('keydown', handleKeyDown);
+        } else {
+            document.body.style.overflow = 'auto'; // Scroll yeniden aktif
+        }
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+            document.body.style.overflow = 'auto';
+        };
+    }, [showModal]);
 
     return (
         <div className="w-full max-w-lg bg-gray-800 text-white p-4 rounded-lg shadow-lg">
@@ -88,7 +110,15 @@ const Post = () => {
 
             {/* Modal */}
             {showModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+                    onClick={(e) => {
+                        // Modal dışına tıklayınca kapanma
+                        if (e.target === e.currentTarget) {
+                            setShowModal(false);
+                        }
+                    }}
+                >
                     <div className="bg-gray-800 text-white w-full max-w-md p-6 rounded-lg relative">
                         <button
                             onClick={() => setShowModal(false)}
@@ -97,7 +127,7 @@ const Post = () => {
                             ✕
                         </button>
                         <h2 className="text-xl font-semibold mb-4">Comments</h2>
-                        <div className="max-h-64 overflow-y-auto">
+                        <div className="max-h-64 overflow-y-auto custom-scrollbar">
                             {comments.map((comment) => (
                                 <div key={comment.id} className="mb-4">
                                     <div className="flex items-center mb-2">

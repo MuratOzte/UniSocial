@@ -1,6 +1,7 @@
 'use client';
 
 import LeftNav from '@/app/components/feed/left-nav/LeftNav';
+import NewsSection from '@/app/components/feed/news/news';
 import Post from '@/app/components/feed/post/post';
 import Share from '@/app/components/feed/share/Share';
 import WhoToFollow from '@/app/components/feed/wtfollow/wtFollow';
@@ -16,7 +17,10 @@ const Page = () => {
                     <Share />
                     <Post />
                 </div>
-                <WhoToFollow />
+                <div>
+                    <WhoToFollow />
+                    <NewsSection />
+                </div>
             </div>
         </div>
     );

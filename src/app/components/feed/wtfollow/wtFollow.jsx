@@ -22,7 +22,7 @@ const WhoToFollow = () => {
     };
 
     return (
-        <div className="w-full h-fit max-w-sm p-4 bg-gray-900 text-white rounded-lg shadow-lg">
+        <div className="w-full h-fit max-w-sm p-4 bg-gray-800 text-white rounded-lg shadow-lg">
             <h3 className="text-lg font-semibold mb-4">Who to follow</h3>
             <ul>
                 {users.map((user) => (

@@ -19,7 +19,7 @@ const Nav = () => {
     } = useNav();
 
     return (
-        <nav className="flex items-center justify-between px-12 py-2 bg-white shadow-md">
+        <nav className="flex items-center justify-between px-12 py-2 bg-[#191a1f] shadow-md">
             <div className="flex items-center h-[80px]">
                 <Image
                     src={require('@/assets/logo/logo.png')}
