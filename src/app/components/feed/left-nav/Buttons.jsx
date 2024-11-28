@@ -13,33 +13,29 @@ const buttons = [
         text: 'Clubs',
     },
     {
-        icon: <FaPeopleGroup />,
-        text: 'Contacts',
-    },
-    {
         icon: <MdOutlineEventNote />,
         text: 'Events',
+    },
+    {
+        icon: <FaPeopleGroup />,
+        text: 'Contacts',
     },
 ];
 
 const Buttons = () => {
     return (
         <div className="flex flex-col bg-blue-200 pt-4 pb-2 rounded-bl-md rounded-br-md">
-            {/* Divider */}
-            <div className="w-[300px] h-[1px] bg-gray-400 my-3 mx-6" />{' '}
-            {/* Ayırıcı çizgi */}
+            <div className="w-[300px] h-[1px] bg-gray-400 my-3 mt-0 mx-6" />{' '}
             {buttons.map((button, index) => (
                 <div
                     key={index}
                     className="relative flex items-center justify-start w-[350px] h-12 p-4 bg-blue-200 cursor-pointer group hover:text-white px-6"
                 >
                     <div className="text-xl mr-4 z-50">{button.icon}</div>
-                    {/* Metnin hizasını ve boyutunu ayarlıyoruz */}
                     <p className="text-lg font-medium z-50 leading-tight px-2">
                         {button.text}
                     </p>
 
-                    {/* Hover efekti için soldan genişleyen div */}
                     <div className="absolute left-0 bottom-0 w-0 h-12 bg-blue-500 transition-all group-hover:w-full"></div>
                 </div>
             ))}
