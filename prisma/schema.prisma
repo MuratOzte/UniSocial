@@ -25,17 +25,29 @@ model Post {
 }
 
 model User {
-    id         String @id @default(auto()) @map("_id") @db.ObjectId
+    id         String   @id @default(auto()) @map("_id") @db.ObjectId
     name       String
     surname    String
-    email      String @unique
+    email      String   @unique
     password   String
     univercity String
     department String
-
-    token     String?
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    token      String?
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
 
     posts Post[]
+
+    following Follower[] @relation("FollowingRelation")
+    followers Follower[] @relation("FollowersRelation")
+}
+
+model Follower {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    followerId  String @db.ObjectId
+    followingId String @db.ObjectId
+    createdAt   DateTime @default(now())
+
+    follower  User @relation("FollowersRelation", fields: [followerId], references: [id])
+    following User @relation("FollowingRelation", fields: [followingId], references: [id])
 }
