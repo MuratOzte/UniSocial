@@ -28,7 +28,7 @@ model User {
     id         String @id @default(auto()) @map("_id") @db.ObjectId
     name       String
     surname    String
-    email      String
+    email      String @unique
     password   String
     univercity String
     department String
