@@ -2,24 +2,8 @@ import { useState, useEffect } from 'react';
 import { FaThumbsUp, FaCommentAlt, FaShare } from 'react-icons/fa';
 import { IoIosSend } from 'react-icons/io';
 
-const Post = () => {
+const Post = ({ post }) => {
     const [showModal, setShowModal] = useState(false);
-
-    const post = {
-        user: {
-            name: 'Surat Turat',
-            role: 'Karadeniz Teknik Üniversitesinde Profesör',
-            avatar: 'https://via.placeholder.com/40',
-        },
-        time: '2 hours ago',
-        text: "I'm thrilled to share that I've completed a graduate certificate course in project management with the president's honor roll.",
-        image: 'https://via.placeholder.com/600x400',
-        stats: {
-            likes: 56,
-            comments: 12,
-            shares: 3,
-        },
-    };
 
     const comments = [
         {
@@ -45,7 +29,6 @@ const Post = () => {
         },
     ];
 
-    // Modal dışına tıklayınca kapanma ve Esc ile kapanma
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === 'Escape') {
@@ -54,10 +37,10 @@ const Post = () => {
         };
 
         if (showModal) {
-            document.body.style.overflow = 'hidden'; // Scroll devre dışı bırak
+            document.body.style.overflow = 'hidden';
             window.addEventListener('keydown', handleKeyDown);
         } else {
-            document.body.style.overflow = 'auto'; // Scroll yeniden aktif
+            document.body.style.overflow = 'auto';
         }
 
         return () => {
@@ -67,16 +50,16 @@ const Post = () => {
     }, [showModal]);
 
     return (
-        <div className="w-full max-w-lg bg-gray-800 text-white p-4 rounded-lg shadow-lg">
+        <div className="w-full max-w-lg bg-gray-800 text-white p-4 rounded-lg shadow-lg my-8">
             <div className="flex items-center mb-4">
                 <img
-                    src={post.user.avatar}
-                    alt={`${post.user.name}'s avatar`}
+                    src={post.avatar}
+                    alt={`${post.name}'s avatar`}
                     className="w-12 h-12 rounded-full mr-3"
                 />
                 <div>
-                    <p className="font-semibold">{post.user.name}</p>
-                    <p className="text-sm text-gray-400">{post.user.role}</p>
+                    <p className="font-semibold">{post.name}</p>
+                    <p className="text-sm text-gray-400">{post.role}</p>
                     <p className="text-xs text-gray-500">{post.time}</p>
                 </div>
                 <div className="ml-auto text-gray-500 cursor-pointer">...</div>
@@ -92,28 +75,24 @@ const Post = () => {
 
             <div className="flex justify-between items-center text-gray-400 text-sm mb-4">
                 <p className="cursor-pointer">
-                    <FaThumbsUp className="inline mr-1" /> Liked (
-                    {post.stats.likes})
+                    <FaThumbsUp className="inline mr-1" /> Liked ({post.likes})
                 </p>
                 <p
                     className="cursor-pointer"
                     onClick={() => setShowModal(true)}
                 >
                     <FaCommentAlt className="inline mr-1" /> Comments (
-                    {post.stats.comments})
+                    {post.comments})
                 </p>
                 <p className="cursor-pointer">
-                    <FaShare className="inline mr-1" /> Share (
-                    {post.stats.shares})
+                    <FaShare className="inline mr-1" /> Share ({post.shares})
                 </p>
             </div>
 
-            {/* Modal */}
             {showModal && (
                 <div
                     className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
                     onClick={(e) => {
-                        // Modal dışına tıklayınca kapanma
                         if (e.target === e.currentTarget) {
                             setShowModal(false);
                         }

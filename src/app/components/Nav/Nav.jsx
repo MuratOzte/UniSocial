@@ -43,7 +43,7 @@ const Nav = () => {
                     onChange={handleSearch}
                     type="text"
                     placeholder="Search..."
-                    className="w-full pl-10 pr-10 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-50 text-gray-800"
+                    className="w-full pl-10 pr-10 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-400 text-gray-800 placeholder:text-authGray"
                 />
                 {searchQuery && (
                     <IoCloseSharp
