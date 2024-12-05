@@ -21,6 +21,9 @@ const spin = keyframes`
 
 const LoginEmailInput = ({ isEmailShake }) => {
     const dispatch = useDispatch();
+
+
+
     const isEmailValid = useSelector((state) => state.login.isEmailValid);
     const isEmailEntered = useSelector((state) => state.login.isEmailEntered);
     const emailRedux = useSelector((state) => state.login.emailValue);
