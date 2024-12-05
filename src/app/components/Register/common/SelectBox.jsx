@@ -2,6 +2,25 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const SelectBox = () => {
+
+    //todo ZEHRA 
+    /*
+        https://designer.microsoft.com/image-creator
+        sitesinden öğrenci öğretmen ve şirket için resimler oluşturulacak
+        ve bu resimler src/assets/auth klasörüne atılacak
+        daha sonrasında aşağıdaki options arrayine eklenerek
+        sayfada görüntülenecek
+
+        description kısmını chatgpt yazdı duruma göre onları da değiştirebilirsin
+        
+        örnek:
+        image: require('@/assets/auth/student.jpeg'),
+
+        test etmek için terminale npm run dev yazdıktan sonra
+        http://localhost:3000/register
+        adresine giderek sayfayı görebilirsin
+    */
+
     const options = [
         {
             id: 'student',

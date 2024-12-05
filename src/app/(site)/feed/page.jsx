@@ -18,7 +18,7 @@ const Page = () => {
                     <Share />
                     <Posts />
                 </div>
-                <div>
+                <div className='flex flex-col gap-5 mt-4' >
                     <WhoToFollow />
                     <NewsSection />
                 </div>

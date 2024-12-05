@@ -1,7 +1,6 @@
 'use client';
 import SelectBox from '@/app/components/Register/common/SelectBox';
 import UniSocialLogo from '@/app/components/Register/common/UniSocialLogo';
-import { motion } from 'framer-motion';
 
 const Page = () => {
     return (
