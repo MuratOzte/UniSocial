@@ -13,7 +13,7 @@ const posts = [
         shares: 3,
     },
     {
-        name: 'Surat Turat',
+        name: 'Surat Turatasd',
         role: 'Karadeniz Teknik Üniversitesinde Profesör',
         avatar: 'https://via.placeholder.com/40',
         time: '2 hours ago',
