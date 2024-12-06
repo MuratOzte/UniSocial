@@ -19,6 +19,7 @@ import { IoMdSearch } from 'react-icons/io';
 import data from '@/app/data/uniData.json';
 import registerSlice from '@/store/Slices/RegisterSlice';
 import { motion } from 'framer-motion';
+import BasicSelect from './StatusSelect';
 
 const containsText = (text, searchUniText) =>
     text.toLowerCase().indexOf(searchUniText.toLowerCase()) > -1;
@@ -242,9 +243,10 @@ const UnivercitySelect = (props) => {
                     </FormControl>
                 </Box>
             </motion.div>
+            <BasicSelect/>
             <Box
                 sx={{
-                    my: 3,
+                    mt: 3,
                     display: 'flex',
                     justifyContent: 'space-between',
                 }}
@@ -252,7 +254,7 @@ const UnivercitySelect = (props) => {
                 <motion.div
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ transition: 0.5, delay: 0.7 }}
+                    transition={{ transition: 0.5, delay: 1 }}
                 >
                     <Button
                         variant="contained"
@@ -266,7 +268,7 @@ const UnivercitySelect = (props) => {
                 <motion.div
                     initial={{ opacity: 0, x: 30 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ transition: 0.5, delay: 0.8 }}
+                    transition={{ transition: 0.5, delay: 1.1 }}
                 >
                     <Button
                         variant="contained"

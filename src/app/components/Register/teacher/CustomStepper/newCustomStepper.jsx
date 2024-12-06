@@ -132,7 +132,7 @@ const CustomStepper = () => {
                                 duration: 0.6,
                             }}
                         >
-                            Öğrenci bilgileri
+                            Öğretmen bilgileri
                         </motion.div>
                     </StepLabel>
                 </Step>
