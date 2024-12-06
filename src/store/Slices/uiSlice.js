@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const registerSlice = createSlice({
+const uiSlice = createSlice({
     name: 'ui',
     initialState: {},
     reducers: {},
 });
 
-export default registerSlice;
+export default uiSlice;

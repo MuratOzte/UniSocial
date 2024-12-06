@@ -14,8 +14,8 @@ const registerSlice = createSlice({
             third: true,
         },
         //first step constants
-        nameValue: '',
-        surnameValue: '',
+        nameValue: 'a',
+        surnameValue: 'a',
         //second step constants
         univercityValue: '',
         departmentValue: '',
@@ -27,7 +27,7 @@ const registerSlice = createSlice({
         isKvkkSubmitted: false,
         passwordStrenght: 0,
         //teacher
-        statu: '',
+        status: '',
 
     },
     reducers: {
@@ -68,8 +68,8 @@ const registerSlice = createSlice({
         isFirstOpenHandler(state, action) {
             state.isFirstOpen = action.payload;
         },
-        statuChangeHandler(state,action){
-            state.statu=action.payload;
+        statusChangeHandler(state,action){
+            state.status=action.payload;
         }
     },
 });
