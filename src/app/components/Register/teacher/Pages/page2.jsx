@@ -1,6 +1,7 @@
 import { CssBaseline, Box, Typography } from '@mui/material';
 import { motion } from 'framer-motion'; // Import motion from framer-motion
 import UnivercitySelect from '../UnivercitySelect';
+import BasicSelect from '../StatusSelect';
 
 const Inputs2 = (props) => {
     return (

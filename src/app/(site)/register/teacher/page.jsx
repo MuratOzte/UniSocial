@@ -1,10 +1,10 @@
 'use client';
 
 // import CustomStepper from '@/app/components/Register/CustomStepper/CustomStepper';
-import CustomStepper from '@/app/components/Register/student/CustomStepper/newCustomStepper';
-import Inputs1 from '@/app/components/Register/student/Pages/page1';
-import Inputs2 from '@/app/components/Register/student/Pages/page2';
-import Inputs3 from '@/app/components/Register/student/Pages/page3';
+import CustomStepper from '@/app/components/Register/teacher/CustomStepper/newCustomStepper';
+import Inputs1 from '@/app/components/Register/teacher/Pages/page1';
+import Inputs2 from '@/app/components/Register/teacher/Pages/page2';
+import Inputs3 from '@/app/components/Register/teacher/Pages/page3';
 
 import logo from '@/assets/logo/logo.png';
 import Image from 'next/image';

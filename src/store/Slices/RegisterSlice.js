@@ -26,6 +26,9 @@ const registerSlice = createSlice({
         isPasswordEntered: false,
         isKvkkSubmitted: false,
         passwordStrenght: 0,
+        //teacher
+        statu: '',
+
     },
     reducers: {
         stepChangeHandler(state, action) {
@@ -65,6 +68,9 @@ const registerSlice = createSlice({
         isFirstOpenHandler(state, action) {
             state.isFirstOpen = action.payload;
         },
+        statuChangeHandler(state,action){
+            state.statu=action.payload;
+        }
     },
 });
 
