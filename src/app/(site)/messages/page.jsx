@@ -1,3 +1,4 @@
+'use client'
 import MessageBox from "@/app/components/messages/Messagebox";
 
 const Main = () => {
