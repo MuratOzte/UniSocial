@@ -1,8 +1,18 @@
-import { CssBaseline, Box, Typography } from '@mui/material';
+import { CssBaseline, Box, Typography, Button } from '@mui/material';
 import { motion } from 'framer-motion'; // Import motion from framer-motion
 import UnivercitySelect from '../UnivercitySelect';
+import { useDispatch, useSelector } from 'react-redux';
+import registerSlice from '@/store/Slices/RegisterSlice';
 
 const Inputs2 = (props) => {
+    const dispatch=useDispatch();
+    const register=useSelector((state)=>state.register);
+    
+    const stepChangeHandler=(page)=>{
+        dispatch(registerSlice.actions.stepChangeHandler(page));
+    }
+
+    
     return (
         <>
             <CssBaseline />
@@ -27,17 +37,46 @@ const Inputs2 = (props) => {
                         Enter your university and department
                     </Typography>
                 </motion.div>
+                <Box
+                sx={{
+                    my: 3,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                }}
+            >
+                <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ transition: 0.5, delay: 0.7 }}
+                >
+                    <Button
+                        variant="contained"
+                        onClick={() => {
+                            stepChangeHandler(1);
+                        }}
+                    >
+                        Previous step
+                    </Button>
+                </motion.div>
+                <motion.div
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ transition: 0.5, delay: 0.8 }}
+                >
 
-                <Box component="form" onSubmit={props.submitHandler} noValidate>
-                    <UnivercitySelect
-                        activeStepDecrementHandler={
-                            props.activeStepDecrementHandler
-                        }
-                        activeStepIncrementHandler={
-                            props.activeStepIncrementHandler
-                        }
-                    />
-                </Box>
+
+                    <Button
+                        variant="contained"
+                        onClick={() => {
+                            stepChangeHandler(3);
+                        }}
+                        disabled={false}
+                    >
+                        Next Step
+                    </Button>
+                </motion.div>
+            </Box>
+ 
             </Box>
         </>
     );
