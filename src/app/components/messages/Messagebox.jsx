@@ -1,6 +1,6 @@
 import React from 'react';
 
-function App() {
+function MessageBox() {
   const chats = [
     { name: "Frances Guerrero", message: "Frances sent a photo.", status: "online" },
     { name: "Lori Ferguson", message: "You missed a call from Carolyn 👆", active: true },
@@ -83,4 +83,4 @@ function App() {
   );
 }
 
-export default App;
+export default MessageBox;
