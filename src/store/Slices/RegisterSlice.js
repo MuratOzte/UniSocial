@@ -28,6 +28,8 @@ const registerSlice = createSlice({
         passwordStrenght: 0,
         //teacher
         status: '',
+        //community
+        communityType:'',
 
     },
     reducers: {
@@ -70,6 +72,9 @@ const registerSlice = createSlice({
         },
         statusChangeHandler(state,action){
             state.status=action.payload;
+        },
+        communityTypeChangeHandler(state,action){
+            state.communityType=action.payload;
         }
     },
 });

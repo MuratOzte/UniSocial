@@ -87,6 +87,7 @@ function ColorlibStepIcon(props) {
 
 const CustomStepper = () => {
     const dispatch = useDispatch();
+    const register=useSelector((state)=>state.register);
     const [animatedIcon, setAnimatedIcon] = useState(1);
 
     const activeStep = useSelector((state) => state.register.step);
@@ -153,7 +154,7 @@ const CustomStepper = () => {
                                 delay: 0.2,
                             }}
                         >
-                            Üniversite Bilgileri
+                            {register.communityType ? register.communityType+' bilgileri':'Kominite bilgileri'}
                         </motion.div>
                     </StepLabel>
                 </Step>
