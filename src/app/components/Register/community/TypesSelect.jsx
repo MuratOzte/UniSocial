@@ -9,13 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 import registerSlice from "@/store/Slices/RegisterSlice";
 
 export default function TypeSelect() {
-
-
-
   const dispatch = useDispatch();
-  const register=useSelector((state)=>state.register)
+  const register = useSelector((state) => state.register);
   const handleChange = (event) => {
-    dispatch(registerSlice.actions.communityTypeChangeHandler(event.target.value));
+    dispatch(
+      registerSlice.actions.communityTypeChangeHandler(event.target.value)
+    );
   };
   console.log(register);
 
@@ -27,7 +26,7 @@ export default function TypeSelect() {
     >
       <Box sx={{ minWidth: 120, marginTop: 2 }}>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">status</InputLabel>
+          <InputLabel id="demo-simple-select-label">Type</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -35,11 +34,11 @@ export default function TypeSelect() {
             label="Status"
             onChange={handleChange}
           >
-            <MenuItem value={'Profesör'}>Profesör</MenuItem>
-            <MenuItem value={'Doçent'}>Doçent</MenuItem>
-            <MenuItem value={'Doktor Öğretim Üyesi'}>Doktor Öğretim Üyesi</MenuItem>
-            <MenuItem value={'Öğretim Görevlisi'}>Öğretim Görevlisi</MenuItem>
-            <MenuItem value={'Araştırma Görevlisi'}>Araştırma Görevlisi</MenuItem>
+            <MenuItem value={"Şirket"}>Şirket</MenuItem>
+            <MenuItem value={"Kulüp"}>Kulüp</MenuItem>
+            <MenuItem value={"Etkinlik Grubu"}>Etkinlik Grubu</MenuItem>
+            <MenuItem value={"Akademik Topluluk"}>Akademik Topluluk</MenuItem>
+            <MenuItem value={"Hobi Topluluğu"}>Hobi Topluluğu</MenuItem>
           </Select>
         </FormControl>
       </Box>
