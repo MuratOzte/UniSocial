@@ -32,9 +32,34 @@ function App() {
         { sender: "You", text: "Pretty good, thanks!", type: "sent" },
       ],
     },
+    {
+      id: 4,
+      name: "Dennis Barrett",
+      message: "Happy birthday 🍰",
+      status: "offline",
+      conversation: [
+        { sender: "Dennis", text: "Happy birthday 🎉", type: "received" },
+        { sender: "You", text: "Thanks a lot! 🎂", type: "sent" },
+      ],
+    },
+    {
+      id: 5,
+      name: "Judy Nguyen",
+      message: "Thank you!",
+      status: "online",
+      conversation: [
+        { sender: "Judy", text: "Thanks for helping! 🙌", type: "received" },
+        { sender: "You", text: "You're welcome! 😊", type: "sent" },
+      ],
+    },
   ];
 
   const [activeChat, setActiveChat] = useState(chats[0]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredChats = chats.filter((chat) =>
+    chat.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="flex h-screen">
@@ -48,9 +73,11 @@ function App() {
         <input
           className="w-full px-3 py-2 mb-4 border rounded-md focus:outline-none"
           placeholder="Search for chats"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
         <ul>
-          {chats.map((chat) => (
+          {filteredChats.map((chat) => (
             <li
               key={chat.id}
               onClick={() => setActiveChat(chat)}
@@ -65,6 +92,11 @@ function App() {
               </div>
             </li>
           ))}
+          {filteredChats.length === 0 && (
+            <p className="text-gray-500 text-sm text-center mt-4">
+              No chats found.
+            </p>
+          )}
         </ul>
       </div>
 
