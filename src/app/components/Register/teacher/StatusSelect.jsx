@@ -26,6 +26,7 @@ export default function BasicSelect() {
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">status</InputLabel>
           <Select
+           disabled={!register.departmentValue}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={register.status}
