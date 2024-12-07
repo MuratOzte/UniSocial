@@ -5,10 +5,8 @@ const prisma = new PrismaClient();
 
 export async function POST(req) {
     try {
-        // İstekten `followerId` ve `followingId` bilgilerini al
         const { followerId, followingId } = await req.json();
 
-        // Kendi kendini takip etme kontrolü
         if (followerId === followingId) {
             return NextResponse.json(
                 { message: 'You cannot follow yourself.', status: 400 },
@@ -16,7 +14,6 @@ export async function POST(req) {
             );
         }
 
-        // Kullanıcıların mevcut olup olmadığını kontrol et
         const follower = await prisma.user.findUnique({
             where: { id: followerId },
         });
@@ -32,7 +29,6 @@ export async function POST(req) {
             );
         }
 
-        // Takip ilişkisi zaten var mı kontrol et
         const existingFollower = await prisma.follower.findFirst({
             where: {
                 followerId: followerId,
@@ -47,7 +43,6 @@ export async function POST(req) {
             );
         }
 
-        // Yeni takip ilişkisini oluştur
         const newFollower = await prisma.follower.create({
             data: {
                 followerId,

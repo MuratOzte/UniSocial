@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 
 export async function GET(req) {
     try {
-        // Query parametrelerinden userId'yi al
         const { searchParams } = new URL(req.nextUrl);
         const userId = searchParams.get('userId');
 
@@ -16,21 +15,20 @@ export async function GET(req) {
             );
         }
 
-        // Kullanıcıyı ilişkili verileriyle birlikte getir
         const user = await prisma.user.findUnique({
             where: { id: userId },
             include: {
-                posts: true, // Kullanıcının yazıları
+                posts: true, 
                 followers: {
                     include: {
                         follower: { select: { id: true, name: true, surname: true } },
                     },
-                }, // Kullanıcıyı takip edenler
+                }, 
                 following: {
                     include: {
                         following: { select: { id: true, name: true, surname: true } },
                     },
-                }, // Kullanıcının takip ettikleri
+                }, 
             },
         });
 
