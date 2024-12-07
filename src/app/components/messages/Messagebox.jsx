@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
 function App() {
-  const chats = [
+  // Sohbet verilerini tanımla
+  const initialChats = [
     {
       id: 1,
       name: "Frances Guerrero",
@@ -22,53 +23,54 @@ function App() {
         { sender: "You", text: "Thank you so much! 😊", type: "sent" },
       ],
     },
-    {
-      id: 3,
-      name: "Samuel Bishop",
-      message: "Day sweetness why cordially 😊",
-      status: "offline",
-      conversation: [
-        { sender: "Samuel", text: "How's your day going? 🌞", type: "received" },
-        { sender: "You", text: "Pretty good, thanks!", type: "sent" },
-      ],
-    },
-    {
-      id: 4,
-      name: "Dennis Barrett",
-      message: "Happy birthday 🍰",
-      status: "offline",
-      conversation: [
-        { sender: "Dennis", text: "Happy birthday 🎉", type: "received" },
-        { sender: "You", text: "Thanks a lot! 🎂", type: "sent" },
-      ],
-    },
-    {
-      id: 5,
-      name: "Judy Nguyen",
-      message: "Thank you!",
-      status: "online",
-      conversation: [
-        { sender: "Judy", text: "Thanks for helping! 🙌", type: "received" },
-        { sender: "You", text: "You're welcome! 😊", type: "sent" },
-      ],
-    },
   ];
 
-  const [activeChat, setActiveChat] = useState(chats[0]);
+  // State tanımlamaları
+  const [chats, setChats] = useState(initialChats);
+  const [activeChat, setActiveChat] = useState(initialChats[0]);
   const [searchTerm, setSearchTerm] = useState("");
 
+  // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newRecipient, setNewRecipient] = useState("");
+  const [newMessage, setNewMessage] = useState("");
+
+  // Yeni sohbet ekleme fonksiyonu
+  const handleNewChat = () => {
+    if (newRecipient && newMessage) {
+      const newChat = {
+        id: chats.length + 1,
+        name: newRecipient,
+        message: newMessage,
+        status: "offline",
+        conversation: [
+          { sender: "You", text: newMessage, type: "sent" },
+        ],
+      };
+      setChats([...chats, newChat]);
+      setIsModalOpen(false);
+      setNewRecipient("");
+      setNewMessage("");
+    }
+  };
+
+  // Arama filtresi
   const filteredChats = chats.filter((chat) =>
     chat.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
     <div className="flex h-screen">
+      {/* Sol Menü: Sohbet Listesi */}
       <div className="w-1/4 border-r border-gray-300 bg-white p-4">
-        <h2 className="font-bold text-lg mb-4">
+        <h2 className="font-bold text-lg mb-4 flex items-center justify-between">
           Active chats{" "}
-          <span className="ml-2 px-2 py-1 bg-green-100 text-green-600 rounded-full">
-            {chats.length}
-          </span>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="px-3 py-1 bg-blue-500 text-white rounded-lg text-sm"
+          >
+            + New Message
+          </button>
         </h2>
         <input
           className="w-full px-3 py-2 mb-4 border rounded-md focus:outline-none"
@@ -100,23 +102,17 @@ function App() {
         </ul>
       </div>
 
+      {/* Sağ Taraf: Aktif Sohbet */}
       <div className="flex-1 flex flex-col bg-gray-50">
+        {/* Sohbet Üst Bilgisi */}
         <div className="p-4 border-b bg-white flex items-center">
           <div className="w-10 h-10 bg-gray-200 rounded-full mr-3"></div>
           <div>
             <h2 className="font-bold text-lg">{activeChat.name}</h2>
-            <p
-              className={`text-sm ${
-                activeChat.status === "online"
-                  ? "text-green-500"
-                  : "text-gray-500"
-              }`}
-            >
-              {activeChat.status}
-            </p>
           </div>
         </div>
 
+        {/* Sohbet İçeriği */}
         <div className="flex-1 p-4 overflow-y-auto space-y-2">
           {activeChat.conversation.map((msg, index) => (
             <div
@@ -138,6 +134,7 @@ function App() {
           ))}
         </div>
 
+        {/* Mesaj Girişi */}
         <div className="p-4 border-t bg-white flex items-center">
           <input
             type="text"
@@ -149,6 +146,42 @@ function App() {
           </button>
         </div>
       </div>
+
+      {/* Yeni Mesaj Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <h2 className="font-bold text-lg mb-4">New Message</h2>
+            <input
+              type="text"
+              placeholder="Recipient Name"
+              className="w-full px-3 py-2 mb-4 border rounded-lg focus:outline-none"
+              value={newRecipient}
+              onChange={(e) => setNewRecipient(e.target.value)}
+            />
+            <textarea
+              placeholder="Message"
+              className="w-full px-3 py-2 mb-4 border rounded-lg focus:outline-none h-24"
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+            ></textarea>
+            <div className="flex justify-end">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="mr-2 px-4 py-2 bg-gray-300 text-gray-700 rounded-lg"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleNewChat}
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+              >
+                Send
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
