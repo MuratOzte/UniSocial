@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { IoIosSearch } from "react-icons/io";
 
 function App() {
+  // Sohbet verilerini tanımla
   const initialChats = [
     {
       id: 1,
@@ -24,14 +26,17 @@ function App() {
     },
   ];
 
+  // State tanımlamaları
   const [chats, setChats] = useState(initialChats);
   const [activeChat, setActiveChat] = useState(initialChats[0]);
   const [searchTerm, setSearchTerm] = useState("");
 
+  // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newRecipient, setNewRecipient] = useState("");
   const [newMessage, setNewMessage] = useState("");
 
+  // Yeni sohbet ekleme fonksiyonu
   const handleNewChat = () => {
     if (newRecipient && newMessage) {
       const newChat = {
@@ -39,9 +44,7 @@ function App() {
         name: newRecipient,
         message: newMessage,
         status: "offline",
-        conversation: [
-          { sender: "You", text: newMessage, type: "sent" },
-        ],
+        conversation: [{ sender: "You", text: newMessage, type: "sent" }],
       };
       setChats([...chats, newChat]);
       setIsModalOpen(false);
@@ -50,15 +53,18 @@ function App() {
     }
   };
 
+  // Arama filtresi
   const filteredChats = chats.filter((chat) =>
     chat.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
     <div className="flex h-screen">
+      {/* Sol Menü: Sohbet Listesi */}
       <div className="w-1/4 border-r border-gray-300 bg-white p-4">
+        {/* Yeni Mesaj Butonu */}
         <h2 className="font-bold text-lg mb-4 flex items-center justify-between">
-          Active chats{" "}
+          Active chats
           <button
             onClick={() => setIsModalOpen(true)}
             className="px-3 py-1 bg-blue-500 text-white rounded-lg text-sm"
@@ -66,12 +72,19 @@ function App() {
             + New Message
           </button>
         </h2>
-        <input
-          className="w-full px-3 py-2 mb-4 border rounded-md focus:outline-none"
-          placeholder="Search for chats"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        
+        {/* Arama Kutusu */}
+        <div className="relative mb-4">
+          <input
+            className="w-full pl-10 pr-3 py-2 border rounded-md focus:outline-none"
+            placeholder="Search for chats"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <IoIosSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-2xl" />
+        </div>
+        
+        {/* Sohbet Listesi */}
         <ul>
           {filteredChats.map((chat) => (
             <li
@@ -96,9 +109,9 @@ function App() {
         </ul>
       </div>
 
-      
+      {/* Sağ Taraf: Aktif Sohbet */}
       <div className="flex-1 flex flex-col bg-gray-50">
-        
+        {/* Sohbet Üst Bilgisi */}
         <div className="p-4 border-b bg-white flex items-center">
           <div className="w-10 h-10 bg-gray-200 rounded-full mr-3"></div>
           <div>
@@ -106,6 +119,7 @@ function App() {
           </div>
         </div>
 
+        {/* Sohbet İçeriği */}
         <div className="flex-1 p-4 overflow-y-auto space-y-2">
           {activeChat.conversation.map((msg, index) => (
             <div
@@ -127,6 +141,7 @@ function App() {
           ))}
         </div>
 
+        {/* Mesaj Girişi */}
         <div className="p-4 border-t bg-white flex items-center">
           <input
             type="text"
@@ -139,6 +154,7 @@ function App() {
         </div>
       </div>
 
+      {/* Yeni Mesaj Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
