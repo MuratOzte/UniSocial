@@ -52,6 +52,11 @@ const Inputs1 = (props) => {
     console.log(isFirstOpen);
   }, [isFirstOpen]);
 
+  useEffect(() => {
+    dispatch(registerSlice.actions.companyTypeChangeHandler(''))
+    dispatch(registerSlice.actions.communityUniChangeHandler(''))
+  }, [register.communityType]);
+
   return (
     <Grid item xs={12}>
       <CssBaseline />

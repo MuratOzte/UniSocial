@@ -1,22 +1,20 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import registerSlice from "@/store/Slices/RegisterSlice";
+import AdvancedSelect from "../Advancedselect";
 
-export default function TypeSelect() {
+export default function CommunityOthers() {
   const dispatch = useDispatch();
   const register = useSelector((state) => state.register);
   const handleChange = (event) => {
     dispatch(
-      registerSlice.actions.communityTypeChangeHandler(event.target.value)
+      registerSlice.actions.companyTypeChangeHandler(event.target.value)
     );
   };
-  console.log(register);
+  
 
   return (
     <motion.div
@@ -26,17 +24,17 @@ export default function TypeSelect() {
     >
       <Box sx={{ minWidth: 120, marginTop: 2 }}>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Type</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={register.communityType}
-            label="Status"
-            onChange={handleChange}
-          >
-            <MenuItem value={"Şirket"}>Şirket</MenuItem>
-            <MenuItem value={"Kulüp"}>Kulüp</MenuItem>
-          </Select>
+          <AdvancedSelect
+            options={[
+              "Teknoloji ve yazılım",
+              "Medya ve çevre",
+              "Hukuk ve kamu hizmetleri",
+            ]}
+            ondiffrance={handleChange}
+            isdisabled={true}
+            val={register.companyType}
+            labelName={'CompanyType'}
+          />
         </FormControl>
       </Box>
     </motion.div>
