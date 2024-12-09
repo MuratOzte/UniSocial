@@ -30,7 +30,7 @@ const registerSlice = createSlice({
         status: '',
         //community
         communityType:'',
-
+        communityUni:'',
     },
     reducers: {
         stepChangeHandler(state, action) {
@@ -75,6 +75,9 @@ const registerSlice = createSlice({
         },
         communityTypeChangeHandler(state,action){
             state.communityType=action.payload;
+        },
+        communityUniChangeHandler(state,action){
+            state.communityUni=action.payload;
         }
     },
 });

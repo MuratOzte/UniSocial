@@ -3,6 +3,9 @@ import { motion } from 'framer-motion'; // Import motion from framer-motion
 import UnivercitySelect from '../UnivercitySelect';
 import { useDispatch, useSelector } from 'react-redux';
 import registerSlice from '@/store/Slices/RegisterSlice';
+import CommunityBelongUni from '../communityKulupUni';
+import CommunityOthers from '../communitiyOthers';
+
 
 const Inputs2 = (props) => {
     const dispatch=useDispatch();
@@ -12,7 +15,7 @@ const Inputs2 = (props) => {
         dispatch(registerSlice.actions.stepChangeHandler(page));
     }
 
-    
+
     return (
         <>
             <CssBaseline />
@@ -36,6 +39,7 @@ const Inputs2 = (props) => {
                     >
                         Enter your university and department
                     </Typography>
+            {register.communityType=='Kulüp'? <CommunityBelongUni/> : <CommunityOthers/>}
                 </motion.div>
                 <Box
                 sx={{
