@@ -17,11 +17,14 @@ model Post {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
     title     String
     content   String
+    image     String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    author   User   @relation(fields: [authorId], references: [id])
-    authorId String @db.ObjectId
+    author      User       @relation(fields: [authorId], references: [id])
+    authorId    String     @db.ObjectId
+    Community   Community? @relation(fields: [communityId], references: [id])
+    communityId String?    @db.ObjectId
 }
 
 model User {
@@ -36,18 +39,57 @@ model User {
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
 
+    isTeacher Boolean @default(false)
+
     posts Post[]
 
-    following Follower[] @relation("FollowingRelation")
-    followers Follower[] @relation("FollowersRelation")
+    following   Follower[]        @relation("FollowingRelation")
+    followers   Follower[]        @relation("FollowersRelation")
+    communities CommunityMember[]
 }
 
 model Follower {
     id          String   @id @default(auto()) @map("_id") @db.ObjectId
-    followerId  String @db.ObjectId
-    followingId String @db.ObjectId
+    followerId  String   @db.ObjectId
+    followingId String   @db.ObjectId
     createdAt   DateTime @default(now())
 
     follower  User @relation("FollowersRelation", fields: [followerId], references: [id])
     following User @relation("FollowingRelation", fields: [followingId], references: [id])
+}
+
+model Community {
+    id            String   @id @default(auto()) @map("_id") @db.ObjectId
+    name          String
+    type          String
+    activityField String
+    description   String?
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+
+    posts           Post[]
+    CommunityMember CommunityMember[]
+    events          Event[] // İlişki: Topluluğun etkinlikleri
+}
+
+model CommunityMember {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    communityId String @db.ObjectId
+    userId      String @db.ObjectId
+
+    community Community @relation(fields: [communityId], references: [id])
+    user      User      @relation(fields: [userId], references: [id])
+}
+
+model Event {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    title       String
+    description String?
+    date        DateTime
+    location    String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    community   Community @relation(fields: [communityId], references: [id])
+    communityId String    @db.ObjectId
 }
