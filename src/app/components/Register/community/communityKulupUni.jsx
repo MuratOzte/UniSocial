@@ -1,9 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import registerSlice from "@/store/Slices/RegisterSlice";
@@ -32,6 +29,7 @@ export default function CommunityBelongUni() {
             ondiffrance={handleChange}
             isdisabled={true}
             val={register.communityUni}
+            labelName={'Univercity'}
           />
 
         </FormControl>
