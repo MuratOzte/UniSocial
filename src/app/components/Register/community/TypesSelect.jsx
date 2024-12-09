@@ -36,9 +36,6 @@ export default function TypeSelect() {
           >
             <MenuItem value={"Şirket"}>Şirket</MenuItem>
             <MenuItem value={"Kulüp"}>Kulüp</MenuItem>
-            <MenuItem value={"Etkinlik Grubu"}>Etkinlik Grubu</MenuItem>
-            <MenuItem value={"Akademik Topluluk"}>Akademik Topluluk</MenuItem>
-            <MenuItem value={"Hobi Topluluğu"}>Hobi Topluluğu</MenuItem>
           </Select>
         </FormControl>
       </Box>

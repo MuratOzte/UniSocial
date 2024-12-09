@@ -37,7 +37,7 @@ const Inputs2 = (props) => {
                         variant="h6"
                         sx={{ userSelect: 'none' }}
                     >
-                        Enter your university and department
+                        {register.communityType=='Kulüp'?'Kulübün bağlı olduğu üniversiteyi girin':' Şirketin faliyet alanını girin'}
                     </Typography>
             {register.communityType=='Kulüp'? <CommunityBelongUni/> : <CommunityOthers/>}
                 </motion.div>
