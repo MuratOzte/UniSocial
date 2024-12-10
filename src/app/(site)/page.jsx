@@ -36,7 +36,7 @@ const Main = () => {
             {
                 method: 'POST',
                 body: JSON.stringify({
-                    name: 'murat',
+                    name: 'emre',
                     surname: 'surat',
                     univercity: 'asd',
                     department: 'asdw',
