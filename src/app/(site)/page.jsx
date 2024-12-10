@@ -1,5 +1,5 @@
-'use client'
-import { useEffect, useState } from "react";
+'use client';
+import { useEffect, useState } from 'react';
 
 const Main = () => {
     const [file, setFile] = useState(null);
@@ -22,6 +22,33 @@ const Main = () => {
         convertImageToBase64(file);
     }
 
+    const fetchData = async () => {
+        const response = await fetch(
+            'https://jsonplaceholder.typicode.com/users'
+        );
+        const data = await response.json();
+        console.log(data);
+    };
+
+    const postData = async () => {
+        const response = await fetch(
+            'http://localhost:3000/api/register/student',
+            {
+                method: 'POST',
+                body: JSON.stringify({
+                    name: 'murat',
+                    surname: 'surat',
+                    univercity: 'asd',
+                    department: 'asdw',
+                    email: 'asd12das@gmail.com',
+                    password: '123123',
+                }),
+            }
+        );
+        const data = await response.json();
+        console.log(data);
+    };
+
     return (
         <div>
             <input type="file" onChange={handleFileChange} />
@@ -33,6 +60,13 @@ const Main = () => {
                     style={{ width: '100px', height: '100px' }}
                 />
             )}
+
+            <button className="bg-white p-3" onClick={fetchData}>
+                FETCH GET
+            </button>
+            <button className="bg-white p-3" onClick={postData}>
+                FETCH POST
+            </button>
         </div>
     );
 };
