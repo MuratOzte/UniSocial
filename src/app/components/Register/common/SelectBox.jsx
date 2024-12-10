@@ -35,8 +35,8 @@ const SelectBox = () => {
             image: require('@/assets/auth/teacher.jpeg'),
         },
         {
-            id: 'company',
-            title: 'Company',
+            id: 'community',
+            title: 'community',
             description: 'Discover services for companies.',
             image: require('@/assets/auth/teacher.jpeg'),
         },
