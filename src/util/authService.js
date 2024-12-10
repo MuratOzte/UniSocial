@@ -65,8 +65,7 @@ export const TeacherregisterRequest = async (
 export const CommunityregisterRequest = async (
   name,
   communityType,
-  communityuni,
-  department,
+  activityField,
   email,
   emailExtension,
   password
@@ -76,8 +75,7 @@ export const CommunityregisterRequest = async (
     body: JSON.stringify({
       name,
       communityType,
-      communityuni,
-      department,
+      activityField,
       email:email+emailExtension,
       password,
     }),
