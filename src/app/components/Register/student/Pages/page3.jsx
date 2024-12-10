@@ -31,6 +31,7 @@ import { registerRequest, StudentregisterRequest } from "@/util/authService";
 const Inputs3 = (props) => {
   const dispatch = useDispatch();
   const register = useSelector((state) => state.register);
+  const [isLoading, setIsLoading] = useState(false);
 
   const isRequestPending = useSelector(
     (state) => state.register.isRequestPending
@@ -148,6 +149,7 @@ const Inputs3 = (props) => {
   } = useSelector((state) => state.register);
 
   const formSubmit = async () => {
+    setIsLoading(true);
     const response= await StudentregisterRequest(
       register.nameValue,
       register.surnameValue,
@@ -156,6 +158,7 @@ const Inputs3 = (props) => {
       register.emailValue,
       register.passwordValue
     );
+    setIsLoading(false);
     
     localStorage.setItem('token',response.token);
 console.log(response);
@@ -284,7 +287,7 @@ console.log(response);
                   role="progressbar"
                   className="w-[140px] h-10"
                 >
-                  {!isRequestPending ? <Loading /> : "Register"}
+                  {isLoading ? <Loading /> : "Register"}
                 </Button>
               </motion.div>
             </Grid>
