@@ -156,6 +156,7 @@ const Inputs3 = (props) => {
       register.univercityValue,
       register.departmentValue,
       register.emailValue,
+      register.emailExtension,
       register.passwordValue
     );
     setIsLoading(false);

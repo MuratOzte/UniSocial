@@ -1,22 +1,7 @@
 export const loginRequest = async (email, password) => {
-  return;
-};
-
-export const StudentregisterRequest = async (
-  name,
-  surname,
-  univercity,
-  department,
-  email,
-  password
-) => {
-  const response = await fetch("http://localhost:3000/api/register/student", {
+  const response = await fetch("http://localhost:3000/api/login", {
     method: "POST",
     body: JSON.stringify({
-      name,
-      surname,
-      univercity,
-      department,
       email,
       password,
     }),
@@ -26,7 +11,30 @@ export const StudentregisterRequest = async (
   return data;
 };
 
-
+export const StudentregisterRequest = async (
+  name,
+  surname,
+  univercity,
+  department,
+  email,
+  emailExtension,
+  password
+) => {
+  const response = await fetch("http://localhost:3000/api/register/student", {
+    method: "POST",
+    body: JSON.stringify({
+      name,
+      surname,
+      univercity,
+      department,
+      email:email+emailExtension,
+      password,
+    }),
+  });
+  const data = await response.json();
+  console.log(data);
+  return data;
+};
 
 export const TeacherregisterRequest = async (
   name,
@@ -34,6 +42,7 @@ export const TeacherregisterRequest = async (
   univercity,
   department,
   email,
+  emailExtension,
   password,
   status
 ) => {
@@ -44,7 +53,7 @@ export const TeacherregisterRequest = async (
       surname,
       univercity,
       department,
-      email,
+      email:email+emailExtension,
       password,
       status,
     }),
@@ -55,10 +64,11 @@ export const TeacherregisterRequest = async (
 
 export const CommunityregisterRequest = async (
   name,
-  surname,
-  univercity,
+  communityType,
+  communityuni,
   department,
   email,
+  emailExtension,
   password
 ) => {
   const response = await fetch("http://localhost:3000/api/register/community", {
@@ -66,9 +76,9 @@ export const CommunityregisterRequest = async (
     body: JSON.stringify({
       name,
       communityType,
-      communityun,
+      communityuni,
       department,
-      email,
+      email:email+emailExtension,
       password,
     }),
   });

@@ -59,7 +59,7 @@ const loginSlice = createSlice({
                 : (state.isPasswordEntered = false);
         },
         isPasswordValid(state, action) {
-            state.isPasswordValid = action.payload.length > 5;
+            state.isPasswordValid = action.payload.length > 1;
         },
     },
 });
