@@ -21,8 +21,12 @@ model Post {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    author   User   @relation(fields: [authorId], references: [id])
-    authorId String @db.ObjectId
+    author      User       @relation(fields: [authorId], references: [id])
+    authorId    String     @db.ObjectId
+    Community   Community? @relation(fields: [communityId], references: [id])
+    communityId String?    @db.ObjectId
+
+    comments Comment[] 
 }
 
 model User {
@@ -39,13 +43,13 @@ model User {
 
     isTeacher Boolean @default(false)
 
-    isTeacher Boolean @default(false)
-
     posts    Post[]
     comments Comment[] 
 
-    following Follower[] @relation("FollowingRelation")
-    followers Follower[] @relation("FollowersRelation")
+    following   Follower[]         @relation("FollowingRelation")
+    followers   Follower[]         @relation("FollowersRelation")
+    communities CommunityMember[]
+    events      EventParticipant[] 
 }
 
 model Follower {
@@ -117,40 +121,4 @@ model Comment {
 
     post   Post?   @relation(fields: [postId], references: [id])
     postId String? @db.ObjectId
-}
-
-model Community {
-    id            String   @id @default(auto()) @map("_id") @db.ObjectId
-    name          String
-    type          String
-    activityField String
-    description   String?
-    createdAt     DateTime @default(now())
-    updatedAt     DateTime @updatedAt
-
-    posts           Post[]
-    CommunityMember CommunityMember[]
-    events          Event[] // İlişki: Topluluğun etkinlikleri
-}
-
-model CommunityMember {
-    id          String @id @default(auto()) @map("_id") @db.ObjectId
-    communityId String @db.ObjectId
-    userId      String @db.ObjectId
-
-    community Community @relation(fields: [communityId], references: [id])
-    user      User      @relation(fields: [userId], references: [id])
-}
-
-model Event {
-    id          String   @id @default(auto()) @map("_id") @db.ObjectId
-    title       String
-    description String?
-    date        DateTime
-    location    String?
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-
-    community   Community @relation(fields: [communityId], references: [id])
-    communityId String    @db.ObjectId
 }
