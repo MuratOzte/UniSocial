@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
+const SECRET_KEY = process.env.JWT_SECRET || 'your-secret-key'; // Use a secure key in your environment variables
 
 export async function POST(req) {
     try {
@@ -53,6 +55,13 @@ export async function POST(req) {
             },
         });
 
+        // Generate JWT token
+        const token = jwt.sign(
+            { id: student.id, email: student.email },
+            SECRET_KEY,
+            { expiresIn: '1h' } // Token expiration time
+        );
+
         return NextResponse.json(
             {
                 message: 'Student registered successfully',
@@ -64,6 +73,7 @@ export async function POST(req) {
                     department: student.department,
                     email: student.email,
                 },
+                token, // Send the generated token
             },
             { status: 201 }
         );
