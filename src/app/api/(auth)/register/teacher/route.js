@@ -4,12 +4,17 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
-const SECRET_KEY = process.env.JWT_SECRET 
+const SECRET_KEY = process.env.JWT_SECRET;
 
 export async function POST(req) {
     try {
-        const body = await req.json();
+        if (!SECRET_KEY) {
+            throw new Error(
+                'JWT_SECRET is not defined in environment variables'
+            );
+        }
 
+        const body = await req.json();
         if (!body) {
             return NextResponse.json(
                 { message: 'Request body is missing', status: 400 },
@@ -17,7 +22,17 @@ export async function POST(req) {
             );
         }
 
-        const { name, surname, univercity, department, email, password } = body;
+        const {
+            name,
+            surname,
+            univercity,
+            department,
+            email,
+            password,
+            status,
+        } = body;
+
+        console.log('Request body:', body);
 
         if (
             !name ||
@@ -28,52 +43,59 @@ export async function POST(req) {
             !password
         ) {
             return NextResponse.json(
-                { message: 'All fields are required', status: 400 },
+                {
+                    message: 'All required fields are not provided',
+                    status: 400,
+                },
                 { status: 400 }
             );
         }
 
         const ifExist = await prisma.user.findUnique({ where: { email } });
-
         if (ifExist) {
             return NextResponse.json(
-                { message: 'This email already exists' },
+                { message: 'This email already exists', status: 400 },
                 { status: 400 }
             );
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const student = await prisma.user.create({
+        const teacher = await prisma.user.create({
             data: {
                 name,
                 surname,
                 univercity,
+                status,
                 department,
                 email,
                 password: hashedPassword,
-                isTeacher: false,
+                isTeacher: true,
             },
         });
 
+
         const token = jwt.sign(
-            { id: student.id, email: student.email },
+            {
+                id: teacher.id,
+                email: teacher.email,
+            },
             SECRET_KEY,
-            { expiresIn: '1h' } 
+            { expiresIn: '1h' }
         );
 
         return NextResponse.json(
             {
-                message: 'Student registered successfully',
+                message: 'Teacher registered successfully',
                 user: {
-                    id: student.id,
-                    name: student.name,
-                    surname: student.surname,
-                    univercity: student.univercity,
-                    department: student.department,
-                    email: student.email,
+                    id: teacher.id,
+                    name: teacher.name,
+                    surname: teacher.surname,
+                    univercity: teacher.univercity,
+                    department: teacher.department,
+                    email: teacher.email,
                 },
-                token, 
+                token,
             },
             { status: 201 }
         );
