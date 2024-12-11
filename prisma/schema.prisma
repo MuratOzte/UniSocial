@@ -26,7 +26,7 @@ model Post {
     Community   Community? @relation(fields: [communityId], references: [id])
     communityId String?    @db.ObjectId
 
-    comments Comment[] 
+    comments Comment[]
 }
 
 model User {
@@ -44,12 +44,12 @@ model User {
     isTeacher Boolean @default(false)
 
     posts    Post[]
-    comments Comment[] 
+    comments Comment[]
 
     following   Follower[]         @relation("FollowingRelation")
     followers   Follower[]         @relation("FollowersRelation")
     communities CommunityMember[]
-    events      EventParticipant[] 
+    events      EventParticipant[]
 }
 
 model Follower {
@@ -67,13 +67,15 @@ model Community {
     name          String
     type          String
     activityField String
+    email         String   @unique
+    password      String
     description   String?
     createdAt     DateTime @default(now())
     updatedAt     DateTime @updatedAt
 
     posts           Post[]
     CommunityMember CommunityMember[]
-    events          Event[] 
+    events          Event[]
 }
 
 model CommunityMember {
@@ -97,7 +99,7 @@ model Event {
     community   Community @relation(fields: [communityId], references: [id])
     communityId String    @db.ObjectId
 
-    participants EventParticipant[] 
+    participants EventParticipant[]
 }
 
 model EventParticipant {
