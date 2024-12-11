@@ -11,7 +11,7 @@ export default function CommunityBelongUni() {
   const register = useSelector((state) => state.register);
   const handleChange = (event) => {
     dispatch(
-      registerSlice.actions.communityUniChangeHandler(event.target.value)
+      registerSlice.actions.activityFieldChangeHandler(event.target.value)
     );
   };
   console.log(register);
@@ -28,7 +28,7 @@ export default function CommunityBelongUni() {
             options={['Karadeniz teknik üniversitesi','selçuk üniversitesi','istanbul teknik üniversitesi']}
             ondiffrance={handleChange}
             isdisabled={true}
-            val={register.communityUni}
+            val={register.activityField}
             labelName={'Univercity'}
           />
 

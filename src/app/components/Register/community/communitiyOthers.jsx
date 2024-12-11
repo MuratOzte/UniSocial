@@ -11,10 +11,9 @@ export default function CommunityOthers() {
   const register = useSelector((state) => state.register);
   const handleChange = (event) => {
     dispatch(
-      registerSlice.actions.companyTypeChangeHandler(event.target.value)
+      registerSlice.actions.activityFieldChangeHandler(event.target.value)
     );
   };
-  
 
   return (
     <motion.div
@@ -32,8 +31,8 @@ export default function CommunityOthers() {
             ]}
             ondiffrance={handleChange}
             isdisabled={true}
-            val={register.companyType}
-            labelName={'CompanyType'}
+            val={register.activityField}
+            labelName={"CompanyType"}
           />
         </FormControl>
       </Box>

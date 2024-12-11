@@ -86,7 +86,7 @@ const Inputs2 = (props) => {
               onClick={() => {
                 stepChangeHandler(3);
               }}
-              disabled={!(register.communityUni || register.companyType)}
+              disabled={!(register.activityField)}
               fullWidth // Daha iyi hizalama için
             >
               Next Step

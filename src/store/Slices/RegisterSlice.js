@@ -30,6 +30,7 @@ const registerSlice = createSlice({
         status: '',
         //community
         communityType:'',
+        activityField:'',
         communityUni:'',
         companyType:'',
     },
@@ -82,6 +83,9 @@ const registerSlice = createSlice({
         },
         companyTypeChangeHandler(state,action){
             state.companyType=action.payload
+        },
+        activityFieldChangeHandler(state,action){
+            state.activityField=action.payload;
         }
     },
 });

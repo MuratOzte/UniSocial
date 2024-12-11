@@ -23,7 +23,7 @@ import PasswordStrengthBar from "../PasswordStrenghtbar";
 import registerSlice from "@/store/Slices/RegisterSlice";
 import { motion } from "framer-motion";
 import Loading from "../../../common/Loading";
-import { registerRequest } from "@/util/authService";
+import { registerRequest, StudentregisterRequest } from "@/util/authService";
 
 // const emailRegex =
 //     /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
@@ -31,6 +31,7 @@ import { registerRequest } from "@/util/authService";
 const Inputs3 = (props) => {
   const dispatch = useDispatch();
   const register = useSelector((state) => state.register);
+  const [isLoading, setIsLoading] = useState(false);
 
   const isRequestPending = useSelector(
     (state) => state.register.isRequestPending
@@ -148,14 +149,20 @@ const Inputs3 = (props) => {
   } = useSelector((state) => state.register);
 
   const formSubmit = async () => {
-    await registerRequest(
+    setIsLoading(true);
+    const response= await StudentregisterRequest(
       register.nameValue,
       register.surnameValue,
       register.univercityValue,
       register.departmentValue,
       register.emailValue,
+      register.emailExtension,
       register.passwordValue
     );
+    setIsLoading(false);
+    
+    localStorage.setItem('token',response.token);
+console.log(response);
   };
 
   return (
@@ -281,7 +288,7 @@ const Inputs3 = (props) => {
                   role="progressbar"
                   className="w-[140px] h-10"
                 >
-                  {!isRequestPending ? <Loading /> : "Register"}
+                  {isLoading ? <Loading /> : "Register"}
                 </Button>
               </motion.div>
             </Grid>
