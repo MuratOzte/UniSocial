@@ -60,6 +60,7 @@ export const TeacherregisterRequest = async (
   });
   const data = await response.json();
   console.log(data);
+  return data;
 };
 
 export const CommunityregisterRequest = async (
@@ -81,4 +82,5 @@ export const CommunityregisterRequest = async (
   });
   const data = await response.json();
   console.log(data);
+  return data;
 };

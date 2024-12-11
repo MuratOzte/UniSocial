@@ -167,7 +167,7 @@ const Inputs3 = (props) => {
     setIsLoading(false);
     
     localStorage.setItem('token',response.token);
-console.log(response);
+console.log(response.token);
 
     };
 
