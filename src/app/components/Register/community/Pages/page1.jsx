@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import TypeSelect from "../TypesSelect";
+import BasicModal from "@/app/components/common/modal";
 
 const Inputs1 = (props) => {
   const dispatch = useDispatch();
@@ -120,6 +121,8 @@ const Inputs1 = (props) => {
             }}
           >
             <TypeSelect />
+            <BasicModal/>
+
           </motion.div>
 
           <Grid container textAlign={"center"} mt={2}>
