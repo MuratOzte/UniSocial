@@ -60,26 +60,27 @@ export const TeacherregisterRequest = async (
   });
   const data = await response.json();
   console.log(data);
+  return data;
 };
 
 export const CommunityregisterRequest = async (
   name,
-  communityType,
+  Type,
   activityField,
   email,
-  emailExtension,
   password
 ) => {
   const response = await fetch("http://localhost:3000/api/register/community", {
     method: "POST",
     body: JSON.stringify({
       name,
-      communityType,
+      type:Type,
       activityField,
-      email:email+emailExtension,
+      email,
       password,
     }),
   });
   const data = await response.json();
   console.log(data);
+  return data;
 };

@@ -23,12 +23,17 @@ import PasswordStrengthBar from '../PasswordStrenghtbar';
 import registerSlice from '@/store/Slices/RegisterSlice';
 import { motion } from 'framer-motion';
 import Loading from '../../../common/Loading';
-
+import { CommunityregisterRequest } from '@/util/authService';
+import BasicModal from '@/app/components/common/modal';
 // const emailRegex =
 //     /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 
 const Inputs3 = (props) => {
     const dispatch = useDispatch();
+
+    const register = useSelector((state) => state.register);
+    const [isLoading, setIsLoading] = useState(false);
+  
 
     const isRequestPending = useSelector(
         (state) => state.register.isRequestPending
@@ -149,34 +154,22 @@ const Inputs3 = (props) => {
         passwordValue,
     } = useSelector((state) => state.register);
 
-    const formSubmit = () => {
-        console.log(
-            nameValue,
-            surnameValue,
-            univercityValue,
-            departmentValue,
-            emailValue,
-            passwordValue
-        );
+    const formSubmit =async () => {
 
-        try {
-            fetch('/api/register/student', {
-                method: 'POST',
-                body: JSON.stringify({
-                    name: nameValue,
-                    surname: surnameValue,
-                    univercity: univercityValue,
-                    department: departmentValue,
-                    email: emailValue,
-                    password: passwordValue,
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-                .then((response) => response.json())
-                .then((data) => console.log(data));
-        } catch (error) {}
+        
+    setIsLoading(true);
+    const response= await CommunityregisterRequest(
+      register.nameValue,
+      register.communityType,
+      register.activityField,
+      register.emailValue,
+      register.passwordValue
+    );
+    setIsLoading(false);
+    
+    localStorage.setItem('token',response.token);
+console.log(response.token);
+
     };
 
     return (
@@ -219,23 +212,7 @@ const Inputs3 = (props) => {
                             onChange={emailChangeHandler}
                             onBlur={emailBlurHandler}
                             error={isEmailEntered && !isEmailValid}
-                            InputProps={{
-                                endAdornment: (
-                                    <>
-                                        <Divider
-                                            orientation="vertical"
-                                            variant="fullWidth"
-                                            sx={{
-                                                bgcolor: '#e3e5e8',
-                                                py: 3.5,
-                                            }}
-                                        />
-                                        <Typography sx={{ ml: 1.5, mr: 0.5 }}>
-                                            {emailExtension}
-                                        </Typography>
-                                    </>
-                                ),
-                            }}
+                            
                             autoFocus
                         />
                     </motion.div>
@@ -311,11 +288,8 @@ const Inputs3 = (props) => {
                                     role="progressbar"
                                     className="w-[140px] h-10"
                                 >
-                                    {!isRequestPending ? (
-                                        <Loading />
-                                    ) : (
-                                        'Register'
-                                    )}
+                                     {isLoading ? <Loading /> : "Register"}
+
                                 </Button>
                             </motion.div>
                         </Grid>
