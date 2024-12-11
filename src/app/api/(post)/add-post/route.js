@@ -23,7 +23,7 @@ export async function POST(req) {
 
         let decoded;
         try {
-            decoded = jwt.verify(token, process.env.JWT_SECRET); // JWT_SECRET, .env dosyasından alınır
+            decoded = jwt.verify(token, process.env.JWT_SECRET); 
         } catch (err) {
             return NextResponse.json(
                 {
@@ -48,9 +48,9 @@ export async function POST(req) {
             data: {
                 title,
                 content,
-                image: image || null, // Opsiyonel alan
+                image: image || null, 
                 authorId,
-                communityId: communityId || null, // Opsiyonel alan
+                communityId: communityId || null, 
             },
         });
 
