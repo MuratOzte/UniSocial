@@ -1,5 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
+import {EventCalendar} from '@/app/components/events/Calendar'
+import OTPInput from '../components/Register/common/EmailCheckInput/EmailCheckInput';
+
 
 const Main = () => {
     const [file, setFile] = useState(null);
@@ -50,7 +53,9 @@ const Main = () => {
     };
 
     return (
-        <div>
+        <div
+        className='bg-white'
+        >
             <input type="file" onChange={handleFileChange} />
 
             {file && (
@@ -67,6 +72,8 @@ const Main = () => {
             <button className="bg-white p-3" onClick={postData}>
                 FETCH POST
             </button>
+            <EventCalendar/>
+            <OTPInput/>
         </div>
     );
 };

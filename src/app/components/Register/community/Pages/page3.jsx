@@ -219,23 +219,7 @@ const Inputs3 = (props) => {
                             onChange={emailChangeHandler}
                             onBlur={emailBlurHandler}
                             error={isEmailEntered && !isEmailValid}
-                            InputProps={{
-                                endAdornment: (
-                                    <>
-                                        <Divider
-                                            orientation="vertical"
-                                            variant="fullWidth"
-                                            sx={{
-                                                bgcolor: '#e3e5e8',
-                                                py: 3.5,
-                                            }}
-                                        />
-                                        <Typography sx={{ ml: 1.5, mr: 0.5 }}>
-                                            {emailExtension}
-                                        </Typography>
-                                    </>
-                                ),
-                            }}
+                            
                             autoFocus
                         />
                     </motion.div>
