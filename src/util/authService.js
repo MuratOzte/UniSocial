@@ -73,7 +73,7 @@ export const CommunityregisterRequest = async (
     method: "POST",
     body: JSON.stringify({
       name,
-      Type,
+      type:Type,
       activityField,
       email,
       password,
