@@ -1,12 +1,32 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
+import jwt from 'jsonwebtoken';
+
 const prisma = new PrismaClient();
+
+const verifyToken = (token) => {
+    try {
+        return jwt.verify(token, process.env.JWT_SECRET);
+    } catch (err) {
+        return null;
+    }
+};
 
 export async function GET(req) {
     try {
-        const { searchParams } = new URL(req.nextUrl);
-        const userId = searchParams.get('userId');
+        const authHeader = req.headers.get('authorization');
+        if (!authHeader) {
+            return NextResponse.json(
+                { message: 'Authorization token is required.', status: 401 },
+                { status: 401 }
+            );
+        }
+
+        const token = authHeader.split(' ')[1];
+        const decoded = verifyToken(token);
+
+        const userId = decoded.id;
 
         if (!userId) {
             return NextResponse.json(
@@ -15,36 +35,25 @@ export async function GET(req) {
             );
         }
 
-        const user = await prisma.user.findUnique({
-            where: { id: userId },
-            include: {
-                posts: true, 
-                followers: {
-                    include: {
-                        follower: { select: { id: true, name: true, surname: true } },
-                    },
-                }, 
-                following: {
-                    include: {
-                        following: { select: { id: true, name: true, surname: true } },
-                    },
-                }, 
-            },
+        const followers = await prisma.follower.findMany({
+            where: { followerId: userId },
         });
 
-        if (!user) {
+        console.log(userId);
+
+        if (!followers) {
             return NextResponse.json(
-                { message: 'User not found.', status: 404 },
+                { message: 'No followers found.', status: 404 },
                 { status: 404 }
             );
         }
 
         return NextResponse.json({
-            message: 'User retrieved successfully.',
-            user,
+            message: 'Followers retrieved successfully.',
+            followers,
         });
     } catch (error) {
-        console.error("Error in get-user API:", error);
+        console.error('Error in get-user API:', error);
         return NextResponse.json(
             { message: error, status: 500 },
             { status: 500 }
