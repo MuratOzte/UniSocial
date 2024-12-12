@@ -1,8 +1,17 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
+
+const generateToken = (user) => {
+    return jwt.sign(
+        { id: user.id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: '24h' }
+    );
+};
 
 export async function POST(req) {
     try {
@@ -35,6 +44,8 @@ export async function POST(req) {
             );
         }
 
+        const token = generateToken(user);
+
         return NextResponse.json({
             message: 'Login successful',
             user: {
@@ -42,6 +53,7 @@ export async function POST(req) {
                 name: user.name,
                 email: user.email,
             },
+            token,
         });
     } catch (error) {
         console.error(error);
