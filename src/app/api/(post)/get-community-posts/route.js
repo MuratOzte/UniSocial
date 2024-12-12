@@ -43,6 +43,8 @@ export async function GET(req) {
             where: { id: communityId },
         });
 
+        console.log(community);
+
         if (!community) {
             return NextResponse.json(
                 { message: 'Community not found' },
@@ -52,16 +54,6 @@ export async function GET(req) {
 
         const posts = await prisma.post.findMany({
             where: { communityId },
-            include: {
-                author: {
-                    select: {
-                        id: true,
-                        name: true,
-                        email: true,
-                    },
-                },
-                comments: true,
-            },
             orderBy: {
                 createdAt: 'desc',
             },
