@@ -17,7 +17,6 @@ export async function POST(req) {
     try {
         const { email, password } = await req.json();
 
-        // Check user table first
         let userOrCommunity = await prisma.user.findUnique({
             where: {
                 email,
@@ -26,7 +25,6 @@ export async function POST(req) {
 
         let entityType = 'user';
 
-        // If not found in user table, check community table
         if (!userOrCommunity) {
             userOrCommunity = await prisma.community.findUnique({
                 where: {
@@ -46,7 +44,6 @@ export async function POST(req) {
             );
         }
 
-        // Verify password
         const isPasswordValid = await bcrypt.compare(
             password,
             userOrCommunity.password
@@ -61,7 +58,6 @@ export async function POST(req) {
             );
         }
 
-        // Generate token
         const token = generateToken(userOrCommunity);
 
         return NextResponse.json({
