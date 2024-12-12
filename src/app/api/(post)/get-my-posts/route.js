@@ -40,7 +40,7 @@ export async function GET(req) {
 
         const userPosts = await prisma.post.findMany({
             where: {
-                userId: userId,
+                id: userId,
             },
         });
 
