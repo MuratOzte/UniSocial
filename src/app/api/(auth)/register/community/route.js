@@ -69,6 +69,7 @@ export async function POST(req) {
             {
                 id: community.id,
                 email: community.email,
+                name: community.name
             },
             SECRET_KEY,
             { expiresIn: '1h' }

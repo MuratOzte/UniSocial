@@ -74,11 +74,11 @@ export async function POST(req) {
             },
         });
 
-
         const token = jwt.sign(
             {
                 id: teacher.id,
                 email: teacher.email,
+                isTeacher: true,
             },
             SECRET_KEY,
             { expiresIn: '1h' }
