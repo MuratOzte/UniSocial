@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
-// Token doğrulama fonksiyonu
 const verifyToken = (token) => {
     try {
         return jwt.verify(token, process.env.JWT_SECRET);
@@ -23,7 +22,6 @@ export async function GET(req) {
             );
         }
 
-        // Token'i doğrula
         const decoded = verifyToken(token);
         if (!decoded) {
             return NextResponse.json(
@@ -41,7 +39,6 @@ export async function GET(req) {
             );
         }
 
-        // Community'nin varlığını kontrol et
         const community = await prisma.community.findUnique({
             where: { id: communityId },
         });

@@ -39,7 +39,6 @@ export async function GET(req) {
             );
         }
 
-        // Kullanıcı verilerini döndür
         return NextResponse.json({
             message: 'User retrieved successfully.',
             user,
