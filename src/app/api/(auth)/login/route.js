@@ -5,9 +5,9 @@ import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
-const generateToken = (user) => {
+const generateToken = (entity) => {
     return jwt.sign(
-        { id: user.id, email: user.email },
+        { id: entity.id, email: entity.email, name: entity.name },
         process.env.JWT_SECRET,
         { expiresIn: '24h' }
     );
@@ -17,13 +17,26 @@ export async function POST(req) {
     try {
         const { email, password } = await req.json();
 
-        const user = await prisma.user.findUnique({
+        // Check user table first
+        let userOrCommunity = await prisma.user.findUnique({
             where: {
                 email,
             },
         });
 
-        if (!user) {
+        let entityType = 'user';
+
+        // If not found in user table, check community table
+        if (!userOrCommunity) {
+            userOrCommunity = await prisma.community.findUnique({
+                where: {
+                    email,
+                },
+            });
+            entityType = 'community';
+        }
+
+        if (!userOrCommunity) {
             return NextResponse.json(
                 {
                     message: 'Email not found',
@@ -33,7 +46,11 @@ export async function POST(req) {
             );
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        // Verify password
+        const isPasswordValid = await bcrypt.compare(
+            password,
+            userOrCommunity.password
+        );
         if (!isPasswordValid) {
             return NextResponse.json(
                 {
@@ -44,14 +61,15 @@ export async function POST(req) {
             );
         }
 
-        const token = generateToken(user);
+        // Generate token
+        const token = generateToken(userOrCommunity);
 
         return NextResponse.json({
-            message: 'Login successful',
-            user: {
-                id: user.id,
-                name: user.name,
-                email: user.email,
+            message: `${entityType} logged in successfully`,
+            [entityType]: {
+                id: userOrCommunity.id,
+                name: userOrCommunity.name,
+                email: userOrCommunity.email,
             },
             token,
         });
