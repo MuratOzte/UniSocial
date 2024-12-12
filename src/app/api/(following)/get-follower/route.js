@@ -35,13 +35,12 @@ export async function GET(req) {
             );
         }
 
-        // Takipçileri almak için Follower modelini sorguluyoruz
         const followers = await prisma.follower.findMany({
             where: {
-                followingId: userId, // Bu, şu anki kullanıcının takipçilerini bulur
+                followingId: userId, 
             },
             include: {
-                follower: true, // Takipçi kullanıcı bilgilerini dahil et
+                follower: true, 
             },
         });
 
@@ -54,7 +53,7 @@ export async function GET(req) {
 
         return NextResponse.json({
             message: 'Followers retrieved successfully.',
-            followers: followers.map((f) => f.follower), // Sadece follower bilgilerini döndürür
+            followers: followers.map((f) => f.follower), 
         });
     } catch (error) {
         console.error('Error in get-user API:', error);
