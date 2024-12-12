@@ -4,16 +4,18 @@ import { MdOutlineEventNote } from 'react-icons/md';
 import { MdEmojiEmotions } from 'react-icons/md';
 import { useState } from 'react';
 import Image from 'next/image';
+import { useDispatch, useSelector } from 'react-redux';
+import feedSlice from '@/store/Slices/FeedSlice';
 
 const Share = () => {
-    const [content, setContent] = useState('');
+    const dispatch=useDispatch();
+    const feed=useSelector((state)=>state.feed);
 
-    const handleShare = () => {
-        if (content.trim() !== '') {
-            console.log('Shared content:', content);
-            setContent('');
-        }
-    };
+    const inputValChangeHandler=(e)=>{
+
+        dispatch(feedSlice.actions.shareMessageChangeHandler(e.currentTarget.value));
+    }
+    
 
     return (
         <div className="w-full max-w-md p-4 h-fit rounded-lg shadow-lg bg-gray-800 text-white mt-4">
@@ -28,7 +30,9 @@ const Share = () => {
                     className="rounded-full mr-4"
                 />
                 <input
+                    value={feed.shareMessage}
                     type="text"
+                    onChange={inputValChangeHandler}
                     placeholder="Share your thoughts..."
                     className="flex-1 bg-gray-700 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
