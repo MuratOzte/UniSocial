@@ -23,14 +23,17 @@ import PasswordStrengthBar from "../PasswordStrenghtbar";
 import registerSlice from "@/store/Slices/RegisterSlice";
 import { motion } from "framer-motion";
 import Loading from "../../../common/Loading";
-import { CommunityregisterRequest } from "@/util/authService";
+import { CommunityregisterRequest, SendMailtoCheck } from "@/util/authService";
 import BasicModal from "@/app/components/common/modal";
 import EnhancedModal from "@/app/components/common/modal";
+import { useRouter } from "next/navigation";
 // const emailRegex =
 //     /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 
 const Inputs3 = (props) => {
   const dispatch = useDispatch();
+  const router = useRouter();
+//   router.replace('/feed')
 
   const register = useSelector((state) => state.register);
   const [isLoading, setIsLoading] = useState(false);
@@ -147,9 +150,17 @@ const Inputs3 = (props) => {
     passwordValue,
   } = useSelector((state) => state.register);
 
-  const emailCheckModalHandleChange = () => {
+  const emailCheckModalHandleChange = async () => {
     dispatch(registerSlice.actions.emailCheckModalChangeHandler(true));
+
+    console.log(register.nameValue, register.emailValue);
+    const result = await SendMailtoCheck(
+      register.nameValue,
+      register.emailValue
+    );
+    dispatch(registerSlice.actions.takenMailCodeChangeHandler(result.verificationCode));
   };
+
   const formSubmit = async () => {
     setIsLoading(true);
     const response = await CommunityregisterRequest(
@@ -164,6 +175,12 @@ const Inputs3 = (props) => {
     localStorage.setItem("token", response.token);
     console.log(response.token);
   };
+
+  useEffect(() => {
+    if ((register.isTrue == true)) {
+      formSubmit();
+    }
+  }, [register.isTrue]);
 
   return (
     <>

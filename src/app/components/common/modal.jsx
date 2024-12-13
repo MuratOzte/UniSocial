@@ -33,16 +33,16 @@ export default function EnhancedModal() {
 
   const register = useSelector((state) => state.register);
 
-  const SendCheckMail = async () => {
-    console.log(register.nameValue, register.emailValue);
-    const result = await SendMailtoCheck(
-      register.nameValue,
-      register.emailValue
-    );
+  const CheckTakenMailCode = async () => {
+    console.log("a", register.mailCode, "b", register.takenMailCode);
+    if (register.mailCode == register.takenMailCode) {
+      dispatch(registerSlice.actions.isTrueChangeHandler(true));
+      console.log('true')
+    } else {
+      dispatch(registerSlice.actions.isTrueChangeHandler(false));
+      console.log("deneme")
+    }
 
-    console.log(result);
-
-    console.log("Verify button clicked");
   };
 
   return (
@@ -97,7 +97,7 @@ export default function EnhancedModal() {
               Cancel
             </Button>
             <Button
-              onClick={SendCheckMail}
+              onClick={CheckTakenMailCode}
               variant="contained"
               sx={{ textTransform: "none" }}
             >
