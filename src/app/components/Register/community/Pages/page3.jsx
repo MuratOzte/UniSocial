@@ -63,19 +63,14 @@ const Inputs3 = (props) => {
     //email functions
     const [enteredEmail, setEnteredEmail] = useState(emailRedux);
     const [isEmailEntered, setIsEmailEntered] = useState(false);
-    const [isEmailValid, setIsEmailValid] = useState(false);
+    const [isEmailValid, setIsEmailValid] = useState(true);
 
     const emailChangeHandler = (event) => {
         setEnteredEmail(event.currentTarget.value);
         dispatch(
             registerSlice.actions.emailChangeHandler(event.currentTarget.value)
         );
-        dispatch(
-            registerSlice.actions.emailExtensionChangeHandler(emailExtension)
-        );
         // let emailValidation = emailRegex.test(event.currentTarget.value);
-        let emailValidation = enteredEmail > 5 ? true : false;
-        setIsEmailValid(emailValidation);
     };
     const emailBlurHandler = () => {
         enteredEmail ? setIsEmailEntered(true) : setIsEmailEntered(true);
@@ -132,7 +127,7 @@ const Inputs3 = (props) => {
         let emailValidation = enteredEmail > 5 ? true : false;
         setIsEmailValid(emailValidation);
 
-        if (isPasswordValid && isEmailValid) {
+        if (isPasswordValid) {
             setIsFormValid(true);
         } else {
             setIsFormValid(false);
@@ -140,7 +135,7 @@ const Inputs3 = (props) => {
         if (!enteredEmail || !enteredPassword) {
             setIsFormValid(false);
         }
-    }, [enteredEmail, enteredPassword, isPasswordValid, isEmailValid]);
+    }, [enteredEmail, enteredPassword, isPasswordValid]);
 
     const stepDecrementHandler = () => {
         dispatch(registerSlice.actions.stepChangeHandler(2));

@@ -84,3 +84,21 @@ export const CommunityregisterRequest = async (
   console.log(data);
   return data;
 };
+
+export const SendMailtoCheck = async (
+  name,
+  email,
+  
+) => {
+  console.log(email,name)
+  const response = await fetch("http://localhost:3000/api/validation", {
+    method: "POST",
+    body: JSON.stringify({
+      name,
+      email,
+    }),
+  });
+  const data = await response.json();
+  console.log(data);
+  return data;
+};

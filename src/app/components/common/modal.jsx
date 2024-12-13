@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import OTPInput from "../Register/common/EmailCheckInput/EmailCheckInput";
 import { useDispatch, useSelector } from "react-redux";
 import registerSlice from "@/store/Slices/RegisterSlice";
+import { SendMailtoCheck } from "@/util/authService";
 
 const style = {
   position: "absolute",
@@ -20,7 +21,6 @@ const style = {
   p: 4,
 };
 
-
 export default function EnhancedModal() {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
@@ -33,9 +33,17 @@ export default function EnhancedModal() {
 
   const register = useSelector((state) => state.register);
 
-  const SendCheckMail=()=>{
+  const SendCheckMail = async () => {
+    console.log(register.nameValue, register.emailValue);
+    const result = await SendMailtoCheck(
+      register.nameValue,
+      register.emailValue
+    );
+
+    console.log(result);
+
     console.log("Verify button clicked");
-  }
+  };
 
   return (
     <div>
@@ -62,7 +70,11 @@ export default function EnhancedModal() {
             id="modal-modal-description"
             sx={{ mt: 2, textAlign: "center", color: "text.secondary" }}
           >
-            Please enter the code sent to <strong>{register.emailValue}</strong>
+            Please enter the code sent to{" "}
+            <strong>
+              {register.emailValue}
+              {register.emaiExtension}
+            </strong>
           </Typography>
 
           <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
