@@ -36,6 +36,10 @@ const Share = () => {
         dispatch(feedSlice.actions.setIsFileUploadModalOpen(true));
     };
 
+    useEffect(() => {
+        console.log(file);
+    }, [file]);
+
     return (
         <div className="w-full max-w-md p-4 h-fit rounded-lg shadow-lg bg-gray-800 text-white mt-4">
             <div className="flex items-center mb-4 relative">
