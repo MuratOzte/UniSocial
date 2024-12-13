@@ -6,10 +6,12 @@ const prisma = new PrismaClient();
 
 export async function POST(req) {
     try {
-        const { title, content, image, authorId, communityId } =
+        const {content, image, communityId } =
             await req.json();
 
         const token = req.headers.get('authorization')?.replace('Bearer ', '');
+
+        const title = 'A';
 
         if (!token) {
             return NextResponse.json(
@@ -33,6 +35,8 @@ export async function POST(req) {
                 { status: 401 }
             );
         }
+
+        const authorId = decoded.id;
 
         if (!title || !content || !authorId) {
             return NextResponse.json(
