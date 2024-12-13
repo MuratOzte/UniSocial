@@ -35,6 +35,7 @@ const registerSlice = createSlice({
         companyType:'',
         //email check modal
         emailCheckModal:false,
+        mailCode:'',
     },
     reducers: {
         stepChangeHandler(state, action) {
@@ -91,6 +92,9 @@ const registerSlice = createSlice({
         },
         emailCheckModalChangeHandler(state,action){
             state.emailCheckModal=action.payload;
+        },
+        mailCodeChangeHandler(state,action){
+            state.mailCode=action.payload;
         }
     },
 });
