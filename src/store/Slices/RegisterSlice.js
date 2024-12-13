@@ -33,6 +33,9 @@ const registerSlice = createSlice({
         activityField:'',
         communityUni:'',
         companyType:'',
+        //email check modal
+        emailCheckModal:false,
+        mailCode:'',
     },
     reducers: {
         stepChangeHandler(state, action) {
@@ -86,6 +89,12 @@ const registerSlice = createSlice({
         },
         activityFieldChangeHandler(state,action){
             state.activityField=action.payload;
+        },
+        emailCheckModalChangeHandler(state,action){
+            state.emailCheckModal=action.payload;
+        },
+        mailCodeChangeHandler(state,action){
+            state.mailCode=action.payload;
         }
     },
 });

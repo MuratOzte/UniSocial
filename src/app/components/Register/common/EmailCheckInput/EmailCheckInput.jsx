@@ -2,22 +2,28 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import "./EmailCheck.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import registerSlice from "@/store/Slices/RegisterSlice";
 
 const OTPInput = () => {
   const dispatch = useDispatch();
+  const register = useSelector((state) => state.register);
+  const [temp, setTemp] = useState("");
 
   const [otp, setOtp] = useState(["", "", "", ""]);
-  const [mailCode, setMailCode] = useState("");
+  
 
   const inputsRef = useRef([]);
 
   useEffect(() => {
-    setMailCode(() => otp.join(""))
-  }, [otp]);
+    console.log(temp);
+    dispatch(registerSlice.actions.mailCodeChangeHandler(temp));
+  }, [temp]);
 
   const handleInputChange = (index, value) => {
     if (isNaN(value)) return;
+
+    setTemp((prev) => prev + value.toString());
 
     const newOtp = [...otp];
     newOtp[index] = value;
