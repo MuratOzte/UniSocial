@@ -174,6 +174,13 @@ const Inputs3 = (props) => {
     console.log(response);
   };
 
+  useEffect(() => {
+    console.log('a')
+    if ((register.isTrue == true)) {
+      formSubmit();
+    }
+  }, [register.isTrue]);
+
   return (
     <>
       <Box

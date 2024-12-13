@@ -8,22 +8,19 @@ import registerSlice from "@/store/Slices/RegisterSlice";
 const OTPInput = () => {
   const dispatch = useDispatch();
   const register = useSelector((state) => state.register);
-  const [temp, setTemp] = useState("");
 
   const [otp, setOtp] = useState(["", "", "", ""]);
-  
 
+  // Referanslar
   const inputsRef = useRef([]);
 
   useEffect(() => {
-    console.log(temp);
-    dispatch(registerSlice.actions.mailCodeChangeHandler(temp));
-  }, [temp]);
+    const otpValue = otp.join("");
+    dispatch(registerSlice.actions.mailCodeChangeHandler(otpValue));
+  }, [otp]);
 
   const handleInputChange = (index, value) => {
-    if (isNaN(value)) return;
-
-    setTemp((prev) => prev + value.toString());
+    if (isNaN(value) || value.length > 1) return;
 
     const newOtp = [...otp];
     newOtp[index] = value;
@@ -43,6 +40,9 @@ const OTPInput = () => {
       if (index > 0) {
         inputsRef.current[index - 1].focus();
       }
+    }
+    if (key === "Space") {
+      inputsRef.current[index + 1].focus();
     }
   };
 
