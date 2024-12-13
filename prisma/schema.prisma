@@ -20,6 +20,7 @@ model Post {
     image     String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    likes     Int      @default(0)
 
     author      User       @relation(fields: [authorId], references: [id])
     authorId    String     @db.ObjectId

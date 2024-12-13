@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import feedSlice from '@/store/Slices/FeedSlice';
 import { sharePostRequest } from '@/util/feedService';
 import FileUploadModal from './FileUploadModal';
+import Loading from '../../common/Loading';
 
 const Share = () => {
     const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const Share = () => {
     const [token, setToken] = useState(localStorage.getItem('token'));
     const [file, setFile] = useState(null);
     const [base64File, setBase64File] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const inputValChangeHandler = (e) => {
         dispatch(
@@ -23,11 +25,13 @@ const Share = () => {
     };
 
     const sharePostHandler = async () => {
+        setIsLoading(true);
         const data = await sharePostRequest(
             token,
             feed.shareMessage,
             base64File
         );
+        setIsLoading(false);
         console.log(data);
     };
 
@@ -45,16 +49,21 @@ const Share = () => {
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setBase64File(reader.result); 
+                setBase64File(reader.result);
             };
-            reader.readAsDataURL(file); 
+            reader.readAsDataURL(file);
         } else {
-            setBase64File(null); 
+            setBase64File(null);
         }
     }, [file]);
 
     return (
         <div className="w-full max-w-md p-4 h-fit rounded-lg shadow-lg bg-gray-800 text-white mt-4">
+            {isLoading && (
+                <div className="absolute top-0 left-0 w-full h-full bg-gray-800 bg-opacity-80 flex items-center justify-center z-50">
+                    <Loading />
+                </div>
+            )}
             <div className="flex items-center mb-4 relative">
                 <Image
                     src={
