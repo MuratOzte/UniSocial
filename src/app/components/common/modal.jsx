@@ -73,7 +73,7 @@ export default function EnhancedModal() {
             Please enter the code sent to{" "}
             <strong>
               {register.emailValue}
-              {register.emaiExtension}
+              {register.emailExtension}
             </strong>
           </Typography>
 

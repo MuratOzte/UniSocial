@@ -23,7 +23,11 @@ import PasswordStrengthBar from "../PasswordStrenghtbar";
 import registerSlice from "@/store/Slices/RegisterSlice";
 import { motion } from "framer-motion";
 import Loading from "../../../common/Loading";
-import { registerRequest, StudentregisterRequest } from "@/util/authService";
+import {
+  registerRequest,
+  SendMailtoCheck,
+  StudentregisterRequest,
+} from "@/util/authService";
 import EnhancedModal from "@/app/components/common/modal";
 
 // const emailRegex =
@@ -136,18 +140,26 @@ const Inputs3 = (props) => {
     }
   }, [enteredEmail, enteredPassword, isPasswordValid, isEmailValid]);
 
-  const stepDecrementHandler = () => {
+  const stepDecrementHandler = async () => {
     dispatch(registerSlice.actions.stepChangeHandler(2));
   };
 
-
-  const emailCheckModalHandleChange = () => {
+  const emailCheckModalHandleChange = async () => {
     dispatch(registerSlice.actions.emailCheckModalChangeHandler(true));
+
+    console.log(register.nameValue, register.emailValue);
+    const result = await SendMailtoCheck(
+      register.nameValue,
+      register.emailValue + register.emailExtension
+    );
+    dispatch(
+      registerSlice.actions.takenMailCodeChangeHandler(result.verificationCode)
+    );
   };
 
   const formSubmit = async () => {
     setIsLoading(true);
-    const response= await StudentregisterRequest(
+    const response = await StudentregisterRequest(
       register.nameValue,
       register.surnameValue,
       register.univercityValue,
@@ -157,9 +169,9 @@ const Inputs3 = (props) => {
       register.passwordValue
     );
     setIsLoading(false);
-    
-    localStorage.setItem('token',response.token);
-console.log(response);
+
+    localStorage.setItem("token", response.token);
+    console.log(response);
   };
 
   return (
@@ -288,7 +300,7 @@ console.log(response);
                   {isLoading ? <Loading /> : "Register"}
                 </Button>
               </motion.div>
-              <EnhancedModal/>
+              <EnhancedModal />
             </Grid>
           </Grid>
         </Box>
