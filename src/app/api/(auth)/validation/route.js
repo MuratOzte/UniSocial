@@ -5,13 +5,17 @@ export async function POST(req) {
     try {
         const { email, name } = await req.json();
 
-        const verificationCode = Math.floor(1000 + Math.random() * 9000).toString();
+        // Rastgele 4 haneli doğrulama kodu oluştur
+        const verificationCode = Math.floor(
+            1000 + Math.random() * 9000
+        ).toString();
 
         const mailjetClient = mailjet.apiConnect(
             process.env.EMAIL_API_KEY,
             process.env.EMAIL_SECRET_KEY
         );
 
+        console.log(email)
 
         const response = await mailjetClient
             .post('send', { version: 'v3.1' })
@@ -29,8 +33,7 @@ export async function POST(req) {
                             },
                         ],
                         Subject: 'UniSocial Doğrulama Kodu',
-                        TextPart:
-                            `Doğrulama Kodunuz: ${verificationCode}\nBu kodu kimseyle paylaşmayınız.`,
+                        TextPart: `Doğrulama Kodunuz: ${verificationCode}\nBu kodu kimseyle paylaşmayınız.`,
                         HTMLPart: `
                             <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; border-radius: 8px; padding: 20px; background-color: #f9f9f9;">
                                 <h2 style="text-align: center; color: #007bff; margin-bottom: 20px;">Email Verification</h2>
@@ -79,7 +82,8 @@ export async function POST(req) {
 
         return NextResponse.json({
             message: 'Email sent successfully',
-            verificationCode: 1234, 
+            data: response.body,
+            verificationCode: verificationCode, // Doğrulama kodunu da geri döndürüyoruz (isteğe bağlı)
         });
     } catch (error) {
         console.error(error);
