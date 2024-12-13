@@ -1,51 +1,48 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import OTPInput from '../Register/common/EmailCheckInput/EmailCheckInput';
-import { useSelector } from 'react-redux';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import OTPInput from "../Register/common/EmailCheckInput/EmailCheckInput";
+import { useDispatch, useSelector } from "react-redux";
+import registerSlice from "@/store/Slices/RegisterSlice";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
-  border: 'none',
+  bgcolor: "background.paper",
+  border: "none",
   borderRadius: 4,
   boxShadow: 24,
   p: 4,
 };
 
-const buttonStyle = {
-  bgcolor: 'primary.main',
-  color: 'white',
-  '&:hover': {
-    bgcolor: 'primary.dark',
-  },
-  textTransform: 'none',
-  borderRadius: 2,
-  px: 3,
-  py: 1.5,
-};
 
 export default function EnhancedModal() {
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => {
+    dispatch(registerSlice.actions.emailCheckModalChangeHandler(false));
+  };
+  const handleClose = () => {
+    dispatch(registerSlice.actions.emailCheckModalChangeHandler(false));
+  };
 
   const register = useSelector((state) => state.register);
 
+  const SendCheckMail=()=>{
+    console.log("Verify button clicked");
+  }
+
   return (
     <div>
-      <Button onClick={handleOpen} sx={buttonStyle}>
-        Open Modal
-      </Button>
       <Modal
-        open={open}
-        onClose={handleClose}
+        /*open için parametre reduxtan alınır*/
+        open={register.emailCheckModal}
+        onClose={!register.emailCheckModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -63,30 +60,34 @@ export default function EnhancedModal() {
 
           <Typography
             id="modal-modal-description"
-            sx={{ mt: 2, textAlign: 'center', color: 'text.secondary' }}
+            sx={{ mt: 2, textAlign: "center", color: "text.secondary" }}
           >
             Please enter the code sent to <strong>{register.emailValue}</strong>
           </Typography>
 
-          <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center' }}>
+          <Box sx={{ mt: 3, display: "flex", justifyContent: "center" }}>
             <OTPInput />
           </Box>
 
           <Box
             sx={{
               mt: 4,
-              display: 'flex',
-              justifyContent: 'center',
+              display: "flex",
+              justifyContent: "center",
               gap: 2,
             }}
           >
-            <Button onClick={handleClose} variant="outlined" sx={{ textTransform: 'none' }}>
+            <Button
+              onClick={handleClose}
+              variant="outlined"
+              sx={{ textTransform: "none" }}
+            >
               Cancel
             </Button>
             <Button
-              onClick={() => console.log('Verify button clicked')}
+              onClick={SendCheckMail}
               variant="contained"
-              sx={{ textTransform: 'none' }}
+              sx={{ textTransform: "none" }}
             >
               Verify
             </Button>
