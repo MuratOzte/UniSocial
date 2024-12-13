@@ -22,6 +22,7 @@
     "framer-motion": "^11.11.9",
     "jsonwebtoken": "^9.0.2",
     "next": "15.0.4",
+    "node-mailjet": "^6.0.6",
     "prisma": "^5.21.1",
     "react": "19.0.0",
     "react-calendar": "^5.1.0",
