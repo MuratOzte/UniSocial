@@ -5,7 +5,6 @@ export async function POST(req) {
     try {
         const { email, name } = await req.json();
 
-        // Rastgele 4 haneli doğrulama kodu oluştur
         const verificationCode = Math.floor(
             1000 + Math.random() * 9000
         ).toString();

@@ -2,7 +2,7 @@ import { TbSend } from 'react-icons/tb';
 import { FaImage } from 'react-icons/fa';
 import { MdOutlineEventNote } from 'react-icons/md';
 import { MdEmojiEmotions } from 'react-icons/md';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import feedSlice from '@/store/Slices/FeedSlice';
@@ -14,6 +14,7 @@ const Share = () => {
     const feed = useSelector((state) => state.feed);
     const [token, setToken] = useState(localStorage.getItem('token'));
     const [file, setFile] = useState(null);
+    const [base64File, setBase64File] = useState(null);
 
     const inputValChangeHandler = (e) => {
         dispatch(
@@ -22,7 +23,11 @@ const Share = () => {
     };
 
     const sharePostHandler = async () => {
-        const data = sharePostRequest(token, feed.shareMessage, null);
+        const data = await sharePostRequest(
+            token,
+            feed.shareMessage,
+            base64File
+        );
         console.log(data);
     };
 
@@ -37,7 +42,15 @@ const Share = () => {
     };
 
     useEffect(() => {
-        console.log(file);
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setBase64File(reader.result); 
+            };
+            reader.readAsDataURL(file); 
+        } else {
+            setBase64File(null); 
+        }
     }, [file]);
 
     return (
