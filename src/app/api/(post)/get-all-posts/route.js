@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
+// Token doğrulama fonksiyonu
 const verifyToken = (token) => {
     try {
         return jwt.verify(token, process.env.JWT_SECRET);
@@ -14,6 +15,7 @@ const verifyToken = (token) => {
 
 export async function GET(req) {
     try {
+        // Authorization header'dan token al
         const token = req.headers.get('Authorization')?.split(' ')[1];
         if (!token) {
             return NextResponse.json(
@@ -23,14 +25,20 @@ export async function GET(req) {
         }
 
         const decoded = verifyToken(token);
-        console.log(decoded);
         if (!decoded) {
             return NextResponse.json(
                 { message: 'Invalid or expired token' },
                 { status: 401 }
             );
         }
-        const posts = await prisma.post.findMany({});
+
+        // Postları çek, ilişkili yazar ve yorum bilgilerini de dahil et
+        const posts = await prisma.post.findMany({
+            include: {
+                author: true,
+                comments: true,
+            },
+        });
 
         return NextResponse.json(
             {
