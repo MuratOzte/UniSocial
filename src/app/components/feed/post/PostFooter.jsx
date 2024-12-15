@@ -8,10 +8,10 @@ const PostFooter = ({ setShowModal, post }) => {
             </p>
             <p className="cursor-pointer" onClick={() => setShowModal(true)}>
                 <FaCommentAlt className="inline mr-1" /> Comments (
-                {post.comments})
+                {post.comments.length})
             </p>
             <p className="cursor-pointer">
-                <FaShare className="inline mr-1" /> Share ({post.shares})
+                <FaShare className="inline mr-1" /> Share
             </p>
         </div>
     );
