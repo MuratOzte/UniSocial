@@ -20,21 +20,23 @@ const PostHeader = ({ post, time, isTeacher }) => {
                 />
             )}
 
-            <div>
-                <div className="text-sm text-gray-400 flex flex-row items-center">
-                    <p className="font-semibold">{post.author.name}</p>
-                    {isTeacher ? (
-                        <Tooltip title="Teacher" arrow>
-                            <IoBookSharp className="ml-2" />
-                        </Tooltip>
-                    ) : (
-                        <Tooltip title="Student" arrow>
-                            <PiStudent className="ml-2" />
-                        </Tooltip>
-                    )}
+            <div className='w-full' >
+                <div className="text-sm text-gray-400 flex flex-row items-center justify-between w-full">
+                    <div className='flex' >
+                        <p className="font-semibold">{post.author.name}</p>
+                        {isTeacher ? (
+                            <Tooltip title="Teacher" arrow>
+                                <IoBookSharp className="ml-2" />
+                            </Tooltip>
+                        ) : (
+                            <Tooltip title="Student" arrow>
+                                <PiStudent className="ml-2" />
+                            </Tooltip>
+                        )}
+                    </div>
+                    <PostOptions postId={post.id} />
                 </div>
                 <p className="text-xs text-gray-500">{time}</p>
-                <PostOptions />
             </div>
         </div>
     );
