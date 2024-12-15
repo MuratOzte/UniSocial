@@ -141,15 +141,6 @@ const Inputs3 = (props) => {
     dispatch(registerSlice.actions.stepChangeHandler(2));
   };
 
-  const {
-    nameValue,
-    surnameValue,
-    univercityValue,
-    departmentValue,
-    emailValue,
-    passwordValue,
-  } = useSelector((state) => state.register);
-
   const emailCheckModalHandleChange = async () => {
     dispatch(registerSlice.actions.emailCheckModalChangeHandler(true));
 
@@ -174,6 +165,7 @@ const Inputs3 = (props) => {
 
     localStorage.setItem("token", response.token);
     console.log(response.token);
+    router.replace('/feed')
   };
 
   useEffect(() => {
