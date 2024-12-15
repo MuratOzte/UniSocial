@@ -4,6 +4,7 @@ import { IoBookSharp } from 'react-icons/io5';
 import { VscAccount } from 'react-icons/vsc';
 import { Tooltip } from '@mui/material';
 import { CiMenuKebab } from 'react-icons/ci';
+import PostOptions from './PostOptions';
 
 const PostHeader = ({ post, time, isTeacher }) => {
     return (
@@ -33,8 +34,8 @@ const PostHeader = ({ post, time, isTeacher }) => {
                     )}
                 </div>
                 <p className="text-xs text-gray-500">{time}</p>
+                <PostOptions />
             </div>
-            <CiMenuKebab className="ml-auto cursor-pointer" />
         </div>
     );
 };
