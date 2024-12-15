@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
-// Token doğrulama fonksiyonu
 const verifyToken = (token) => {
     try {
         return jwt.verify(token, process.env.JWT_SECRET);
@@ -15,7 +14,6 @@ const verifyToken = (token) => {
 
 export async function GET(req) {
     try {
-        // Authorization header'dan token al
         const token = req.headers.get('Authorization')?.split(' ')[1];
         if (!token) {
             return NextResponse.json(
@@ -36,6 +34,9 @@ export async function GET(req) {
             include: {
                 author: true,
                 comments: true,
+            },
+            orderBy: {
+                createdAt: 'desc',
             },
         });
 

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { FaThumbsUp, FaCommentAlt, FaShare } from 'react-icons/fa';
 import { IoIosSend } from 'react-icons/io';
+
 import CommentModal from './CommentModal';
 import { timeAgo } from '@/util/timeService';
 import { VscAccount } from 'react-icons/vsc';
 import { PiStudent } from 'react-icons/pi';
 import { TbSchool } from 'react-icons/tb';
+import PostFooter from './PostFooter';
+import PostHeader from './PostHeader';
 
 const Post = ({ post }) => {
     const [showModal, setShowModal] = useState(false);
@@ -59,31 +61,7 @@ const Post = ({ post }) => {
 
     return (
         <div className="w-full max-w-lg bg-gray-800 text-white p-4 rounded-lg shadow-lg my-8">
-            <div className="flex items-center mb-4">
-                {!post.image && (
-                    <VscAccount className="w-8 h-8 rounded-full mr-3" />
-                )}
-                {post.image && (
-                    <img
-                        src={post.image}
-                        alt={`${post.author.name}'s avatar`}
-                        className="w-12 h-12 rounded-full mr-3"
-                    />
-                )}
-
-                <div>
-                    <div className="text-sm text-gray-400 flex flex-row items-center">
-                        <p className="font-semibold">{post.author.name}</p> 
-                        {isTeacher ? (
-                            <PiStudent className="ml-2" />
-                        ) : (
-                            <TbSchool className="ml-2" />
-                        )}
-                    </div>
-                    <p className="text-xs text-gray-500">{time}</p>
-                </div>
-                <div className="ml-auto text-gray-500 cursor-pointer">...</div>
-            </div>
+            <PostHeader post={post} time={time} isTeacher={isTeacher} />
 
             <p className="mb-4">{post.content}</p>
 
@@ -95,21 +73,7 @@ const Post = ({ post }) => {
                 />
             )}
 
-            <div className="flex justify-between items-center text-gray-400 text-sm mb-4">
-                <p className="cursor-pointer">
-                    <FaThumbsUp className="inline mr-1" /> Liked ({post.likes})
-                </p>
-                <p
-                    className="cursor-pointer"
-                    onClick={() => setShowModal(true)}
-                >
-                    <FaCommentAlt className="inline mr-1" /> Comments (
-                    {post.comments})
-                </p>
-                <p className="cursor-pointer">
-                    <FaShare className="inline mr-1" /> Share ({post.shares})
-                </p>
-            </div>
+            <PostFooter setShowModal={setShowModal} post={post} />
             <CommentModal
                 showModal={showModal}
                 comments={comments}
