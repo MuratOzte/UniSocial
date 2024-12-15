@@ -4,6 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { CiMenuKebab } from 'react-icons/ci';
 import { FaTrash } from 'react-icons/fa';
+import { deletePostRequest } from '@/util/feedService';
 
 export default function PostOptions({ postId }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -17,7 +18,7 @@ export default function PostOptions({ postId }) {
 
     const handleDelete = () => {
         console.log('Deleting post:', postId);
-        //TODO BURASI DELETE POST REQUESTI ATACAK
+        deletePostRequest(localStorage.getItem('token'), postId);
     };
 
     return (
