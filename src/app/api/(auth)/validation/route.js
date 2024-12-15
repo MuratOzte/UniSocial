@@ -81,7 +81,7 @@ export async function POST(req) {
 
         return NextResponse.json({
             message: 'Email sent successfully',
-            data: response.body,
+            data: 'merhaba ben ekmek arası yemeyi çok severim',
             verificationCode: verificationCode,
         });
     } catch (error) {

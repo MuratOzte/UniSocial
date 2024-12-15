@@ -1,8 +1,9 @@
 import { PiStudent } from 'react-icons/pi';
 import { TbSchool } from 'react-icons/tb';
-import { IoBookSharp } from "react-icons/io5";
+import { IoBookSharp } from 'react-icons/io5';
 import { VscAccount } from 'react-icons/vsc';
 import { Tooltip } from '@mui/material';
+import { CiMenuKebab } from 'react-icons/ci';
 
 const PostHeader = ({ post, time, isTeacher }) => {
     return (
@@ -33,7 +34,7 @@ const PostHeader = ({ post, time, isTeacher }) => {
                 </div>
                 <p className="text-xs text-gray-500">{time}</p>
             </div>
-            <div className="ml-auto text-gray-500 cursor-pointer">...</div>
+            <CiMenuKebab className="ml-auto cursor-pointer" />
         </div>
     );
 };
