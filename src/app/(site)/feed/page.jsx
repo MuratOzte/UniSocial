@@ -14,7 +14,7 @@ const Page = () => {
             <Nav />
             <div className="flex justify-between px-8">
                 <LeftNav />
-                <div className='flex justify-center flex-col items-center' >
+                <div className='flex justify-start flex-col items-center' >
                     <Share />
                     <Posts />
                 </div>

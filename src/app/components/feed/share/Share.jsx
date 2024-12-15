@@ -1,3 +1,4 @@
+'use client';
 import { TbSend } from 'react-icons/tb';
 import { FaImage } from 'react-icons/fa';
 import { MdOutlineEventNote } from 'react-icons/md';
@@ -13,7 +14,7 @@ import Loading from '../../common/Loading';
 const Share = () => {
     const dispatch = useDispatch();
     const feed = useSelector((state) => state.feed);
-    const [token, setToken] = useState(localStorage.getItem('token'));
+    const [token, setToken] = useState(null);
     const [file, setFile] = useState(null);
     const [base64File, setBase64File] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +24,10 @@ const Share = () => {
             feedSlice.actions.shareMessageChangeHandler(e.currentTarget.value)
         );
     };
+
+    useEffect(() => {
+        setToken(localStorage.getItem('token'));
+    }, []);
 
     const sharePostHandler = async () => {
         setIsLoading(true);

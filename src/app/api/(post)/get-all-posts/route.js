@@ -32,7 +32,6 @@ export async function GET(req) {
             );
         }
 
-        // Postları çek, ilişkili yazar ve yorum bilgilerini de dahil et
         const posts = await prisma.post.findMany({
             include: {
                 author: true,

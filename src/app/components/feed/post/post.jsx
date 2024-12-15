@@ -2,9 +2,16 @@ import { useState, useEffect } from 'react';
 import { FaThumbsUp, FaCommentAlt, FaShare } from 'react-icons/fa';
 import { IoIosSend } from 'react-icons/io';
 import CommentModal from './CommentModal';
+import { timeAgo } from '@/util/timeService';
+import { VscAccount } from 'react-icons/vsc';
+import { PiStudent } from 'react-icons/pi';
+import { TbSchool } from 'react-icons/tb';
 
 const Post = ({ post }) => {
     const [showModal, setShowModal] = useState(false);
+    const time = timeAgo(post.createdAt);
+    const isTeacher = post.author.isTeacher;
+    console.log(time);
 
     const comments = [
         {
@@ -53,26 +60,40 @@ const Post = ({ post }) => {
     return (
         <div className="w-full max-w-lg bg-gray-800 text-white p-4 rounded-lg shadow-lg my-8">
             <div className="flex items-center mb-4">
-                <img
-                    src={post.avatar}
-                    alt={`${post.name}'s avatar`}
-                    className="w-12 h-12 rounded-full mr-3"
-                />
+                {!post.image && (
+                    <VscAccount className="w-8 h-8 rounded-full mr-3" />
+                )}
+                {post.image && (
+                    <img
+                        src={post.image}
+                        alt={`${post.author.name}'s avatar`}
+                        className="w-12 h-12 rounded-full mr-3"
+                    />
+                )}
+
                 <div>
-                    <p className="font-semibold">{post.name}</p>
-                    <p className="text-sm text-gray-400">{post.role}</p>
-                    <p className="text-xs text-gray-500">{post.time}</p>
+                    <div className="text-sm text-gray-400 flex flex-row items-center">
+                        <p className="font-semibold">{post.author.name}</p> 
+                        {isTeacher ? (
+                            <PiStudent className="ml-2" />
+                        ) : (
+                            <TbSchool className="ml-2" />
+                        )}
+                    </div>
+                    <p className="text-xs text-gray-500">{time}</p>
                 </div>
                 <div className="ml-auto text-gray-500 cursor-pointer">...</div>
             </div>
 
-            <p className="mb-4">{post.text}</p>
+            <p className="mb-4">{post.content}</p>
 
-            <img
-                src={post.image}
-                alt="Post content"
-                className="w-full rounded-lg mb-4"
-            />
+            {post.image && (
+                <img
+                    src={post.image}
+                    alt="Post content"
+                    className="w-full rounded-lg mb-4"
+                />
+            )}
 
             <div className="flex justify-between items-center text-gray-400 text-sm mb-4">
                 <p className="cursor-pointer">

@@ -95,6 +95,8 @@ model Event {
     description String?
     date        DateTime
     location    String?
+    eventType   String
+    price       Int?
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 
