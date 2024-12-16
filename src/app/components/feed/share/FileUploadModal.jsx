@@ -32,22 +32,20 @@ export default function FileUploadModal({ file, setFile }) {
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
-        setFile(selectedFile); // Store the file in the parent component
+        setFile(selectedFile); 
 
-        // Only proceed if the file is selected
         if (selectedFile) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setPreview(reader.result); // Set the preview once the file is loaded
+                setPreview(reader.result); 
             };
-            reader.readAsDataURL(selectedFile); // Read the file as data URL (base64 string)
+            reader.readAsDataURL(selectedFile); 
         }
     };
 
-    // Function to handle file deletion
     const handleFileDelete = () => {
-        setFile(null); // Remove the file
-        setPreview(null); // Remove the preview
+        setFile(null); 
+        setPreview(null); 
     };
 
     return (
@@ -83,7 +81,7 @@ export default function FileUploadModal({ file, setFile }) {
                     {preview ? (
                         <Box mt={2}>
                             <img
-                                src={preview} // Display the preview image
+                                src={preview} 
                                 alt="File Preview"
                                 className="w-full h-auto max-h-64 object-contain mx-auto"
                             />

@@ -4,9 +4,13 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { CiMenuKebab } from 'react-icons/ci';
 import { FaTrash } from 'react-icons/fa';
+import { TbEdit } from 'react-icons/tb';
 import { deletePostRequest } from '@/util/feedService';
+import { useDispatch } from 'react-redux';
+import feedSlice from '@/store/Slices/FeedSlice';
 
 export default function PostOptions({ postId }) {
+    const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -19,6 +23,11 @@ export default function PostOptions({ postId }) {
     const handleDelete = () => {
         console.log('Deleting post:', postId);
         deletePostRequest(localStorage.getItem('token'), postId);
+    };
+
+    const handleEdit = () => {
+        console.log('Editing post:', postId);
+        dispatch(feedSlice.actions.setIsEditModalOpen(true));
     };
 
     return (
@@ -44,8 +53,10 @@ export default function PostOptions({ postId }) {
                     <FaTrash className="mr-2" color="red" />
                     <p className="text-red-500">Delete</p>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleEdit.bind(this)}>
+                    <TbEdit className="mr-2" />
+                    Edit
+                </MenuItem>
             </Menu>
         </div>
     );

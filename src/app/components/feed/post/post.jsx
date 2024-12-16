@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { IoIosSend } from 'react-icons/io';
 
 import CommentModal from './CommentModal';
+import EditPostModal from './EditPostModal';
 import { timeAgo } from '@/util/timeService';
 import { VscAccount } from 'react-icons/vsc';
 import { PiStudent } from 'react-icons/pi';
@@ -79,6 +80,7 @@ const Post = ({ post }) => {
                 comments={comments}
                 setShowModal={setShowModal}
             />
+            <EditPostModal />
         </div>
     );
 };

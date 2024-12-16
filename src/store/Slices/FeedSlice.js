@@ -4,6 +4,7 @@ const feedSlice = createSlice({
     initialState: {
         shareMessage: '',
         isFileUploadModalOpen: false,
+        isEditModalOpen: false,
     },
 
     reducers: {
@@ -12,6 +13,9 @@ const feedSlice = createSlice({
         },
         setIsFileUploadModalOpen(state, action) {
             state.isFileUploadModalOpen = action.payload;
+        },
+        setIsEditModalOpen(state, action) {
+            state.isEditModalOpen = action.payload;
         },
     },
 });
