@@ -5,6 +5,11 @@ const feedSlice = createSlice({
         shareMessage: '',
         isFileUploadModalOpen: false,
         isEditModalOpen: false,
+        selectedPost: {
+            id: '',
+            content: '',
+            image: '',
+        },
     },
 
     reducers: {
@@ -16,6 +21,9 @@ const feedSlice = createSlice({
         },
         setIsEditModalOpen(state, action) {
             state.isEditModalOpen = action.payload;
+        },
+        setSelectedPost(state, action) {
+            state.selectedPost = action.payload;
         },
     },
 });

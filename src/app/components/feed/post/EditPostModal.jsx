@@ -5,6 +5,7 @@ import Modal from '@mui/material/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import feedSlice from '@/store/Slices/FeedSlice';
 import { FiUpload } from 'react-icons/fi';
+import Loading from '../../common/Loading';
 
 const style = {
     position: 'absolute',
@@ -21,11 +22,11 @@ const style = {
     zIndex: 1300,
 };
 
-export default function EditPostModal({ post, handleEdit }) {
+export default function EditPostModal({ post }) {
     const dispatch = useDispatch();
     const feed = useSelector((state) => state.feed);
-    const [content, setContent] = useState(post?.content || '');
-    const [image, setImage] = useState(post.image || null);
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleModalClose = () => {
         dispatch(feedSlice.actions.setIsEditModalOpen(false));
@@ -39,19 +40,55 @@ export default function EditPostModal({ post, handleEdit }) {
         reader.onloadend = () => {
             const base64Image = reader.result;
             console.log('Base64 Image:', base64Image);
-            setImage(base64Image); 
+            dispatch(
+                feedSlice.actions.setSelectedPost({
+                    ...post,
+                    image: base64Image,
+                })
+            );
         };
         reader.readAsDataURL(selectedFile);
     };
 
-    const handleSaveChanges = () => {
-        handleEdit({ id: post.id, content, image });
-        handleModalClose();
+    const setContent = (event) => {
+        const content = event.target.value;
+        dispatch(
+            feedSlice.actions.setSelectedPost({
+                ...feed.selectedPost, 
+                content, 
+            })
+        );
     };
 
-    useEffect(() => {
-        console.log(image);
-    }, [image]);
+    const handleSaveChanges = async () => {
+        setIsLoading(true);
+        try {
+            const response = await fetch(
+                `http://localhost:3000/api/update-user-post`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem(
+                            'token'
+                        )}`,
+                    },
+                    body: JSON.stringify({
+                        content: feed.selectedPost.content,
+                        image: feed.selectedPost.image,
+                        postId: feed.selectedPost.id,
+                    }),
+                }
+            );
+            setIsLoading(false);
+            console.log(response.body);
+        } catch (error) {
+            setIsLoading(false);
+            console.error(error);
+        }
+
+        handleModalClose();
+    };
 
     return (
         <Modal
@@ -64,10 +101,15 @@ export default function EditPostModal({ post, handleEdit }) {
                 <Typography id="edit-modal-title" variant="h6" component="h2">
                     Edit Post
                 </Typography>
+                {isLoading && (
+                    <div className="absolute top-0 left-0 w-full h-full bg-gray-800 bg-opacity-80 flex items-center justify-center z-50">
+                        <Loading />
+                    </div>
+                )}
 
                 <textarea
-                    onChange={(e) => setContent(e.target.value)}
-                    value={content}
+                    onChange={setContent}
+                    value={feed.selectedPost.content}
                     className="w-full bg-gray-700 text-gray-200 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 my-4 placeholder:text-gray-500 hover:opacity-90 transition-all duration-150"
                     placeholder="New Content"
                 />

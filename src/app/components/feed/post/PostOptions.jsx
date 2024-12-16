@@ -15,6 +15,12 @@ export default function PostOptions({ post }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
+        console.log(post)
+        dispatch(feedSlice.actions.setSelectedPost({
+            id: post.id,
+            content: post.content,
+            image: post.image,
+        }));
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
@@ -23,13 +29,13 @@ export default function PostOptions({ post }) {
 
     const handleDelete = () => {
         console.log('Deleting post:', post.id);
-        deletePostRequest(localStorage.getItem('token'), postId);
+        deletePostRequest(localStorage.getItem('token'), post.id);
     };
 
     const handleEdit = () => {
-        console.log('Editing post:', post.id);
         dispatch(feedSlice.actions.setIsEditModalOpen(true));
     };
+
 
     return (
         <div>
@@ -37,7 +43,7 @@ export default function PostOptions({ post }) {
                 className="ml-auto cursor-pointer"
                 onClick={handleClick}
             />
-            <EditPostModal post={post} />
+            <EditPostModal post={post} key={post.id} />
 
             <Menu
                 id="basic-menu"
