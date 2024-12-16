@@ -1,17 +1,17 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
-
 const prisma = new PrismaClient();
 
 export async function POST(req) {
     try {
         const { title, description, date, time, location, eventType, price } =
             await req.json();
+
         console.log(title, description, date, time, location, eventType, price);
 
+        console.log(title, description, date, time, location, eventType, price);
         const token = req.headers.get('authorization')?.replace('Bearer ', '');
-
         if (!token) {
             return NextResponse.json(
                 {
@@ -21,7 +21,6 @@ export async function POST(req) {
                 { status: 401 }
             );
         }
-
         let decoded;
         try {
             decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -34,9 +33,7 @@ export async function POST(req) {
                 { status: 401 }
             );
         }
-
         const communityId = decoded.id;
-
         if (!title || !date || !time || !eventType || !communityId) {
             return NextResponse.json(
                 {
@@ -47,12 +44,11 @@ export async function POST(req) {
                 { status: 400 }
             );
         }
-
         const newEvent = await prisma.event.create({
             data: {
                 title,
                 description: description || null,
-                date: new Date(date),
+                date,
                 time,
                 location: location || null,
                 eventType,
@@ -60,7 +56,6 @@ export async function POST(req) {
                 communityId,
             },
         });
-
         return NextResponse.json(
             {
                 message: 'Event created successfully',
