@@ -44,7 +44,6 @@ export async function GET(req) {
         }
 
         const events = await prisma.event.findMany({
-            where: { communityId },
             include: {
                 community: {
                     select: { name: true, profilePicture: true, id: true },
