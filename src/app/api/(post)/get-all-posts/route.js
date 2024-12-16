@@ -21,8 +21,8 @@ export async function GET(req) {
                 { status: 401 }
             );
         }
+
         const decoded = verifyToken(token);
-        console.log(decoded);
         if (!decoded) {
             return NextResponse.json(
                 { message: 'Invalid or expired token' },
@@ -30,20 +30,44 @@ export async function GET(req) {
             );
         }
 
-        const posts = await prisma.post.findMany();
-        const postsWithAuthors = await Promise.all(
-            posts.map(async (post) => ({
-                ...post,
-                author: await prisma.user.findUnique({
+        const posts = await prisma.post.findMany({
+            orderBy: { createdAt: 'desc' },
+        });
+
+        const enrichedPosts = await Promise.all(
+            posts.map(async (post) => {
+                const author = await prisma.user.findUnique({
                     where: { id: post.authorId },
-                }),
-            }))
+                    select: {
+                        id: true,
+                        name: true,
+                        profilePicture: true,
+                        isTeacher: true,
+                    },
+                });
+
+                const comments = await prisma.comment.findMany({
+                    where: { postId: post.id },
+                    select: {
+                        id: true,
+                        content: true,
+                        createdAt: true,
+                        authorId: true,
+                    },
+                });
+
+                return {
+                    ...post,
+                    author,
+                    comments,
+                };
+            })
         );
 
         return NextResponse.json(
             {
                 message: 'Posts fetched successfully',
-                posts,
+                posts: enrichedPosts,
             },
             { status: 200 }
         );

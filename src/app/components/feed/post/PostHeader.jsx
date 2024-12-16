@@ -7,6 +7,7 @@ import { CiMenuKebab } from 'react-icons/ci';
 import PostOptions from './PostOptions';
 
 const PostHeader = ({ post, time, isTeacher }) => {
+    console.log('denee', post, time, isTeacher);
     return (
         <div className="flex items-center mb-4">
             {!post.author.profilePicture && (
@@ -20,9 +21,9 @@ const PostHeader = ({ post, time, isTeacher }) => {
                 />
             )}
 
-            <div className='w-full' >
+            <div className="w-full">
                 <div className="text-sm text-gray-400 flex flex-row items-center justify-between w-full">
-                    <div className='flex' >
+                    <div className="flex">
                         <p className="font-semibold">{post.author.name}</p>
                         {isTeacher ? (
                             <Tooltip title="Teacher" arrow>

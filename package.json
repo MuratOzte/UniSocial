@@ -21,7 +21,7 @@
     "bcrypt": "^5.1.1",
     "framer-motion": "^11.11.9",
     "jsonwebtoken": "^9.0.2",
-    "next": "15.0.4",
+    "next": "^15.1.0",
     "node-mailjet": "^6.0.6",
     "prisma": "^5.21.1",
     "react": "19.0.0",

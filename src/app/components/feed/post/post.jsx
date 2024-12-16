@@ -14,7 +14,6 @@ const Post = ({ post }) => {
     const [showModal, setShowModal] = useState(false);
     const time = timeAgo(post.createdAt);
     const isTeacher = post.author.isTeacher;
-    console.log(time);
 
     const comments = [
         {
