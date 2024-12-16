@@ -21,8 +21,8 @@ export async function GET(req) {
                 { status: 401 }
             );
         }
-
         const decoded = verifyToken(token);
+        console.log(decoded);
         if (!decoded) {
             return NextResponse.json(
                 { message: 'Invalid or expired token' },

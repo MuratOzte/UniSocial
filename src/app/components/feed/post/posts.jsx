@@ -1,40 +1,25 @@
 import { useEffect, useState } from 'react';
+import useFetchPosts from '@/hooks/useFetchPosts';
 import Post from './post';
+import Loading from '../../common/Loading';
 
 const Posts = () => {
-    const [posts, setPosts] = useState(null);
+    const { posts, fetchPosts } = useFetchPosts();
 
     useEffect(() => {
-        const fetchData = async () => {
-            const getAllPostsRequest = async (token) => {
-                const response = await fetch(
-                    'http://localhost:3000/api/get-all-posts',
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
-                const data = await response.json();
-                console.log(data);
-                return data;
-            };
-
-            try {
-                const response = await getAllPostsRequest(
-                    localStorage.getItem('token')
-                );
-                setPosts(response.posts);
-                console.log(response.posts);
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-            }
-        };
-
-        fetchData();
+        const token = localStorage.getItem('token');
+        if (token) {
+            fetchPosts(token);
+        }
     }, []);
 
-    return posts && posts.map((post) => <Post key={post.id} post={post} />);
+    return posts ? (
+        posts.map((post) => <Post key={post.id} post={post} />)
+    ) : (
+        <div className="absolute w-full h-screen bg-black opacity-50 flex justify-center items-center z-50 overflow-hidden scale-150">
+            <Loading />
+        </div>
+    );
 };
 
 export default Posts;

@@ -7,6 +7,7 @@ body {
     height: 100%;
     font-family: 'Inter', sans-serif;
     background-color: #191a1f;
+    overflow-x: hidden;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
