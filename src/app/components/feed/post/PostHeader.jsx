@@ -34,7 +34,7 @@ const PostHeader = ({ post, time, isTeacher }) => {
                             </Tooltip>
                         )}
                     </div>
-                    <PostOptions postId={post.id} />
+                    <PostOptions post={post} />
                 </div>
                 <p className="text-xs text-gray-500">{time}</p>
             </div>

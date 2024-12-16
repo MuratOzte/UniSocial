@@ -5,7 +5,6 @@ import Modal from '@mui/material/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import feedSlice from '@/store/Slices/FeedSlice';
 import { FiUpload } from 'react-icons/fi';
-import Image from 'next/image';
 
 const style = {
     position: 'absolute',
@@ -25,9 +24,8 @@ const style = {
 export default function EditPostModal({ post, handleEdit }) {
     const dispatch = useDispatch();
     const feed = useSelector((state) => state.feed);
-    const [title, setTitle] = useState(post?.title || '');
     const [content, setContent] = useState(post?.content || '');
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState(post.image || null);
 
     const handleModalClose = () => {
         dispatch(feedSlice.actions.setIsEditModalOpen(false));
@@ -35,19 +33,25 @@ export default function EditPostModal({ post, handleEdit }) {
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
-        setImage(selectedFile);
+        if (!selectedFile) return;
 
-        if (selectedFile) {
-            const reader = new FileReader();
-            reader.onloadend = () => {};
-            reader.readAsDataURL(selectedFile);
-        }
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const base64Image = reader.result;
+            console.log('Base64 Image:', base64Image);
+            setImage(base64Image); 
+        };
+        reader.readAsDataURL(selectedFile);
     };
 
     const handleSaveChanges = () => {
-        handleEdit({ id: post.id, title, content, image });
+        handleEdit({ id: post.id, content, image });
         handleModalClose();
     };
+
+    useEffect(() => {
+        console.log(image);
+    }, [image]);
 
     return (
         <Modal
@@ -60,13 +64,6 @@ export default function EditPostModal({ post, handleEdit }) {
                 <Typography id="edit-modal-title" variant="h6" component="h2">
                     Edit Post
                 </Typography>
-
-                <input
-                    onChange={(e) => -setTitle(e.target.value)}
-                    value={title}
-                    className="w-full bg-gray-700 text-gray-200 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 my-4 placeholder:text-gray-500 hover:opacity-90 transition-all duration-150"
-                    placeholder="New Title"
-                />
 
                 <textarea
                     onChange={(e) => setContent(e.target.value)}

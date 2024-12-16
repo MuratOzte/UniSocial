@@ -80,7 +80,6 @@ const Post = ({ post }) => {
                 comments={comments}
                 setShowModal={setShowModal}
             />
-            <EditPostModal />
         </div>
     );
 };

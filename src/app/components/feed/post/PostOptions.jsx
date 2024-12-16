@@ -8,8 +8,9 @@ import { TbEdit } from 'react-icons/tb';
 import { deletePostRequest } from '@/util/feedService';
 import { useDispatch } from 'react-redux';
 import feedSlice from '@/store/Slices/FeedSlice';
+import EditPostModal from './EditPostModal';
 
-export default function PostOptions({ postId }) {
+export default function PostOptions({ post }) {
     const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -21,12 +22,12 @@ export default function PostOptions({ postId }) {
     };
 
     const handleDelete = () => {
-        console.log('Deleting post:', postId);
+        console.log('Deleting post:', post.id);
         deletePostRequest(localStorage.getItem('token'), postId);
     };
 
     const handleEdit = () => {
-        console.log('Editing post:', postId);
+        console.log('Editing post:', post.id);
         dispatch(feedSlice.actions.setIsEditModalOpen(true));
     };
 
@@ -36,12 +37,14 @@ export default function PostOptions({ postId }) {
                 className="ml-auto cursor-pointer"
                 onClick={handleClick}
             />
+            <EditPostModal post={post} />
 
             <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
+                autoFocus={false}
                 MenuListProps={{
                     'aria-labelledby': 'basic-button',
                 }}
