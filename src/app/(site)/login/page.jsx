@@ -29,9 +29,12 @@ import Loading from '@/app/components/common/Loading';
 import AuthBackground from '@/app/components/common/authBackground';
 import logo from '@/assets/logo/logo.png';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const LoginPage = () => {
     const dispatch = useDispatch();
+    const router = useRouter();
+
     // Error and loading state
     const [errorText, setErrorText] = useState('');
     const [isRequestPending, setIsRequestPending] = useState(false);
@@ -66,6 +69,7 @@ const LoginPage = () => {
                 localStorage.setItem('token', data.token);
                 dispatch(loginSlice.actions.resetAllData());
                 setIsRequestPending(false);
+                router.replace('/feed');
             } catch (error) {
                 console.log(error.message);
                 setIsRequestPending(false);

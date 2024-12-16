@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Post from './event';
+import Event from './events';
 
 const Events = () => {
     const [events, setEvents] = useState(null);
@@ -34,7 +34,7 @@ const Events = () => {
         fetchData();
     }, []);
 
-    return events && events.map((event) => <Post key={event.id} event={event} />);
+    return events && events.map((event) => <Event key={event.id} event={event} />);
 };
 
 export default Events;
