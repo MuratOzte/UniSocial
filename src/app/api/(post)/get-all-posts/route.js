@@ -30,15 +30,15 @@ export async function GET(req) {
             );
         }
 
-        const posts = await prisma.post.findMany({
-            include: {
-                author: true,
-                comments: true,
-            },
-            orderBy: {
-                createdAt: 'desc',
-            },
-        });
+        const posts = await prisma.post.findMany();
+        const postsWithAuthors = await Promise.all(
+            posts.map(async (post) => ({
+                ...post,
+                author: await prisma.user.findUnique({
+                    where: { id: post.authorId },
+                }),
+            }))
+        );
 
         return NextResponse.json(
             {
