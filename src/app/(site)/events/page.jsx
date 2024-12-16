@@ -18,7 +18,8 @@ const Page = () => {
                 <LeftNav />
                 <div className='flex justify-start flex-col items-center' >
                     <ShareEvents/>
-                    <Posts />
+                    
+                    
                 </div>
                 <div className='flex flex-col gap-5 mt-4' >
                 <Calendar

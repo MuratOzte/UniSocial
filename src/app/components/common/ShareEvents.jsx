@@ -1,39 +1,40 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import TextField from '@mui/material/TextField';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Modal from "@mui/material/Modal";
+import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: '#ffffff',
-  borderRadius: '12px',
-  boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+  bgcolor: "#ffffff",
+  borderRadius: "12px",
+  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
   p: 4,
 };
 
 export default function ShareEvents() {
   const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({
-    description: '',
-    date: '',
-    time: '',
-    location: '',
-    eventType: '',
-    price: '',
+    title: "",
+    description: "",
+    date: "",
+    time: "",
+    location: "",
+    eventType: "",
+    price: "",
     file: null,
   });
 
-  const [fileName, setFileName] = React.useState(''); // Dosya adını tutar
+  const [fileName, setFileName] = React.useState(""); // Dosya adını tutar
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -57,8 +58,29 @@ export default function ShareEvents() {
     }
   };
 
-  const handleSubmit = () => {
-    console.log('Form Data:', formData);
+  const handleSubmit = async () => {
+    console.log("Form Data:", formData);
+    try {
+      const response = await fetch("http://localhost:3000/api/create-event", {
+        method: "POST",
+        body: JSON.stringify({
+          title: formData.title,
+          description: formData.description,
+          date: formData.date,
+          location: formData.location,
+          eventType: formData.eventType,
+          price: formData.price,
+          time:formData.time
+        }),
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
     handleClose();
   };
 
@@ -68,10 +90,10 @@ export default function ShareEvents() {
         variant="contained"
         onClick={handleOpen}
         sx={{
-          backgroundColor: '#1976D2',
-          color: '#fff',
-          borderRadius: '8px',
-          '&:hover': { backgroundColor: '#135ba1' },
+          backgroundColor: "#1976D2",
+          color: "#fff",
+          borderRadius: "8px",
+          "&:hover": { backgroundColor: "#135ba1" },
         }}
       >
         Share Event
@@ -88,18 +110,26 @@ export default function ShareEvents() {
             variant="h6"
             component="h2"
             gutterBottom
-            sx={{ color: '#1976D2', fontWeight: 'bold' }}
+            sx={{ color: "#1976D2", fontWeight: "bold" }}
           >
             Share an Event
           </Typography>
           <Box
             component="form"
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
+              display: "flex",
+              flexDirection: "column",
               gap: 2,
             }}
           >
+            <TextField
+              label="title"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              fullWidth
+            />
+
             <TextField
               label="Description"
               name="description"
@@ -160,7 +190,7 @@ export default function ShareEvents() {
               <input
                 type="file"
                 id="file-upload"
-                style={{ display: 'none' }}
+                style={{ display: "none" }}
                 onChange={handleFileChange}
               />
               <label htmlFor="file-upload">
@@ -168,17 +198,17 @@ export default function ShareEvents() {
                   variant="outlined"
                   component="span"
                   sx={{
-                    color: '#1976D2',
-                    borderColor: '#1976D2',
-                    borderRadius: '8px',
-                    '&:hover': { borderColor: '#135ba1', color: '#135ba1' },
+                    color: "#1976D2",
+                    borderColor: "#1976D2",
+                    borderRadius: "8px",
+                    "&:hover": { borderColor: "#135ba1", color: "#135ba1" },
                   }}
                 >
                   Upload File
                 </Button>
               </label>
               {fileName && (
-                <Typography variant="body2" sx={{ mt: 1, color: '#555' }}>
+                <Typography variant="body2" sx={{ mt: 1, color: "#555" }}>
                   Selected File: {fileName}
                 </Typography>
               )}
@@ -189,10 +219,10 @@ export default function ShareEvents() {
               onClick={handleSubmit}
               sx={{
                 mt: 2,
-                backgroundColor: '#1976D2',
-                color: '#fff',
-                borderRadius: '8px',
-                '&:hover': { backgroundColor: '#135ba1' },
+                backgroundColor: "#1976D2",
+                color: "#fff",
+                borderRadius: "8px",
+                "&:hover": { backgroundColor: "#135ba1" },
               }}
             >
               Submit
