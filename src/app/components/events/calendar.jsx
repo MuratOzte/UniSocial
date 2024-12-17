@@ -65,7 +65,7 @@ const Calendar = ({ events }) => {
                     &lt;
                 </button>
                 <h2 className="text-lg font-semibold">
-                    {`months[currentMonth]} {currentYear`}
+                    {`${months[currentMonth]} ${currentYear}`}
                 </h2>
                 <button
                     onClick={() => changeMonth(1)}
