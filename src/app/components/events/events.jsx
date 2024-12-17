@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Event from './events';
+import Event from './event';
 
 const Events = () => {
     const [events, setEvents] = useState(null);
@@ -25,7 +25,7 @@ const Events = () => {
     }, []);
 
     return (
-        events && events.map((event) => <Event key={event.id} event={event} />)
+        events && events.map((event) => <Event key={event.id} eventData={event} />)
     );
 };
 
