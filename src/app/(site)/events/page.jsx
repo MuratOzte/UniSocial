@@ -1,14 +1,10 @@
 'use client';
 
-import Calendar from '@/app/components/common/calendar';
-import LeftNav from '@/app/components/feed/left-nav/LeftNav';
-import NewsSection from '@/app/components/feed/news/news';
-import Posts from '@/app/components/feed/post/posts';
-import Share from '@/app/components/feed/share/Share';
-import WhoToFollow from '@/app/components/feed/wtfollow/wtFollow';
 import Nav from '@/app/components/Nav/Nav';
+import Calendar from '@/app/components/events/calendar';
 import ShareEvents from '@/app/components/events/ShareEvents';
 import Events from '@/app/components/events/events';
+import LeftNav from '@/app/components/feed/left-nav/LeftNav';
 
 const Page = () => {
     const events = ['2024-12-5', '2024-12-10', '2025-1-8'];

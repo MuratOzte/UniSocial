@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Calendar from "../components/common/calendar";
+import Calendar from "../components/events/calendar";
 
 const Main = () => {
   const [file, setFile] = useState(null);
