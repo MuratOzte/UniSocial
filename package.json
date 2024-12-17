@@ -19,6 +19,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.7",
     "bcrypt": "^5.1.1",
+    "emoji-picker-react": "^4.12.0",
     "framer-motion": "^11.11.9",
     "jsonwebtoken": "^9.0.2",
     "next": "^15.1.0",
