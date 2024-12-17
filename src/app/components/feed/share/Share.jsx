@@ -2,7 +2,7 @@
 import feedSlice, { fetchPosts } from "@/store/Slices/FeedSlice";
 import { sharePostRequest } from "@/util/feedService";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TbSend } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../common/Loading";
@@ -19,10 +19,11 @@ const Share = () => {
   const [file, setFile] = useState(null);
   const [base64File, setBase64File] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const emojiPickerRef = useRef(null); // Referans ekliyoruz
 
-    const EmojiModuleOpenHandler=()=>{
-        setIsEmojiOpened((prev)=>!prev)
-    }
+  const EmojiModuleOpenHandler = () => {
+    setIsEmojiOpened((prev) => !prev);
+  };
   const inputValChangeHandler = (e) => {
     dispatch(
       feedSlice.actions.shareMessageChangeHandler(e.currentTarget.value)
@@ -63,6 +64,25 @@ const Share = () => {
     }
   }, [file]);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        emojiPickerRef.current &&
+        !emojiPickerRef.current.contains(event.target)
+      ) {
+        setIsEmojiOpened(false);
+      }
+    };
+
+    if (isEmojiOpened) {
+      document.addEventListener("click", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isEmojiOpened]);
+
   return (
     <div className="w-full max-w-md p-4 h-fit rounded-lg shadow-lg bg-gray-800 text-white mt-4">
       {isLoading && (
@@ -80,16 +100,24 @@ const Share = () => {
           height={50}
           className="rounded-full mr-4"
         />
-        <div
-            style={{position:"relative"}}
-        >
-          <MdEmojiEmotions 
-            style={{position:'absolute',right:10,top:10,cursor:'pointer'}}
+        <div style={{ position: "relative" }} ref={emojiPickerRef}>
+          <MdEmojiEmotions
+            style={{
+              position: "absolute",
+              right: 10,
+              top: 10,
+              cursor: "pointer",
+            }}
             size={20}
             onClick={EmojiModuleOpenHandler}
           />
           <EmojiPicker
-            style={{ position: "absolute", top: "50px", left: "75px", zIndex: 10 }}
+            style={{
+              position: "absolute",
+              top: "50px",
+              left: "75px",
+              zIndex: 10,
+            }}
             open={isEmojiOpened}
           />
           <input
