@@ -1,87 +1,80 @@
-import { useState, useEffect } from 'react';
-import { IoIosSend } from 'react-icons/io';
+import React from "react";
 
-import CommentModal from './CommentModal';
-import EditPostModal from './EditPostModal';
-import { timeAgo } from '@/util/timeService';
-import { VscAccount } from 'react-icons/vsc';
-import { PiStudent } from 'react-icons/pi';
-import { TbSchool } from 'react-icons/tb';
-import PostFooter from './PostFooter';
-import PostHeader from './PostHeader';
+const Event = ({ eventData }) => {
+  return (
+    <div style={styles.container}>
+      <h2 style={styles.title}>{eventData.title || "Event Title"}</h2>
 
-const Event = ({ event }) => {
-    const [showModal, setShowModal] = useState(false);
-    const time = timeAgo(event.createdAt);
-    const isTeacher = event.author.isTeacher;
-    console.log(time);
+      <div style={styles.details}>
+        <p style={styles.info}><strong>Description:</strong> {eventData.description || "No description provided."}</p>
+        <p style={styles.info}><strong>Date:</strong> {eventData.date || "TBA"}</p>
+        <p style={styles.info}><strong>Time:</strong> {eventData.time || "TBA"}</p>
+        <p style={styles.info}><strong>Location:</strong> {eventData.location || "To be announced"}</p>
+        <p style={styles.info}><strong>Type:</strong> {eventData.eventType || "General"}</p>
+        <p style={styles.info}><strong>Price:</strong> {eventData.price || "Free"}</p>
+      </div>
 
-    const comments = [
-        {
-            id: 1,
-            name: 'Samuel Bishop',
-            text: 'Removed demands expense account in outward tedious do. Particular way thoroughly unaffected projection.',
-            time: '5 hours ago',
-            likes: 3,
-        },
-        {
-            id: 2,
-            name: 'Dennis Barrett',
-            text: 'See resolved goodness felicity shy civility domestic had but Drawings offended yet answered Jennings perceive.',
-            time: '2 hours ago',
-            likes: 5,
-        },
-        {
-            id: 3,
-            name: 'Lori Ferguson',
-            text: 'Wishing calling is warrant settled was lucky.',
-            time: '15 minutes ago',
-            likes: 0,
-        },
-    ];
-
-    useEffect(() => {
-        const handleKeyDown = (e) => {
-            if (e.key === 'Escape') {
-                setShowModal(false);
-            }
-        };
-
-        if (showModal) {
-            document.body.style.overflow = 'hidden';
-            window.addEventListener('keydown', handleKeyDown);
-        } else {
-            document.body.style.overflow = 'auto';
-        }
-
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-            document.body.style.overflow = 'auto';
-        };
-    }, [showModal]);
-
-    return (
-        <div className="w-full max-w-lg bg-gray-800 text-white p-4 rounded-lg shadow-lg my-8">
-            <PostHeader event={event} time={time} isTeacher={isTeacher} />
-
-            <p className="mb-4">{event.content}</p>
-
-            {event.image && (
-                <img
-                    src={event.image}
-                    alt="Post content"
-                    className="w-full rounded-lg mb-4"
-                />
-            )}
-
-            <PostFooter setShowModal={setShowModal} event={event} />
-            <CommentModal
-                showModal={showModal}
-                comments={comments}
-                setShowModal={setShowModal}
-            />
+      {eventData.file ? (
+        <div style={styles.fileContainer}>
+          <strong>Attached File:</strong>
+          <p style={styles.fileName}>{eventData.file.name}</p>
+          <embed src={URL.createObjectURL(eventData.file)} width="100%" height="200px" style={styles.filePreview} />
         </div>
-    );
+      ) : (
+        <p style={styles.noFile}>No file uploaded.</p>
+      )}
+    </div>
+  );
+};
+
+const styles = {
+  container: {
+    border: "1px solid #e0e0e0",
+    borderRadius: "12px",
+    padding: "20px",
+    maxWidth: "700px",
+    margin: "20px auto",
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+    backgroundColor: "#f9f9f9",
+    fontFamily: "'Roboto', sans-serif",
+  },
+  title: {
+    marginBottom: "15px",
+    color: "#2c3e50",
+    fontSize: "24px",
+    borderBottom: "2px solid #3498db",
+    paddingBottom: "10px",
+    textAlign: "center",
+  },
+  details: {
+    marginTop: "10px",
+    color: "#34495e",
+    lineHeight: "1.6",
+  },
+  info: {
+    margin: "5px 0",
+    fontSize: "16px",
+  },
+  fileContainer: {
+    marginTop: "20px",
+    padding: "10px",
+    backgroundColor: "#ecf0f1",
+    borderRadius: "8px",
+    textAlign: "center",
+  },
+  fileName: {
+    fontStyle: "italic",
+    margin: "5px 0",
+  },
+  filePreview: {
+    marginTop: "10px",
+    borderRadius: "6px",
+  },
+  noFile: {
+    color: "#7f8c8d",
+    fontStyle: "italic",
+    textAlign: "center",
+  },
 };
 
 export default Event;
