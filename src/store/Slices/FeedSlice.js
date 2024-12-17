@@ -27,7 +27,7 @@ const feedSlice = createSlice({
         posts: [],
         status: 'idle',
         error: null,
-        isPostLoading: false,
+        loadingPosts: {},
     },
 
     reducers: {
@@ -49,8 +49,9 @@ const feedSlice = createSlice({
         SelectedCalendarDateChangeHandler(state, action) {
             state.SelectedCalendarDate = action.payload;
         },
-        setIsPostLoading(state, action) {
-            state.isPostLoading = action.payload;
+        setPostLoading(state, action) {
+            const { id, isLoading } = action.payload;
+            state.loadingPosts[id] = isLoading;
         },
     },
 

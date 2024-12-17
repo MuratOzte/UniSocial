@@ -30,10 +30,17 @@ export default function PostOptions({ post }) {
 
     const handleDelete = async () => {
         console.log('Deleting post:', post.id);
-        dispatch(feedSlice.actions.setIsPostLoading(true));
-        await deletePostRequest(localStorage.getItem('token'), post.id);
-        dispatch(fetchPosts(localStorage.getItem('token')));
-        dispatch(feedSlice.actions.setIsPostLoading(false));
+
+        dispatch(feedSlice.actions.setPostLoading({ id: post.id, isLoading: true }));
+
+        try {
+            await deletePostRequest(localStorage.getItem('token'), post.id);
+            dispatch(fetchPosts(localStorage.getItem('token')));
+        } catch (error) {
+            console.error('Error deleting post:', error);
+        } finally {
+            dispatch(feedSlice.actions.setPostLoading({ id: post.id, isLoading: false }));
+        }
     };
 
     const handleEdit = () => {

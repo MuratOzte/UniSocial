@@ -9,9 +9,14 @@ import { PiStudent } from 'react-icons/pi';
 import { TbSchool } from 'react-icons/tb';
 import PostFooter from './PostFooter';
 import PostHeader from './PostHeader';
+import { useSelector } from 'react-redux';
+import Loading from '../../common/Loading';
 
 const Post = ({ post }) => {
     const [showModal, setShowModal] = useState(false);
+    const feed = useSelector((state) => state.feed);
+    const isPostLoading = feed.loadingPosts[post.id];
+
     const time = timeAgo(post.createdAt);
     const isTeacher = post.author.isTeacher;
 
@@ -58,6 +63,14 @@ const Post = ({ post }) => {
             document.body.style.overflow = 'auto';
         };
     }, [showModal]);
+
+    if (isPostLoading) {
+        return (
+            <div className="w-full min-h-[160px] max-w-lg bg-gray-800 text-white p-4 rounded-lg shadow-lg my-8 flex justify-center items-center">
+                <Loading />
+            </div>
+        );
+    }
 
     return (
         <div className="w-full max-w-lg bg-gray-800 text-white p-4 rounded-lg shadow-lg my-8">
