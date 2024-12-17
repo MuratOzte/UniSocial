@@ -20,6 +20,8 @@ const Post = ({ post }) => {
     const time = timeAgo(post.createdAt);
     const isTeacher = post.author.isTeacher;
 
+    console.log(post);
+
     const comments = [
         {
             id: 1,

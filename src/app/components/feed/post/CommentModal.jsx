@@ -1,7 +1,7 @@
 import { FaThumbsUp } from "react-icons/fa6";
 import { IoIosSend } from "react-icons/io";
 
-const CommentModal = ({ showModal, setShowModal, comments }) => {
+const CommentModal = ({ showModal, setShowModal }) => {
     return (
         showModal && (
             <div

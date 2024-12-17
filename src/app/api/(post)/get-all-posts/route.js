@@ -50,11 +50,19 @@ export async function GET(req) {
 
                 const comments = await prisma.comment.findMany({
                     where: { postId: post.id },
+                    orderBy: { createdAt: 'desc' },
                     select: {
                         id: true,
-                        content: true,
+                        content: true, 
                         createdAt: true,
-                        authorId: true,
+                        author: {
+                            select: {
+                                id: true,
+                                name: true,
+                                profilePicture: true,
+                                isTeacher: true,
+                            },
+                        },
                     },
                 });
 
@@ -62,7 +70,7 @@ export async function GET(req) {
                     ...post,
                     author,
                     comments,
-                    isYourPost: post.authorId === userId, 
+                    isYourPost: post.authorId === userId,
                 };
             })
         );
