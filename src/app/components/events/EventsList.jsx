@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import EventCard from './EventCard';
+import Loading from '../common/Loading';
 
 const EventsList = () => {
     const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState(true); 
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -21,21 +23,27 @@ const EventsList = () => {
                 const data = await response.json();
                 console.log(data);
                 setEvents(data.events);
+                setLoading(false); 
             } catch (error) {
                 console.error('Error fetching events: ', error);
+                setLoading(false); 
             }
         };
         fetchEvents();
     }, []);
 
-    const handleJoin = (id) => {
-        console.log(`Event ${id} joined!`);
-    };
+    if (loading) {
+        return (
+            <div className='flex justify-center items-center mt-16' >
+                <Loading />
+            </div>
+        );
+    }
 
     return (
         <div className="p-6 space-y-4">
             {events.map((event) => (
-                <EventCard key={event.id} event={event} onJoin={handleJoin} />
+                <EventCard key={event.id} event={event} />
             ))}
         </div>
     );
