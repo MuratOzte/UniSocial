@@ -2,8 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const uiSlice = createSlice({
     name: 'ui',
-    initialState: {},
-    reducers: {},
+    initialState: {
+        userId: null,
+    },
+    reducers: {
+        setUserId(state, action) {
+            state.userId = action.payload;
+        },
+    },
 });
 
 export default uiSlice;

@@ -30,6 +30,7 @@ import AuthBackground from '@/app/components/common/authBackground';
 import logo from '@/assets/logo/logo.png';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import uiSlice from '@/store/Slices/uiSlice';
 
 const LoginPage = () => {
     const dispatch = useDispatch();
@@ -67,7 +68,9 @@ const LoginPage = () => {
                 setIsRequestPending(true);
                 const data = await loginRequest(enteredEmail, enteredPassword);
                 localStorage.setItem('token', data.token);
+
                 dispatch(loginSlice.actions.resetAllData());
+                localStorage.setItem('userId', data.user.id);
                 setIsRequestPending(false);
                 router.replace('/feed');
             } catch (error) {

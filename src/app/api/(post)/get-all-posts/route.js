@@ -53,7 +53,7 @@ export async function GET(req) {
                     orderBy: { createdAt: 'desc' },
                     select: {
                         id: true,
-                        content: true, 
+                        content: true,
                         createdAt: true,
                         author: {
                             select: {
