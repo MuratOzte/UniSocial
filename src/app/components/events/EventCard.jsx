@@ -3,22 +3,52 @@ import React from 'react';
 
 const EventCard = ({ event, onJoin }) => {
     if (!event) return null;
-    console.log(event);
+
+    const communityName = event.community
+        ? event.community.name
+        : 'Unknown Community';
+    const communityProfilePicture = event.community
+        ? event.community.profilePicture
+        : '';
 
     return (
         <div className="flex items-center bg-white border border-gray-200 rounded-lg shadow-lg p-6 space-x-6 min-w-[450px]">
-            {/* Left Side: Event Info */}
-            <div className="flex-1">
-                <h3 className="text-xl font-semibold text-gray-800">
-                    {event.title}
-                </h3>
-                <p className="text-sm text-gray-600">{event.description}</p>
-                <p className="text-sm text-gray-500 mt-2">
-                    {timeAgo(event.createdAt)}
+            <div className="flex-1 flex flex-col gap-5 w-full">
+                {/* Title and Right Section (Time, Price, Community) */}
+                <div className="flex justify-between w-full">
+                    <h3 className="text-xl font-semibold text-gray-800">
+                        {event.title}
+                    </h3>
+
+                    {/* Time, Price, and Community Name Section */}
+                    <div className="flex items-end gap-2">
+                        <p className="text-sm text-gray-500">
+                            {event.date} - {event.time} | {event.location}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                            Price: {event.price}{' '}
+                            {event.price > 0 ? '₺' : 'Free'}
+                        </p>
+                    </div>
+                </div>
+                <p className="text-sm text-gray-600">
+                    Community: {communityName}
                 </p>
+                {/* Event Description */}
+                <p className="text-sm text-gray-600">{event.description}</p>
+
+                {/* Time Ago (Created At) */}
+                <div className='flex justify-between' >
+                    <p className="text-sm text-gray-500 mt-2">
+                        {timeAgo(event.createdAt)}
+                    </p>
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded min-w-32">
+                        Join
+                    </button>
+                </div>
             </div>
 
-            {/* Right Side: Event Image */}
+            {/* Event Image */}
             {event.image && (
                 <div className="flex-shrink-0">
                     <img
@@ -30,12 +60,6 @@ const EventCard = ({ event, onJoin }) => {
             )}
 
             {/* Join Button */}
-            <button
-                onClick={() => onJoin(event.id)}
-                className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
-            >
-                Join Event
-            </button>
         </div>
     );
 };
