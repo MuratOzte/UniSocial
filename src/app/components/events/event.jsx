@@ -10,10 +10,10 @@ import { TbSchool } from 'react-icons/tb';
 import PostFooter from './PostFooter';
 import PostHeader from './PostHeader';
 
-const Event = ({ post }) => {
+const Event = ({ event }) => {
     const [showModal, setShowModal] = useState(false);
-    const time = timeAgo(post.createdAt);
-    const isTeacher = post.author.isTeacher;
+    const time = timeAgo(event.createdAt);
+    const isTeacher = event.author.isTeacher;
     console.log(time);
 
     const comments = [
@@ -62,19 +62,19 @@ const Event = ({ post }) => {
 
     return (
         <div className="w-full max-w-lg bg-gray-800 text-white p-4 rounded-lg shadow-lg my-8">
-            <PostHeader post={post} time={time} isTeacher={isTeacher} />
+            <PostHeader event={event} time={time} isTeacher={isTeacher} />
 
-            <p className="mb-4">{post.content}</p>
+            <p className="mb-4">{event.content}</p>
 
-            {post.image && (
+            {event.image && (
                 <img
-                    src={post.image}
+                    src={event.image}
                     alt="Post content"
                     className="w-full rounded-lg mb-4"
                 />
             )}
 
-            <PostFooter setShowModal={setShowModal} post={post} />
+            <PostFooter setShowModal={setShowModal} event={event} />
             <CommentModal
                 showModal={showModal}
                 comments={comments}

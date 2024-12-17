@@ -1,7 +1,13 @@
-import { FaImage } from "react-icons/fa6";
-import { MdEmojiEmotions, MdOutlineEventNote } from "react-icons/md";
+import feedSlice from '@/store/Slices/FeedSlice';
+import { FaImage } from 'react-icons/fa6';
+import { MdEmojiEmotions, MdOutlineEventNote } from 'react-icons/md';
+import { useDispatch } from 'react-redux';
 
 const ShareFooter = ({ uploadFileModalHandler }) => {
+    const dispatch = useDispatch();
+    const ShareModalOpenHandler = () => {
+        dispatch(feedSlice.actions.OpenShareModalChangeHandler(true));
+    };
     return (
         <div className="flex items-center justify-evenly">
             <button
@@ -11,7 +17,10 @@ const ShareFooter = ({ uploadFileModalHandler }) => {
                 <FaImage className="mr-2" />
                 Photo/Video
             </button>
-            <button className="flex items-center px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600">
+            <button
+                className="flex items-center px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600"
+                onClick={ShareModalOpenHandler}
+            >
                 <MdOutlineEventNote className="mr-2" />
                 Event
             </button>

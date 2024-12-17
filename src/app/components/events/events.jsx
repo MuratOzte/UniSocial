@@ -24,8 +24,8 @@ const Events = () => {
                 const response = await getAllPostsRequest(
                     localStorage.getItem('token')
                 );
-                setEvents(response.events);
-                console.log(response.events);
+                // setEvents(response.events);
+                console.log(response);
             } catch (error) {
                 console.error('Error fetching events:', error);
             }
@@ -34,7 +34,9 @@ const Events = () => {
         fetchData();
     }, []);
 
-    return events && events.map((event) => <Event key={event.id} event={event} />);
+    return (
+        events && events.map((event) => <Event key={event.id} event={event} />)
+    );
 };
 
 export default Events;

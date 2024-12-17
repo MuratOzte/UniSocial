@@ -8,6 +8,7 @@ import Share from '@/app/components/feed/share/Share';
 import WhoToFollow from '@/app/components/feed/wtfollow/wtFollow';
 import Nav from '@/app/components/Nav/Nav';
 import ShareEvents from '@/app/components/common/ShareEvents';
+import Events from '@/app/components/events/events';
 
 const Page = () => {
     const events = ['2024-12-5', '2024-12-10', '2025-1-8'];
@@ -15,13 +16,12 @@ const Page = () => {
         <div>
             <Nav />
             <div className="flex justify-between px-8">
-                <div >
-                    <LeftNav />
-                </div>
-                <div className="flex justify-start flex-col items-center bg-red-500 w-1/2 mt-8 mx-16">
+                <LeftNav />
+                <div className="flex justify-start flex-col items-center">
                     <ShareEvents />
+                    <Events />
                 </div>
-                <div className="flex flex-col gap-5 mt-4 justify-items-end">
+                <div className="flex flex-col gap-5 mt-4">
                     <Calendar events={events} />
                 </div>
             </div>

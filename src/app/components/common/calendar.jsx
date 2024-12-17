@@ -1,6 +1,9 @@
+import feedSlice from '@/store/Slices/FeedSlice';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 const Calendar = ({ events }) => {
+    const dispatch = useDispatch();
     const [currentDate, setCurrentDate] = useState(new Date());
 
     // Ay ve yıl bilgisini güncelle
@@ -40,6 +43,9 @@ const Calendar = ({ events }) => {
     const handleDayClick = (day) => {
         const selectedDate = `${day} ${months[currentMonth]} ${currentYear}`;
         const eventExists = isEventDay(day);
+        dispatch(
+            feedSlice.actions.SelectedCalendarDateChangeHandler(selectedDate)
+        );
         console.log(`Seçilen Gün: ${selectedDate}`);
         console.log(
             eventExists
@@ -49,9 +55,9 @@ const Calendar = ({ events }) => {
     };
 
     return (
-        <div className="mr-2 mt-20 bg-white shadow-lg rounded-lg items-end">
+        <div className="w-full max-w-md mx-auto mt-6 bg-white shadow-lg rounded-lg">
             {/* Ay ve Yıl Başlığı */}
-            <div className="p-4 flex justify-between items-center w-[320px]">
+            <div className="p-4 flex justify-between items-center">
                 <button
                     onClick={() => changeMonth(-1)}
                     className="text-gray-600 hover:text-gray-800 select-none"

@@ -10,6 +10,10 @@ const feedSlice = createSlice({
             content: '',
             image: '',
         },
+        //shareEvent
+        OpenShareModal: false,
+        //Calendar
+        SelectedCalendarDate: '',
     },
 
     reducers: {
@@ -24,6 +28,12 @@ const feedSlice = createSlice({
         },
         setSelectedPost(state, action) {
             state.selectedPost = action.payload;
+        },
+        OpenShareModalChangeHandler(state, action) {
+            state.OpenShareModal = action.payload;
+        },
+        SelectedCalendarDateChangeHandler(state, action) {
+            state.SelectedCalendarDate = action.payload;
         },
     },
 });

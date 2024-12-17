@@ -1,3 +1,4 @@
+import feedSlice from '@/store/Slices/FeedSlice';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
@@ -8,6 +9,7 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 const style = {
     position: 'absolute',
@@ -22,7 +24,8 @@ const style = {
 };
 
 export default function ShareEvents() {
-    const [open, setOpen] = React.useState(false);
+    const dispatch = useDispatch();
+    const feed = useSelector((state) => state.feed);
     const [formData, setFormData] = React.useState({
         title: '',
         description: '',
@@ -30,61 +33,53 @@ export default function ShareEvents() {
         time: '',
         location: '',
         eventType: '',
-        price: 12,
+        price: '',
         file: null,
     });
 
-    const [fileName, setFileName] = React.useState(''); // Dosya adını tutar
+    const [fileName, setFileName] = React.useState('');
 
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+        dispatch(feedSlice.actions.OpenShareModalChangeHandler(false));
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        if (name == 'price') {
-            setFormData({
-                ...formData,
-                [name]: parseInt(value),
-            });
-            return;
-        }
         setFormData({
             ...formData,
             [name]: value,
         });
     };
 
-    React.useEffect(() => {
-        console.log(formData.date);
-    }, [formData]);
-
     const handleFileChange = (e) => {
-        const file = e.target.files[0]; // İlk dosyayı al
+        const file = e.target.files[0];
         if (file) {
             setFormData({
                 ...formData,
                 file: file,
             });
-            setFileName(file.name); // Dosya adını ayarla
+            setFileName(file.name);
         }
     };
 
     const handleSubmit = async () => {
         console.log('Form Data:', formData);
+        const form = new FormData();
+        form.append('title', formData.title);
+        form.append('description', formData.description);
+        form.append('date', formData.date);
+        form.append('time', formData.time);
+        form.append('location', formData.location);
+        form.append('eventType', formData.eventType);
+        form.append('price', formData.price);
+        if (formData.file) form.append('file', formData.file);
+
         try {
             const response = await fetch(
                 'http://localhost:3000/api/create-event',
                 {
                     method: 'POST',
-                    body: JSON.stringify({
-                        title: formData.title,
-                        description: formData.description,
-                        time: formData.time,
-                        date: formData.date,
-                        location: formData.location,
-                        eventType: formData.eventType,
-                        price: formData.price,
-                    }),
+                    body: form,
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem(
                             'token'
@@ -102,20 +97,8 @@ export default function ShareEvents() {
 
     return (
         <div>
-            <Button
-                variant="contained"
-                onClick={handleOpen}
-                sx={{
-                    backgroundColor: '#1976D2',
-                    color: '#fff',
-                    borderRadius: '8px',
-                    '&:hover': { backgroundColor: '#135ba1' },
-                }}
-            >
-                Share Event
-            </Button>
             <Modal
-                open={open}
+                open={feed.OpenShareModal}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
@@ -139,7 +122,7 @@ export default function ShareEvents() {
                         }}
                     >
                         <TextField
-                            label="title"
+                            label="Title"
                             name="title"
                             value={formData.title}
                             onChange={handleChange}
@@ -203,7 +186,7 @@ export default function ShareEvents() {
                             fullWidth
                         />
 
-                        {/* Dosya Yükleme Alanı */}
+                        {/* File Upload Area */}
                         <Box>
                             <input
                                 type="file"
