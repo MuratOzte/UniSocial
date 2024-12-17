@@ -83,6 +83,10 @@ const Share = () => {
     };
   }, [isEmojiOpened]);
 
+  const EmojiClicked = (e) => {
+    const newMessage = feed.shareMessage + e.emoji;
+    dispatch(feedSlice.actions.shareMessageChangeHandler(newMessage));
+  };
   return (
     <div className="w-full max-w-md p-4 h-fit rounded-lg shadow-lg bg-gray-800 text-white mt-4">
       {isLoading && (
@@ -119,6 +123,7 @@ const Share = () => {
               zIndex: 10,
             }}
             open={isEmojiOpened}
+            onEmojiClick={EmojiClicked}
           />
           <input
             value={feed.shareMessage}
