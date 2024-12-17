@@ -98,6 +98,16 @@ export default function ShareEvents() {
       console.log(error);
     }
     handleClose();
+    setFormData({
+        title: "",
+        description: "",
+        date: "",
+        time: "",
+        location: "",
+        eventType: "",
+        price: "",
+        file: null,
+      });
   };
 
   return (
