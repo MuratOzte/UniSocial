@@ -1,7 +1,9 @@
+import { timeAgo } from "@/util/timeService";
 import { FaThumbsUp } from "react-icons/fa6";
 import { IoIosSend } from "react-icons/io";
 
-const CommentModal = ({ showModal, setShowModal }) => {
+const CommentModal = ({ showModal, setShowModal , comments }) => {
+    const time = timeAgo();
     return (
         showModal && (
             <div
@@ -26,20 +28,20 @@ const CommentModal = ({ showModal, setShowModal }) => {
                                 <div className="flex items-center mb-2">
                                     <img
                                         src="https://via.placeholder.com/40"
-                                        alt={`${comment.name}'s avatar`}
+                                        alt={`${comment.author.name}'s avatar`}
                                         className="w-8 h-8 rounded-full mr-3"
                                     />
                                     <div>
                                         <p className="font-semibold text-sm">
-                                            {comment.name}
+                                            {comment.author.name}
                                         </p>
                                         <p className="text-xs text-gray-400">
-                                            {comment.time}
+                                            {timeAgo(comment.createdAt)}
                                         </p>
                                     </div>
                                 </div>
                                 <p className="text-sm text-gray-300 mb-2">
-                                    {comment.text}
+                                    {comment.content}
                                 </p>
                                 <p className="text-xs text-gray-400 cursor-pointer">
                                     <FaThumbsUp className="inline mr-1" /> Like

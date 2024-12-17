@@ -91,7 +91,7 @@ const Post = ({ post }) => {
             <PostFooter setShowModal={setShowModal} post={post} />
             <CommentModal
                 showModal={showModal}
-                comments={comments}
+                comments={post.comments}
                 setShowModal={setShowModal}
             />
         </div>
