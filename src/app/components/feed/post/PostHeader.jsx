@@ -7,7 +7,6 @@ import { CiMenuKebab } from 'react-icons/ci';
 import PostOptions from './PostOptions';
 
 const PostHeader = ({ post, time, isTeacher }) => {
-    console.log('denee', post, time, isTeacher);
     return (
         <div className="flex items-center mb-4">
             {!post.author.profilePicture && (

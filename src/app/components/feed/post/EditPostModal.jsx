@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useDispatch, useSelector } from 'react-redux';
-import feedSlice from '@/store/Slices/FeedSlice';
+import feedSlice, { fetchPosts } from '@/store/Slices/FeedSlice';
 import { FiUpload } from 'react-icons/fi';
 import Loading from '../../common/Loading';
 
@@ -81,6 +81,7 @@ export default function EditPostModal({ post }) {
                 }
             );
             setIsLoading(false);
+            dispatch(fetchPosts(localStorage.getItem('token')));
             console.log(response.body);
         } catch (error) {
             setIsLoading(false);
