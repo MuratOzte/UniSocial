@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import OTPInput from "../Register/common/EmailCheckInput/EmailCheckInput";
+import OTPInput from "./EmailCheckInput/EmailCheckInput";
 import { useDispatch, useSelector } from "react-redux";
 import registerSlice from "@/store/Slices/RegisterSlice";
 import { SendMailtoCheck } from "@/util/authService";

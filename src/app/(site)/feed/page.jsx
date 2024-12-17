@@ -1,6 +1,6 @@
 'use client';
 
-import ShareEvents from '@/app/components/common/ShareEvents';
+import ShareEvents from '@/app/components/events/ShareEvents';
 import LeftNav from '@/app/components/feed/left-nav/LeftNav';
 import NewsSection from '@/app/components/feed/news/news';
 import Post from '@/app/components/feed/post/post';

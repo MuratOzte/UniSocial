@@ -28,7 +28,7 @@ import {
   SendMailtoCheck,
   StudentregisterRequest,
 } from "@/util/authService";
-import EnhancedModal from "@/app/components/common/modal";
+import EnhancedModal from "@/app/components/Register/common/modal";
 import { useRouter } from "next/router";
 
 // const emailRegex =

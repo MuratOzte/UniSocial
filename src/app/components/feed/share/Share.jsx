@@ -1,5 +1,5 @@
 'use client';
-import feedSlice from '@/store/Slices/FeedSlice';
+import feedSlice, { fetchPosts } from '@/store/Slices/FeedSlice';
 import { sharePostRequest } from '@/util/feedService';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -35,6 +35,7 @@ const Share = () => {
             base64File
         );
         setIsLoading(false);
+        dispatch(fetchPosts(localStorage.getItem('token')));
         console.log(data);
     };
 

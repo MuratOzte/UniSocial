@@ -7,7 +7,7 @@ import Posts from '@/app/components/feed/post/posts';
 import Share from '@/app/components/feed/share/Share';
 import WhoToFollow from '@/app/components/feed/wtfollow/wtFollow';
 import Nav from '@/app/components/Nav/Nav';
-import ShareEvents from '@/app/components/common/ShareEvents';
+import ShareEvents from '@/app/components/events/ShareEvents';
 import Events from '@/app/components/events/events';
 
 const Page = () => {

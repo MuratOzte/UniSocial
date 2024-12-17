@@ -7,7 +7,7 @@ import { FaTrash } from 'react-icons/fa';
 import { TbEdit } from 'react-icons/tb';
 import { deletePostRequest } from '@/util/feedService';
 import { useDispatch } from 'react-redux';
-import feedSlice from '@/store/Slices/FeedSlice';
+import feedSlice, { fetchPosts } from '@/store/Slices/FeedSlice';
 import EditPostModal from './EditPostModal';
 
 export default function PostOptions({ post }) {
@@ -15,27 +15,30 @@ export default function PostOptions({ post }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
-        console.log(post)
-        dispatch(feedSlice.actions.setSelectedPost({
-            id: post.id,
-            content: post.content,
-            image: post.image,
-        }));
+        dispatch(
+            feedSlice.actions.setSelectedPost({
+                id: post.id,
+                content: post.content,
+                image: post.image,
+            })
+        );
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
     };
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         console.log('Deleting post:', post.id);
-        deletePostRequest(localStorage.getItem('token'), post.id);
+        dispatch(feedSlice.actions.setIsPostLoading(true));
+        await deletePostRequest(localStorage.getItem('token'), post.id);
+        dispatch(fetchPosts(localStorage.getItem('token')));
+        dispatch(feedSlice.actions.setIsPostLoading(false));
     };
 
     const handleEdit = () => {
         dispatch(feedSlice.actions.setIsEditModalOpen(true));
     };
-
 
     return (
         <div>

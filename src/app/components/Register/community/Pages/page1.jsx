@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import TypeSelect from "../TypesSelect";
-import BasicModal from "@/app/components/common/modal";
+import BasicModal from "@/app/components/Register/common/modal";
 
 const Inputs1 = (props) => {
   const dispatch = useDispatch();

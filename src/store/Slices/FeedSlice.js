@@ -1,4 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+export const fetchPosts = createAsyncThunk('feed/fetchPosts', async (token) => {
+    const response = await fetch('http://localhost:3000/api/get-all-posts', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    const data = await response.json();
+    return data.posts;
+});
+
 const feedSlice = createSlice({
     name: 'feed',
     initialState: {
@@ -10,10 +22,12 @@ const feedSlice = createSlice({
             content: '',
             image: '',
         },
-        //shareEvent
         OpenShareModal: false,
-        //Calendar
         SelectedCalendarDate: '',
+        posts: [],
+        status: 'idle',
+        error: null,
+        isPostLoading: false,
     },
 
     reducers: {
@@ -35,6 +49,24 @@ const feedSlice = createSlice({
         SelectedCalendarDateChangeHandler(state, action) {
             state.SelectedCalendarDate = action.payload;
         },
+        setIsPostLoading(state, action) {
+            state.isPostLoading = action.payload;
+        },
+    },
+
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchPosts.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchPosts.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.posts = action.payload;
+            })
+            .addCase(fetchPosts.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            });
     },
 });
 
