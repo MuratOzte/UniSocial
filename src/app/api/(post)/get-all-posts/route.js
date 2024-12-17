@@ -30,6 +30,8 @@ export async function GET(req) {
             );
         }
 
+        const userId = decoded.id;
+
         const posts = await prisma.post.findMany({
             orderBy: { createdAt: 'desc' },
         });
@@ -60,6 +62,7 @@ export async function GET(req) {
                     ...post,
                     author,
                     comments,
+                    isYourPost: post.authorId === userId, 
                 };
             })
         );
