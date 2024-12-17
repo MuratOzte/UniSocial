@@ -7,7 +7,6 @@ const PostFooter = ({ setShowModal, post }) => {
     const [hasLiked, setHasLiked] = useState(
         post.likedBy.includes(localStorage.getItem('userId'))
     );
-
     const handleLike = async () => {
         try {
             const response = await fetch(
