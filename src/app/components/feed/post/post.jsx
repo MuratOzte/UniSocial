@@ -1,16 +1,11 @@
-import { useState, useEffect } from 'react';
-import { IoIosSend } from 'react-icons/io';
+import { useEffect, useState } from 'react';
 
-import CommentModal from './CommentModal';
-import EditPostModal from './EditPostModal';
 import { timeAgo } from '@/util/timeService';
-import { VscAccount } from 'react-icons/vsc';
-import { PiStudent } from 'react-icons/pi';
-import { TbSchool } from 'react-icons/tb';
-import PostFooter from './PostFooter';
-import PostHeader from './PostHeader';
 import { useSelector } from 'react-redux';
 import Loading from '../../common/Loading';
+import CommentModal from './CommentModal';
+import PostFooter from './PostFooter';
+import PostHeader from './PostHeader';
 
 const Post = ({ post }) => {
     const [showModal, setShowModal] = useState(false);
@@ -21,30 +16,6 @@ const Post = ({ post }) => {
     const isTeacher = post.author.isTeacher;
 
     console.log(post);
-
-    const comments = [
-        {
-            id: 1,
-            name: 'Samuel Bishop',
-            text: 'Removed demands expense account in outward tedious do. Particular way thoroughly unaffected projection.',
-            time: '5 hours ago',
-            likes: 3,
-        },
-        {
-            id: 2,
-            name: 'Dennis Barrett',
-            text: 'See resolved goodness felicity shy civility domestic had but Drawings offended yet answered Jennings perceive.',
-            time: '2 hours ago',
-            likes: 5,
-        },
-        {
-            id: 3,
-            name: 'Lori Ferguson',
-            text: 'Wishing calling is warrant settled was lucky.',
-            time: '15 minutes ago',
-            likes: 0,
-        },
-    ];
 
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -93,6 +64,7 @@ const Post = ({ post }) => {
                 showModal={showModal}
                 comments={post.comments}
                 setShowModal={setShowModal}
+                postId={post.id}
             />
         </div>
     );
