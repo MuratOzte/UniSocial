@@ -20,9 +20,9 @@ const Nav = () => {
                 />
             </div>
             <div className="flex items-center gap-4">
-                <Icons title="Messages" icon={<TbMessages />} />
-                <Icons title="Settings" icon={<IoSettingsSharp />} />
-                <Icons title="Account" icon={<FaUserCircle />} />
+                <Icons title="Messages" icon={<TbMessages size={20} />} />
+                <Icons title="Settings" icon={<IoSettingsSharp size={20} />} />
+                <Icons title="Account" icon={<FaUserCircle size={20} />} />
             </div>
         </nav>
     );
