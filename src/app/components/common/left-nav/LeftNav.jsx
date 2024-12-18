@@ -7,16 +7,17 @@ const LeftNav = () => {
 
     //emre burda http://localhost:3000/api/get-left-bar-info adresine token ile birlikte get request at kanka
     //dönen response'u burda kullan
-    //böyle bir response dner
+    //böyle bir response döner profile picture null ise react iconsdan account gibi bir icon koyabilirsin
 
     // {
     //     "message": "User data retrieved successfully",
     //     "userData": {
+    //       "profilePicture": null,
     //       "name": "admin",
     //       "surname": "admin",
     //       "univercity": "admin",
     //       "department": "admin",
-    //       "totalPosts": 2,
+    //       "totalPosts": 4,
     //       "totalFollowers": 0,
     //       "totalFollowing": 0
     //     }

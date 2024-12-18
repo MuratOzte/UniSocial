@@ -74,6 +74,7 @@ export async function GET(req) {
             {
                 message: 'User data retrieved successfully',
                 userData: {
+                    profilePicture: user.profilePicture,
                     name: user.name,
                     surname: user.surname,
                     univercity: user.univercity,
