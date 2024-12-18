@@ -38,15 +38,31 @@ export async function GET(req) {
 
         const enrichedPosts = await Promise.all(
             posts.map(async (post) => {
-                const author = await prisma.user.findUnique({
-                    where: { id: post.authorId },
-                    select: {
-                        id: true,
-                        name: true,
-                        profilePicture: true,
-                        isTeacher: true,
-                    },
-                });
+                let author;
+                if (post.authorId) {
+                    // Eğer post bir kullanıcıya aitse
+                    author = await prisma.user.findUnique({
+                        where: { id: post.authorId },
+                        select: {
+                            id: true,
+                            name: true,
+                            profilePicture: true,
+                            isTeacher: true,
+                        },
+                    });
+                }
+
+                if (!author && post.communityId) {
+                    // Eğer post bir topluluğa aitse
+                    author = await prisma.community.findUnique({
+                        where: { id: post.communityId },
+                        select: {
+                            id: true,
+                            name: true,
+                            profilePicture: true,
+                        },
+                    });
+                }
 
                 const comments = await prisma.comment.findMany({
                     where: { postId: post.id },

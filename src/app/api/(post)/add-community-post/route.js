@@ -32,7 +32,7 @@ export async function POST(req) {
 
         const { title, content, image } = await req.json();
 
-        const communityId = decoded.id; 
+        const communityId = decoded.id;
 
         if (!communityId) {
             return NextResponse.json(
@@ -59,6 +59,7 @@ export async function POST(req) {
                 image: image || null,
                 communityId,
                 authorId: decoded.id,
+                isTeacher: false,
             },
         });
 

@@ -8,6 +8,8 @@ const Posts = () => {
     const dispatch = useDispatch();
     const { posts, status, error } = useSelector((state) => state.feed);
 
+    console.log(posts)
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {

@@ -72,8 +72,10 @@ const LoginPage = () => {
                 dispatch(loginSlice.actions.resetAllData());
                 if (data.user) {
                     localStorage.setItem('userId', data.user.id);
+                    localStorage.setItem('isCommunity', false);
                 } else {
                     localStorage.setItem('userId', data.community.id);
+                    localStorage.setItem('isCommunity', true);
                 }
                 setIsRequestPending(false);
                 router.replace('/feed');
