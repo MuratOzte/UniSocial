@@ -105,11 +105,11 @@ const Share = () => {
     };
     return (
         <div className="w-full max-w-md p-4 h-fit rounded-lg shadow-lg bg-gray-800 text-white mt-4">
-            {isLoading && (
+            {/* {isLoading && (
                 <div className="absolute top-0 left-0 w-full h-full bg-gray-800 bg-opacity-80 flex items-center justify-center z-50">
                     <Loading />
                 </div>
-            )}
+            )} */}
             <div className="flex items-center mb-4 relative">
                 <Image
                     src={
@@ -120,17 +120,7 @@ const Share = () => {
                     height={50}
                     className="rounded-full mr-4"
                 />
-                <div style={{ position: 'relative' }} ref={emojiPickerRef}>
-                    <MdEmojiEmotions
-                        style={{
-                            position: 'absolute',
-                            right: 10,
-                            top: 10,
-                            cursor: 'pointer',
-                        }}
-                        size={20}
-                        onClick={EmojiModuleOpenHandler}
-                    />
+                <div className="relative w-full" ref={emojiPickerRef}>
                     <EmojiPicker
                         style={{
                             position: 'absolute',
@@ -141,14 +131,27 @@ const Share = () => {
                         open={isEmojiOpened}
                         onEmojiClick={EmojiClicked}
                     />
-                    <input
-                        value={feed.shareMessage}
-                        type="text"
-                        onKeyDown={keyPressHandler}
-                        onChange={inputValChangeHandler}
-                        placeholder="Share your thoughts..."
-                        className="flex-1 bg-gray-700 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
+                    <div>
+                        <input
+                            value={feed.shareMessage}
+                            type="text"
+                            onKeyDown={keyPressHandler}
+                            onChange={inputValChangeHandler}
+                            placeholder="Share your thoughts..."
+                            className="w-full bg-gray-700 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                        <MdEmojiEmotions
+                            style={{
+                                position: 'absolute',
+                                right: 10,
+                                top: 10,
+                                cursor: 'pointer',
+                            }}
+                            
+                            size={20}
+                            onClick={EmojiModuleOpenHandler}
+                        />
+                    </div>
                 </div>
                 <TbSend
                     className="ml-2 cursor-pointer"

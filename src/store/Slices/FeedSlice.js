@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import useSWR from 'swr';
 
 export const fetchPosts = createAsyncThunk('feed/fetchPosts', async (token) => {
     const response = await fetch('http://localhost:3000/api/get-all-posts', {
