@@ -7,7 +7,14 @@ const PostFooter = ({ setShowModal, post }) => {
     const [hasLiked, setHasLiked] = useState(
         post.likedBy.includes(localStorage.getItem('userId'))
     );
+
     const handleLike = async () => {
+        const newHasLiked = !hasLiked;
+        const newLikesCount = newHasLiked ? likesCount + 1 : likesCount - 1;
+
+        setHasLiked(newHasLiked);
+        setLikesCount(newLikesCount);
+
         try {
             const response = await fetch(
                 'http://localhost:3000/api/add-post-like',
@@ -27,12 +34,18 @@ const PostFooter = ({ setShowModal, post }) => {
             const data = await response.json();
 
             if (response.ok) {
-                setHasLiked(!hasLiked);
-                setLikesCount(data.post.likedBy.length); 
+                setLikesCount(data.post.likedBy.length);
+                setHasLiked(
+                    data.post.likedBy.includes(localStorage.getItem('userId'))
+                );
             } else {
+                setLikesCount(likesCount);
+                setHasLiked(hasLiked);
                 console.error('Failed to update like:', data.message);
             }
         } catch (error) {
+            setLikesCount(likesCount);
+            setHasLiked(hasLiked);
             console.error('Error in handleLike:', error);
         }
     };
