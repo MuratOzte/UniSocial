@@ -13,8 +13,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../common/Loading';
 import FileUploadModal from './FileUploadModal';
 import ShareFooter from './ShareFooter';
+import { usePosts } from '@/hooks/useFetchPosts';
 
 const Share = () => {
+
+    //emre burda istek atıldıktan sonra inputun içinin temizlenmesi gerekiyor
+
     const dispatch = useDispatch();
     const [isEmojiOpened, setIsEmojiOpened] = useState(false);
     const feed = useSelector((state) => state.feed);
@@ -22,7 +26,9 @@ const Share = () => {
     const [file, setFile] = useState(null);
     const [base64File, setBase64File] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const emojiPickerRef = useRef(null); // Referans ekliyoruz
+    const emojiPickerRef = useRef(null);
+
+    const { refreshPosts } = usePosts(token);
 
     const EmojiModuleOpenHandler = () => {
         setIsEmojiOpened((prev) => !prev);
@@ -55,7 +61,7 @@ const Share = () => {
             );
         }
         setIsLoading(false);
-        dispatch(fetchPosts(localStorage.getItem('token')));
+        refreshPosts(); 
     };
 
     const keyPressHandler = (e) => {
@@ -105,12 +111,12 @@ const Share = () => {
     };
     return (
         <div className="w-full max-w-md p-4 h-fit rounded-lg shadow-lg bg-gray-800 text-white mt-4">
-            {/* {isLoading && (
-                <div className="absolute top-0 left-0 w-full h-full bg-gray-800 bg-opacity-80 flex items-center justify-center z-50">
+            {isLoading && (
+                <div className="w-full flex justify-center items-center py-4">
                     <Loading />
                 </div>
-            )} */}
-            <div className="flex items-center mb-4 relative">
+            )}
+            {!isLoading && <div className="flex items-center mb-4 relative">
                 <Image
                     src={
                         'https://media-ist1-1.cdn.whatsapp.net/v/t61.24694-24/397884028_1042568196864685_3091923269807243330_n.jpg?ccb=11-4&oh=01_Q5AaIKQmUOCzd8T27xRaE1xk6hv1larJdXmoCzMxBD7ZMq3A&oe=67557ECD&_nc_sid=5e03e0&_nc_cat=101'
@@ -147,7 +153,6 @@ const Share = () => {
                                 top: 10,
                                 cursor: 'pointer',
                             }}
-                            
                             size={20}
                             onClick={EmojiModuleOpenHandler}
                         />
@@ -158,7 +163,7 @@ const Share = () => {
                     onClick={sharePostHandler}
                     size={24}
                 />
-            </div>
+            </div>}
             <FileUploadModal file={file} setFile={setFile} />
 
             <ShareFooter uploadFileModalHandler={uploadFileModalHandler} />

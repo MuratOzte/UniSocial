@@ -9,9 +9,16 @@ import { deletePostRequest } from '@/util/feedService';
 import { useDispatch } from 'react-redux';
 import feedSlice, { fetchPosts } from '@/store/Slices/FeedSlice';
 import EditPostModal from './EditPostModal';
+import { usePosts } from '@/hooks/useFetchPosts';
 
 export default function PostOptions({ post }) {
     const dispatch = useDispatch();
+
+    const [token, setToken] = React.useState('');
+    React.useEffect(() => {
+        setToken(localStorage.getItem('token'));
+    }, []);
+    const { refreshPosts } = usePosts(token);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -35,7 +42,7 @@ export default function PostOptions({ post }) {
 
         try {
             await deletePostRequest(localStorage.getItem('token'), post.id);
-            dispatch(fetchPosts(localStorage.getItem('token')));
+            refreshPosts();
         } catch (error) {
             console.error('Error deleting post:', error);
         } finally {

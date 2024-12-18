@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import feedSlice, { fetchPosts } from '@/store/Slices/FeedSlice';
 import { FiUpload } from 'react-icons/fi';
 import Loading from '../../common/Loading';
+import { usePosts } from '@/hooks/useFetchPosts';
 
 const style = {
     position: 'absolute',
@@ -25,6 +26,13 @@ const style = {
 export default function EditPostModal({ post }) {
     const dispatch = useDispatch();
     const feed = useSelector((state) => state.feed);
+    const [token, setToken] = useState('');
+
+    useEffect(() => {
+        setToken(localStorage.getItem('token'));
+    }, []);
+
+    const { refreshPosts } = usePosts(token);
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -54,8 +62,8 @@ export default function EditPostModal({ post }) {
         const content = event.target.value;
         dispatch(
             feedSlice.actions.setSelectedPost({
-                ...feed.selectedPost, 
-                content, 
+                ...feed.selectedPost,
+                content,
             })
         );
     };
@@ -81,7 +89,7 @@ export default function EditPostModal({ post }) {
                 }
             );
             setIsLoading(false);
-            dispatch(fetchPosts(localStorage.getItem('token')));
+            refreshPosts();
             console.log(response.body);
         } catch (error) {
             setIsLoading(false);

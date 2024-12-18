@@ -1,30 +1,27 @@
-import { useState, useEffect } from 'react';
+import useSWR from 'swr';
 
-const useFetchPosts = () => {
-    const [posts, setPosts] = useState(null);
-
-    const fetchPosts = async (token) => {
-        try {
-            const response = await fetch('http://localhost:3000/api/get-all-posts', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            const data = await response.json();
-            setPosts(data.posts);
-        } catch (error) {
-            console.error('Error fetching posts:', error);
-        }
-    };
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            fetchPosts(token);
-        }
-    }, []);
-
-    return { posts, fetchPosts };
+const fetcher = async (url, token) => {
+    const res = await fetch(url, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    if (!res.ok) {
+        throw new Error('Failed to fetch data');
+    }
+    return res.json();
 };
 
-export default useFetchPosts;
+export const usePosts = (token) => {
+    const { data, error, isValidating, mutate } = useSWR(
+        token ? ['http://localhost:3000/api/get-all-posts', token] : null,
+        ([url, token]) => fetcher(url, token)
+    );
+
+    return {
+        posts: data?.posts || [],
+        error,
+        isValidating,
+        refreshPosts: mutate, 
+    };
+};

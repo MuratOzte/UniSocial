@@ -1,14 +1,22 @@
 import { fetchPosts } from '@/store/Slices/FeedSlice';
 import { timeAgo } from '@/util/timeService';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoIosSend } from 'react-icons/io';
 import { useDispatch } from 'react-redux';
 import Loading from '../../common/Loading';
+import { usePosts } from '@/hooks/useFetchPosts';
 
 const CommentModal = ({ showModal, setShowModal, comments, postId }) => {
     const dispatch = useDispatch();
+    const [token, setToken] = useState('');
     const [comment, setComment] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        setToken(localStorage.getItem('token'));
+    }, []);
+
+    const { refreshPosts } = usePosts(token);
 
     const handleInputComment = (e) => {
         setComment(e.target.value);
@@ -22,7 +30,7 @@ const CommentModal = ({ showModal, setShowModal, comments, postId }) => {
 
     const handleAddComment = async () => {
         if (comment.trim() === '') return;
-        setIsLoading(true); // Yükleme durumunu başlat
+        setIsLoading(true); 
         try {
             const response = await fetch(
                 'http://localhost:3000/api/add-comment',
@@ -41,13 +49,13 @@ const CommentModal = ({ showModal, setShowModal, comments, postId }) => {
                 }
             );
             const buffer = await response.json();
-            dispatch(fetchPosts(localStorage.getItem('token')));
+            refreshPosts();
             console.log(buffer);
-            setComment(''); 
+            setComment('');
         } catch (error) {
             console.log(error);
         } finally {
-            setIsLoading(false); 
+            setIsLoading(false);
         }
     };
 
@@ -120,12 +128,12 @@ const CommentModal = ({ showModal, setShowModal, comments, postId }) => {
                             onKeyDown={handleKeyboardAction}
                             placeholder="Add a comment..."
                             className="flex-1 bg-gray-800 text-gray-300 rounded-full px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-                            disabled={isLoading} 
+                            disabled={isLoading}
                         />
                         <button
                             onClick={handleAddComment}
                             className="ml-3 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-400 transition-colors"
-                            disabled={isLoading} 
+                            disabled={isLoading}
                         >
                             {isLoading ? (
                                 <Loading size={20} />

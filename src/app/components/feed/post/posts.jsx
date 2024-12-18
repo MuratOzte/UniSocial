@@ -1,23 +1,17 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts } from '@/store/Slices/FeedSlice';
+'use client';
+import { usePosts } from '@/hooks/useFetchPosts';
 import Post from './post';
 import Loading from '../../common/Loading';
+import { useEffect, useState } from 'react';
 
 const Posts = () => {
-    const dispatch = useDispatch();
-    const { posts, status, error } = useSelector((state) => state.feed);
-
-    console.log(posts)
-
+    const [token, setToken] = useState('');
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            dispatch(fetchPosts(token));
-        }
-    }, [dispatch]);
+        setToken(localStorage.getItem('token'));
+    }, []);
+    const { posts, error, isValidating } = usePosts(token);
 
-    if (status === 'loading') {
+    if (isValidating && !posts.length) {
         return (
             <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
                 <Loading />
@@ -25,8 +19,8 @@ const Posts = () => {
         );
     }
 
-    if (status === 'failed') {
-        return <div>Error: {error}</div>;
+    if (error) {
+        return <div>Error: {error.message}</div>;
     }
 
     return posts.length > 0 ? (

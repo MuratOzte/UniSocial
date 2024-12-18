@@ -1,16 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import useSWR from 'swr';
-
-export const fetchPosts = createAsyncThunk('feed/fetchPosts', async (token) => {
-    const response = await fetch('http://localhost:3000/api/get-all-posts', {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-
-    const data = await response.json();
-    return data.posts;
-});
+import { createSlice } from '@reduxjs/toolkit';
 
 const feedSlice = createSlice({
     name: 'feed',
@@ -25,9 +13,6 @@ const feedSlice = createSlice({
         },
         OpenShareModal: false,
         SelectedCalendarDate: '',
-        posts: [],
-        status: 'idle',
-        error: null,
         loadingPosts: {},
     },
 
@@ -54,21 +39,6 @@ const feedSlice = createSlice({
             const { id, isLoading } = action.payload;
             state.loadingPosts[id] = isLoading;
         },
-    },
-
-    extraReducers: (builder) => {
-        builder
-            .addCase(fetchPosts.pending, (state) => {
-                state.status = 'loading';
-            })
-            .addCase(fetchPosts.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-                state.posts = action.payload;
-            })
-            .addCase(fetchPosts.rejected, (state, action) => {
-                state.status = 'failed';
-                state.error = action.error.message;
-            });
     },
 });
 
