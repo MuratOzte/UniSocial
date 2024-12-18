@@ -43,15 +43,14 @@ export async function GET(req) {
             );
         }
 
-        // Fetch events
         const events = await prisma.event.findMany({
-            orderBy: { date: 'asc' },
+            orderBy: {
+                createdAt: 'desc', 
+            },
         });
 
-        // Fetch community and participants for each event
         const enrichedEvents = await Promise.all(
             events.map(async (event) => {
-                // Fetch community for the event
                 const community = await prisma.community.findUnique({
                     where: { id: event.communityId },
                     select: {
@@ -61,7 +60,6 @@ export async function GET(req) {
                     },
                 });
 
-                // Fetch participants for the event
                 const participants = await prisma.eventParticipant.findMany({
                     where: { eventId: event.id },
                 });
