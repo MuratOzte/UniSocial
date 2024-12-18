@@ -43,7 +43,6 @@ export async function GET(req) {
             );
         }
 
-        // Fetch user data along with related posts, followers, and following count
         const user = await prisma.user.findUnique({
             where: { id: userId },
             select: {
@@ -54,6 +53,7 @@ export async function GET(req) {
                 posts: true,
                 following: true,
                 followers: true,
+                profilePicture: true,
             },
         });
 
@@ -66,7 +66,6 @@ export async function GET(req) {
             );
         }
 
-        // Get total post count, followers count, and following count
         const totalPosts = user.posts.length;
         const totalFollowers = user.followers.length;
         const totalFollowing = user.following.length;

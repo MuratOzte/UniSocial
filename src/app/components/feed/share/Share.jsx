@@ -39,13 +39,15 @@ const Share = () => {
 
     const sharePostHandler = async () => {
         setIsLoading(true);
-        if (!localStorage.getItem('isCommunity')) {
+        if (localStorage.getItem('isCommunity') == 'false') {
+            console.log('user');
             const data = await sharePostRequestUser(
                 token,
                 feed.shareMessage,
                 base64File
             );
         } else {
+            console.log('community');
             const data = await sharePostRequestCommunity(
                 token,
                 feed.shareMessage,

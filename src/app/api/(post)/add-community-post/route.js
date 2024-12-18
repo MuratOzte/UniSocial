@@ -45,21 +45,22 @@ export async function POST(req) {
             where: { id: communityId },
         });
 
+        console.log('community:', community);
+
         if (!community) {
             return NextResponse.json(
                 { message: 'Community not found' },
                 { status: 404 }
             );
         }
+        console.log(content, image, communityId, decoded.id);
 
         const newPost = await prisma.post.create({
             data: {
-                title,
-                content,
+                title: 'A',
+                content: content,
                 image: image || null,
-                communityId,
                 authorId: decoded.id,
-                isTeacher: false,
             },
         });
 

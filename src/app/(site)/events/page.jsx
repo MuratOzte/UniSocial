@@ -3,7 +3,7 @@
 import Nav from '@/app/components/Nav/Nav';
 import Calendar from '@/app/components/events/calendar';
 import ShareEvents from '@/app/components/events/ShareEvents';
-import LeftNav from '@/app/components/feed/left-nav/LeftNav';
+import LeftNav from '@/app/components/common/left-nav/LeftNav';
 import EventsList from '@/app/components/events/EventsList';
 
 const Page = () => {
