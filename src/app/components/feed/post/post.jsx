@@ -14,11 +14,6 @@ const Post = ({ post }) => {
 
     const time = timeAgo(post.createdAt);
 
-    // Community postlarını hariç tut
-    if (!post.author || post.communityId) {
-        return null;
-    }
-
     const isTeacher = post.author.isTeacher;
 
     useEffect(() => {

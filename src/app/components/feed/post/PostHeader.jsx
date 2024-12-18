@@ -1,12 +1,15 @@
+import { Tooltip } from '@mui/material';
 import { PiStudent } from 'react-icons/pi';
 import { TbSchool } from 'react-icons/tb';
-import { IoBookSharp } from 'react-icons/io5';
 import { VscAccount } from 'react-icons/vsc';
-import { Tooltip } from '@mui/material';
-import { CiMenuKebab } from 'react-icons/ci';
 import PostOptions from './PostOptions';
 
 const PostHeader = ({ post, time, isTeacher }) => {
+    const isCommunity = isTeacher === undefined;
+
+    //emre burada iscommunity ise ona göre logo teacher ise teacher logo student ise student logo community ise community logo
+    //react icons kullanarak yapabilirsin
+
     return (
         <div className="flex items-center mb-4">
             {!post.author.profilePicture && (
@@ -24,13 +27,19 @@ const PostHeader = ({ post, time, isTeacher }) => {
                 <div className="text-sm text-gray-400 flex flex-row items-center justify-between w-full">
                     <div className="flex">
                         <p className="font-semibold">{post.author.name}</p>
-                        {isTeacher ? (
+                        {isTeacher && (
                             <Tooltip title="Teacher" arrow>
-                                <IoBookSharp className="ml-2" />
+                                <TbSchool className="text-lg text-blue-500 ml-1" />
                             </Tooltip>
-                        ) : (
+                        )}
+                        {!isTeacher && !isCommunity && (
                             <Tooltip title="Student" arrow>
-                                <PiStudent className="ml-2" />
+                                <PiStudent className="text-lg text-blue-500 ml-1" />
+                            </Tooltip>
+                        )}
+                        {isCommunity && (
+                            <Tooltip title="Community" arrow>
+                                <div className="text-lg text-blue-500 ml-1" />
                             </Tooltip>
                         )}
                     </div>
