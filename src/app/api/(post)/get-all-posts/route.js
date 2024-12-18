@@ -40,7 +40,6 @@ export async function GET(req) {
             posts.map(async (post) => {
                 let author;
                 if (post.authorId) {
-                    // Eğer post bir kullanıcıya aitse
                     author = await prisma.user.findUnique({
                         where: { id: post.authorId },
                         select: {
@@ -52,10 +51,9 @@ export async function GET(req) {
                     });
                 }
 
-                if (!author && post.communityId) {
-                    // Eğer post bir topluluğa aitse
+                if (author == null) {
                     author = await prisma.community.findUnique({
-                        where: { id: post.communityId },
+                        where: { id: post.authorId },
                         select: {
                             id: true,
                             name: true,
@@ -64,6 +62,8 @@ export async function GET(req) {
                     });
                 }
 
+                console.log(author)
+                
                 const comments = await prisma.comment.findMany({
                     where: { postId: post.id },
                     orderBy: { createdAt: 'desc' },

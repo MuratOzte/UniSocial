@@ -13,9 +13,13 @@ const Post = ({ post }) => {
     const isPostLoading = feed.loadingPosts[post.id];
 
     const time = timeAgo(post.createdAt);
-    const isTeacher = post.author.isTeacher;
 
-    console.log(post);
+    // Community postlarını hariç tut
+    if (!post.author || post.communityId) {
+        return null;
+    }
+
+    const isTeacher = post.author.isTeacher;
 
     useEffect(() => {
         const handleKeyDown = (e) => {
