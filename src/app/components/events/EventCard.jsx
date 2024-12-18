@@ -75,6 +75,7 @@ const EventCard = ({ event }) => {
           <button
             onClick={handleJoin}
             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded min-w-32 flex justify-center h-10 items-center"
+            disabled={isJoined}
           >
             {isJoined ? <AiOutlineCheck size={24} /> : isLoading ? <Loading /> : "JOIN"}
           </button>
