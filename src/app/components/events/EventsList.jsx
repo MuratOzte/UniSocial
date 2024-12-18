@@ -1,43 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import EventCard from './EventCard';
 import Loading from '../common/Loading';
+import { useEvents } from '@/hooks/useFetchEvents';
 
 const EventsList = () => {
-    const [events, setEvents] = useState([]);
-    const [loading, setLoading] = useState(true); 
+    const { events, isValidating, error } = useEvents();
 
-    useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                const response = await fetch(
-                    'http://localhost:3000/api/get-all-events',
-                    {
-                        method: 'GET',
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem(
-                                'token'
-                            )}`,
-                        },
-                    }
-                );
-                const data = await response.json();
-                console.log(data);
-                setEvents(data.events);
-                setLoading(false); 
-            } catch (error) {
-                console.error('Error fetching events: ', error);
-                setLoading(false); 
-            }
-        };
-        fetchEvents();
-    }, []);
-
-    if (loading) {
+    if (!events) {
         return (
-            <div className='flex justify-center items-center mt-16' >
+            <div className="flex justify-center items-center mt-16">
                 <Loading />
             </div>
         );
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
     }
 
     return (
