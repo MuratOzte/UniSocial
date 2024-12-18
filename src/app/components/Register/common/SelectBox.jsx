@@ -2,8 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const SelectBox = () => {
-
-    //todo ZEHRA 
+    //todo mert
     /*
         https://designer.microsoft.com/image-creator
         sitesinden öğrenci öğretmen ve şirket için resimler oluşturulacak
@@ -13,10 +12,13 @@ const SelectBox = () => {
 
         description kısmını chatgpt yazdı duruma göre onları da değiştirebilirsin
         
+        31.satırda
         örnek:
         image: require('@/assets/auth/student.jpeg'),
-
-        test etmek için terminale npm run dev yazdıktan sonra
+        
+        test etmek için terminale sırayla
+        cd .\UniSocial\
+        npm run dev yazdıktan sonra
         http://localhost:3000/register
         adresine giderek sayfayı görebilirsin
     */
@@ -46,9 +48,7 @@ const SelectBox = () => {
         <div className="flex flex-wrap justify-center gap-8 w-full mt-10">
             {options.map(({ id, title, description, image }) => (
                 <Link key={id} href={`/register/${id}`} passHref>
-                    <div
-                        className="relative w-[360px] h-[420px] rounded-lg overflow-hidden shadow-lg group hover:scale-105 transition-transform duration-300 cursor-pointer"
-                    >
+                    <div className="relative w-[360px] h-[420px] rounded-lg overflow-hidden shadow-lg group hover:scale-105 transition-transform duration-300 cursor-pointer">
                         <Image
                             src={image}
                             alt={title}
