@@ -1,31 +1,52 @@
 import { timeAgo } from "@/util/timeService";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Loading from "../common/Loading";
+import { AiOutlineCheck } from "react-icons/ai";
 
 const EventCard = ({ event }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isJoined, setIsJoined] = useState(false);
+
+  const userId = localStorage.getItem("userId"); 
+
   if (!event) return null;
 
   const communityName = event.community
     ? event.community.name
     : "Unknown Community";
-  const communityProfilePicture = event.community
-    ? event.community.profilePicture
-    : "";
+
+  useEffect(() => {
+    if (event?.participants) {
+      setIsJoined(event.participants.some((e) => e.userId === userId));
+    }
+  }, [event, userId]);
 
   const handleJoin = async () => {
-    console.log(event.id);
+    setIsLoading(true);
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch("http://localhost:3000/api/join-event", {
+        method: "POST",
+        body: JSON.stringify({
+          eventId: event.id,
+        }),
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
-    const token = localStorage.getItem("token");
-    const response = await fetch("http://localhost:3000/api/join-event", {
-      method: "POST",
-      body: JSON.stringify({
-        eventId: event.id,
-      }),
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await response.json();
-    console.log(data);
+      if (!response.ok) throw new Error("Failed to join the event");
+
+      const data = await response.json();
+      console.log(data);
+
+      setIsJoined(true);
+    } catch (error) {
+      console.error("Error joining the event:", error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -43,6 +64,7 @@ const EventCard = ({ event }) => {
             </p>
           </div>
         </div>
+
         <p className="text-sm text-gray-700">Community: {communityName}</p>
         <p className="text-sm text-gray-700">{event.description}</p>
 
@@ -52,9 +74,9 @@ const EventCard = ({ event }) => {
           </p>
           <button
             onClick={handleJoin}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded min-w-32"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded min-w-32 flex justify-center h-10 items-center"
           >
-            Join
+            {isJoined ? <AiOutlineCheck size={24} /> : isLoading ? <Loading /> : "JOIN"}
           </button>
         </div>
       </div>
