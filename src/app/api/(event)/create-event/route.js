@@ -10,7 +10,6 @@ export async function POST(req) {
 
         console.log(title, description, date, time, location, eventType, price);
 
-        console.log(title, description, date, time, location, eventType, price);
         const token = req.headers.get('authorization')?.replace('Bearer ', '');
         if (!token) {
             return NextResponse.json(
@@ -34,6 +33,7 @@ export async function POST(req) {
             );
         }
         const communityId = decoded.id;
+        console.log(decoded);
         if (!title || !date || !time || !eventType || !communityId) {
             return NextResponse.json(
                 {

@@ -68,9 +68,13 @@ const LoginPage = () => {
                 setIsRequestPending(true);
                 const data = await loginRequest(enteredEmail, enteredPassword);
                 localStorage.setItem('token', data.token);
-
+                console.log(data);
                 dispatch(loginSlice.actions.resetAllData());
-                localStorage.setItem('userId', data.user.id);
+                if (data.user) {
+                    localStorage.setItem('userId', data.user.id);
+                } else {
+                    localStorage.setItem('userId', data.community.id);
+                }
                 setIsRequestPending(false);
                 router.replace('/feed');
             } catch (error) {
