@@ -1,6 +1,7 @@
 'use client';
 import ProfileAbout from '@/app/components/Profile/ProfileAbout';
 import ProfileHeader from '@/app/components/Profile/ProfileHeader';
+import ProfilePosts from '@/app/components/Profile/ProfilePosts';
 
 const Page = () => {
     return (
@@ -8,8 +9,9 @@ const Page = () => {
             <div className="w-full">
                 <ProfileHeader />
             </div>
-            <div>
+            <div className='flex' >
                 <ProfileAbout />
+                <ProfilePosts />
             </div>
         </>
     );

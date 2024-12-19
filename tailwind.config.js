@@ -13,6 +13,7 @@ module.exports = {
                 registerGray: '#cccccc',
                 navgray: '#0f0f10',
                 fff: '#ffffff',
+                softGray: '#f2f4f7',
             },
             animation: {
                 ripple: 'ripple 10s infinite',
