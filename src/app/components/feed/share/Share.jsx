@@ -16,7 +16,6 @@ import ShareFooter from './ShareFooter';
 import { usePosts } from '@/hooks/useFetchPosts';
 
 const Share = () => {
-
     //emre burda istek atıldıktan sonra inputun içinin temizlenmesi gerekiyor
 
     const dispatch = useDispatch();
@@ -45,6 +44,7 @@ const Share = () => {
 
     const sharePostHandler = async () => {
         setIsLoading(true);
+
         if (localStorage.getItem('isCommunity') == 'false') {
             console.log('user');
             const data = await sharePostRequestUser(
@@ -61,7 +61,22 @@ const Share = () => {
             );
         }
         setIsLoading(false);
-        refreshPosts(); 
+        dispatch(
+            feedSlice.actions.setOptimisticPost({
+                isVisible: true,
+                content: feed.shareMessage,
+                image: base64File,
+            })
+        );
+        refreshPosts().then(() => {
+            dispatch(
+                feedSlice.actions.setOptimisticPost({
+                    isVisible: false,
+                    content: '',
+                    image: '',
+                })
+            );
+        });
     };
 
     const keyPressHandler = (e) => {
@@ -116,54 +131,56 @@ const Share = () => {
                     <Loading />
                 </div>
             )}
-            {!isLoading && <div className="flex items-center mb-4 relative">
-                <Image
-                    src={
-                        'https://media-ist1-1.cdn.whatsapp.net/v/t61.24694-24/397884028_1042568196864685_3091923269807243330_n.jpg?ccb=11-4&oh=01_Q5AaIKQmUOCzd8T27xRaE1xk6hv1larJdXmoCzMxBD7ZMq3A&oe=67557ECD&_nc_sid=5e03e0&_nc_cat=101'
-                    }
-                    alt="avatar"
-                    width={50}
-                    height={50}
-                    className="rounded-full mr-4"
-                />
-                <div className="relative w-full" ref={emojiPickerRef}>
-                    <EmojiPicker
-                        style={{
-                            position: 'absolute',
-                            top: '50px',
-                            left: '75px',
-                            zIndex: 10,
-                        }}
-                        open={isEmojiOpened}
-                        onEmojiClick={EmojiClicked}
+            {!isLoading && (
+                <div className="flex items-center mb-4 relative">
+                    <Image
+                        src={
+                            'https://media-ist1-1.cdn.whatsapp.net/v/t61.24694-24/397884028_1042568196864685_3091923269807243330_n.jpg?ccb=11-4&oh=01_Q5AaIKQmUOCzd8T27xRaE1xk6hv1larJdXmoCzMxBD7ZMq3A&oe=67557ECD&_nc_sid=5e03e0&_nc_cat=101'
+                        }
+                        alt="avatar"
+                        width={50}
+                        height={50}
+                        className="rounded-full mr-4"
                     />
-                    <div>
-                        <input
-                            value={feed.shareMessage}
-                            type="text"
-                            onKeyDown={keyPressHandler}
-                            onChange={inputValChangeHandler}
-                            placeholder="Share your thoughts..."
-                            className="w-full bg-gray-700 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                        <MdEmojiEmotions
+                    <div className="relative w-full" ref={emojiPickerRef}>
+                        <EmojiPicker
                             style={{
                                 position: 'absolute',
-                                right: 10,
-                                top: 10,
-                                cursor: 'pointer',
+                                top: '50px',
+                                left: '75px',
+                                zIndex: 10,
                             }}
-                            size={20}
-                            onClick={EmojiModuleOpenHandler}
+                            open={isEmojiOpened}
+                            onEmojiClick={EmojiClicked}
                         />
+                        <div>
+                            <input
+                                value={feed.shareMessage}
+                                type="text"
+                                onKeyDown={keyPressHandler}
+                                onChange={inputValChangeHandler}
+                                placeholder="Share your thoughts..."
+                                className="w-full bg-gray-700 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            <MdEmojiEmotions
+                                style={{
+                                    position: 'absolute',
+                                    right: 10,
+                                    top: 10,
+                                    cursor: 'pointer',
+                                }}
+                                size={20}
+                                onClick={EmojiModuleOpenHandler}
+                            />
+                        </div>
                     </div>
+                    <TbSend
+                        className="ml-2 cursor-pointer"
+                        onClick={sharePostHandler}
+                        size={24}
+                    />
                 </div>
-                <TbSend
-                    className="ml-2 cursor-pointer"
-                    onClick={sharePostHandler}
-                    size={24}
-                />
-            </div>}
+            )}
             <FileUploadModal file={file} setFile={setFile} />
 
             <ShareFooter uploadFileModalHandler={uploadFileModalHandler} />

@@ -44,6 +44,9 @@ const feedSlice = createSlice({
             const { id, isLoading } = action.payload;
             state.loadingPosts[id] = isLoading;
         },
+        setOptimisticPost(state, action) {
+            state.optimisticPost = action.payload;
+        }
     },
 });
 

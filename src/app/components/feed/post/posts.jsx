@@ -3,8 +3,12 @@ import { usePosts } from '@/hooks/useFetchPosts';
 import Post from './post';
 import Loading from '../../common/Loading';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import OptimisticPost from './OptimisticPost';
 
 const Posts = () => {
+    const feed = useSelector((state) => state.feed);
+
     const [token, setToken] = useState('');
     useEffect(() => {
         setToken(localStorage.getItem('token'));
@@ -24,7 +28,14 @@ const Posts = () => {
     }
 
     return posts.length > 0 ? (
-        posts.map((post) => <Post key={post.id} post={post} />)
+        <>
+            {
+                feed.optimisticPost.isVisible && (
+                    <OptimisticPost />
+                )
+            }
+            {posts.map((post) => <Post key={post.id} post={post} />)}
+        </>
     ) : (
         <div>No posts available</div>
     );
