@@ -28,7 +28,7 @@ const useLeftNav = () => {
         ([url, token]) => fetcher(url, token),
         {
             revalidateOnFocus: false,
-            refreshInterval: 60000,
+            refreshInterval: 30000,
         }
     );
     const dispatch = useDispatch();

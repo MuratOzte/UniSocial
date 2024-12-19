@@ -15,7 +15,11 @@ const fetcher = async (url, token) => {
 export const usePosts = (token) => {
     const { data, error, isValidating, mutate } = useSWR(
         token ? ['http://localhost:3000/api/get-all-posts', token] : null,
-        ([url, token]) => fetcher(url, token)
+        ([url, token]) => fetcher(url, token),
+        {
+            revalidateOnMount: true,
+            refreshInterval: 10000,
+        }
     );
 
     return {

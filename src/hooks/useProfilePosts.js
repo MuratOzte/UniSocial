@@ -22,7 +22,11 @@ export const useProfilePosts = () => {
 
     const { data, error, isValidating, mutate } = useSWR(
         token ? ['http://localhost:3000/api/get-my-posts', token] : null,
-        ([url, token]) => fetcher(url, token)
+        ([url, token]) => fetcher(url, token),
+        {
+            revalidateOnMount: true,
+            refreshInterval: 30000,
+        }
     );
 
     return {
