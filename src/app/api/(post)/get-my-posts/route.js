@@ -31,31 +31,79 @@ export async function GET(req) {
         }
 
         const userId = decoded.id;
-        if (!userId) {
-            return NextResponse.json(
-                { message: 'User ID not found in token' },
-                { status: 401 }
-            );
-        }
 
-        const userPosts = await prisma.post.findMany({
-            where: {
-                id: userId,
-            },
+        const posts = await prisma.post.findMany({
+            where: { authorId: userId },
+            orderBy: { createdAt: 'desc' },
         });
+
+        const enrichedPosts = await Promise.all(
+            posts.map(async (post) => {
+                let author;
+                if (post.authorId) {
+                    author = await prisma.user.findUnique({
+                        where: { id: post.authorId },
+                        select: {
+                            id: true,
+                            name: true,
+                            profilePicture: true,
+                            isTeacher: true,
+                        },
+                    });
+                }
+
+                if (author == null) {
+                    author = await prisma.community.findUnique({
+                        where: { id: post.authorId },
+                        select: {
+                            id: true,
+                            name: true,
+                            profilePicture: true,
+                        },
+                    });
+                }
+
+                console.log(author);
+
+                const comments = await prisma.comment.findMany({
+                    where: { postId: post.id },
+                    orderBy: { createdAt: 'desc' },
+                    select: {
+                        id: true,
+                        content: true,
+                        createdAt: true,
+                        author: {
+                            select: {
+                                id: true,
+                                name: true,
+                                profilePicture: true,
+                                isTeacher: true,
+                            },
+                        },
+                    },
+                });
+
+                return {
+                    ...post,
+                    author,
+                    comments,
+                    isYourPost: post.authorId === userId,
+                };
+            })
+        );
 
         return NextResponse.json(
             {
-                message: 'User posts fetched successfully',
-                posts: userPosts,
+                message: 'Posts fetched successfully',
+                posts: enrichedPosts,
             },
             { status: 200 }
         );
     } catch (error) {
-        console.error('Error fetching user posts:', error);
+        console.error('Error fetching posts:', error);
         return NextResponse.json(
             {
-                message: 'An error occurred while fetching the user posts',
+                message: 'An error occurred while fetching the posts',
                 error: error.message,
             },
             { status: 500 }

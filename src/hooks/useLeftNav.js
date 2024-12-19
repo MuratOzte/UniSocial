@@ -32,7 +32,6 @@ const useLeftNav = () => {
         }
     );
     const dispatch = useDispatch();
-    console.log('data', data);
 
     if (data) {
         dispatch(
