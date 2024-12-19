@@ -28,7 +28,7 @@ const ProfileHeader = () => {
     return (
         <div className="rounded-md px-8 pt-4">
             <div
-                className={`w-full relative h-60 bg-gradient-to-r ${gradient} flex justify-end items-end p-4 rounded-tl-md rounded-tr-md`}
+                className={`w-full ring-2 ring-gray-200 relative h-60 bg-gradient-to-r ${gradient} flex justify-end items-end p-4 rounded-md`}
             >
                 <div className="w-[500px] h-[200px] absolute left-4 top-[75px] rounded-md flex gap-5">
                     <MdAccountCircle
