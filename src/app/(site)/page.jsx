@@ -1,34 +1,38 @@
-"use client";
-import { useEffect, useState } from "react";
-import Calendar from "../components/events/calendar";
+'use client';
+import slogo from '@/assets/logo/slogo.png';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 const Main = () => {
-  const [file, setFile] = useState(null);
-  const events = ["2024-12-5", "2024-12-10","2025-1-8"];
+    const [isTriggered, setIsTriggered] = useState(false);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setFile(file);
-  };
+    useEffect(() => {
+        setTimeout(() => setIsTriggered(true), 300); // Delay the trigger for a smoother effect
+    }, []);
 
-  return (
-    <div>
-      <div className="bg-white">
-        <input type="file" onChange={handleFileChange} />
+    return (
+        <div className="flex items-center justify-center bg-fff">
+            <span
+                className={`text-transparent justify-end flex bg-clip-text bg-gradient-to-r from-purple-500 via-pink-600 to-red-500 origin-left overflow-hidden transition-all duration-[3000ms] ease-in-out ${
+                    isTriggered ? 'w-[150px]' : 'w-0'
+                } text-6xl`} 
+                style={{ whiteSpace: 'nowrap' }}
+            >
+                Uni
+            </span>
 
-        {file && (
-          <img
-            src={URL.createObjectURL(file)}
-            alt="Preview"
-            style={{ width: "500px", height: "500px" }}
-          />
-        )}
-      </div>
-      <Calendar
-        events={events}
-      />
-    </div>
-  );
+            <Image src={slogo} alt="s" className="h-20 w-16 mx-2" />
+
+            <span
+                className={`text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-600 to-red-500 origin-left inline-block overflow-hidden transition-all duration-[3000ms] ease-in-out ${
+                    isTriggered ? 'w-[150px]' : 'w-0'
+                } text-6xl`} 
+                style={{ display: 'inline-block', whiteSpace: 'nowrap' }}
+            >
+                ocial
+            </span>
+        </div>
+    );
 };
 
 export default Main;

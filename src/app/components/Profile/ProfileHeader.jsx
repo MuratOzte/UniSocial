@@ -45,9 +45,6 @@ const ProfileHeader = () => {
                         <h3 className="text-lg opacity-80">
                             Karadeniz Teknik Üniversitesi
                         </h3>
-                        {/* <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500">
-                            Gradient Text Example
-                        </h1> */}
                     </div>
                 </div>
                 <div className="flex gap-6 justify-center items-center bg-white p-2 rounded-md mt-4 shadow-md">
