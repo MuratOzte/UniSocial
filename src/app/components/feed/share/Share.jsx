@@ -37,6 +37,9 @@ const Share = () => {
             feedSlice.actions.shareMessageChangeHandler(e.currentTarget.value)
         );
     };
+    const inputValClearHandler=()=>{
+        dispatch(feedSlice.actions.shareMessageChangeHandler(""))
+    }
 
     useEffect(() => {
         setToken(localStorage.getItem('token'));
@@ -77,6 +80,7 @@ const Share = () => {
                 })
             );
         });
+        inputValClearHandler();
     };
 
     const keyPressHandler = (e) => {
