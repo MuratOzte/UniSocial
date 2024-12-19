@@ -13,6 +13,7 @@ import { usePosts } from '@/hooks/useFetchPosts';
 
 export default function PostOptions({ post }) {
     const dispatch = useDispatch();
+    const [parentElement, setParentElement] = React.useState(null);
 
     const [token, setToken] = React.useState('');
     React.useEffect(() => {
@@ -29,16 +30,20 @@ export default function PostOptions({ post }) {
                 image: post.image,
             })
         );
+        const buffer = event.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement;
+        setParentElement(buffer);
         setAnchorEl(event.currentTarget);
     };
-    const handleClose = () => {
+    const handleClose = (e) => {
         setAnchorEl(null);
     };
 
     const handleDelete = async () => {
         console.log('Deleting post:', post.id);
-
-        dispatch(feedSlice.actions.setPostLoading({ id: post.id, isLoading: true }));
+        parentElement.style.display = 'none';
+        dispatch(
+            feedSlice.actions.setPostLoading({ id: post.id, isLoading: true })
+        );
 
         try {
             await deletePostRequest(localStorage.getItem('token'), post.id);
@@ -46,7 +51,12 @@ export default function PostOptions({ post }) {
         } catch (error) {
             console.error('Error deleting post:', error);
         } finally {
-            dispatch(feedSlice.actions.setPostLoading({ id: post.id, isLoading: false }));
+            dispatch(
+                feedSlice.actions.setPostLoading({
+                    id: post.id,
+                    isLoading: false,
+                })
+            );
         }
     };
 
