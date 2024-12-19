@@ -13,7 +13,10 @@ const LeftNav = () => {
 
     if (error) {
         return <div>Error: {error.message}</div>;
+        
     }
+
+    //emre burada uidatanın içindeki resme göre resim döndürmen gerekiyor imagesectiona prop olarak gönder resim null ise icon döndür
 
     return (
         <div className="w-[350px] rounded-md mt-6 ml-4">

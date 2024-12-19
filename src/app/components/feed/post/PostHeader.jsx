@@ -3,12 +3,13 @@ import { PiStudent } from 'react-icons/pi';
 import { TbSchool } from 'react-icons/tb';
 import { VscAccount } from 'react-icons/vsc';
 import PostOptions from './PostOptions';
-import { PiStudentBold } from "react-icons/pi";
-import { FaPeopleRoof } from "react-icons/fa6";
+import { PiStudentBold } from 'react-icons/pi';
+import { FaPeopleRoof } from 'react-icons/fa6';
 
 const PostHeader = ({ post, time, isTeacher }) => {
     const isCommunity = isTeacher === undefined;
-       
+
+    //emre burada postOptions componentini post kullanın ise göster post propunda bunla ilgili bir veri var isYourPost gibi
 
     return (
         <div className="flex items-center mb-4">
@@ -33,14 +34,13 @@ const PostHeader = ({ post, time, isTeacher }) => {
                             </Tooltip>
                         )}
                         {!isTeacher && !isCommunity && (
-
                             <Tooltip title="Student" arrow>
                                 <PiStudent className="text-lg text-blue-500 ml-1" />
                             </Tooltip>
                         )}
                         {isCommunity && (
                             <Tooltip title="Community" arrow>
-                            <FaPeopleRoof className="text-lg text-blue-500 ml-1" />
+                                <FaPeopleRoof className="text-lg text-blue-500 ml-1" />
                             </Tooltip>
                         )}
                     </div>
