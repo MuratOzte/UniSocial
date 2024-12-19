@@ -3,8 +3,11 @@ import About from "./About";
 import Buttons from "./Buttons";
 import ImageSection from "./ImageSection";
 import Numbers from "./Numbers";
+import { useDispatch } from "react-redux";
+import uiSlice from "@/store/Slices/uiSlice";
 
 const LeftNav = () => {
+    const dispatch=useDispatch();
   //emre burda http://localhost:3000/api/get-left-bar-info adresine token ile birlikte get request at kanka
   //dönen response'u burda kullan
   //böyle bir response döner profile picture null ise react iconsdan account gibi bir icon koyabilirsin
@@ -37,6 +40,7 @@ const LeftNav = () => {
       );
       const data = await response.json();
       console.log(data);
+      dispatch(uiSlice.actions.setUser({name:data.userData.name,avatar:data.userData.profilePicture}))
     };
 
     try {
@@ -44,6 +48,7 @@ const LeftNav = () => {
     } catch (error) {
       console.log(error);
     }
+
   }, []);
 
   return (
