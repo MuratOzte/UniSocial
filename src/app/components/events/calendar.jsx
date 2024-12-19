@@ -6,7 +6,6 @@ const Calendar = ({ events }) => {
     const dispatch = useDispatch();
     const [currentDate, setCurrentDate] = useState(new Date());
 
-    // Ay ve yıl bilgisini güncelle
     const currentMonth = currentDate.getMonth();
     const currentYear = currentDate.getFullYear();
 
@@ -28,18 +27,15 @@ const Calendar = ({ events }) => {
         'Aralık',
     ];
 
-    // Fonksiyon: Ayı Değiştir
     const changeMonth = (direction) => {
         const newDate = new Date(currentDate);
         newDate.setMonth(newDate.getMonth() + direction);
         setCurrentDate(newDate);
     };
 
-    // Fonksiyon: Etkinlik günlerini kontrol et
     const isEventDay = (day) =>
         events.includes(`${currentYear}-${currentMonth + 1}-${day}`);
 
-    // Gün tıklandığında çağrılan fonksiyon
     const handleDayClick = (day) => {
         const selectedDate = `${day} ${months[currentMonth]} ${currentYear}`;
         const eventExists = isEventDay(day);
@@ -55,33 +51,32 @@ const Calendar = ({ events }) => {
     };
 
     return (
-        <div className="w-full max-w-md mx-auto mt-6 bg-white shadow-lg rounded-lg">
-            {/* Ay ve Yıl Başlığı */}
-            <div className="p-4 flex justify-between items-center">
+        <div className="w-full mx-auto mt-6 bg-white shadow-lg rounded-lg p-4">
+            <div className="p-3 flex justify-between items-center">
                 <button
                     onClick={() => changeMonth(-1)}
-                    className="text-gray-600 hover:text-gray-800 select-none"
+                    className="text-xl text-gray-600 hover:text-gray-800 select-none"
                 >
                     &lt;
                 </button>
-                <h2 className="text-lg font-semibold">
+                <h2 className="text-2xl font-semibold">
                     {`${months[currentMonth]} ${currentYear}`}
                 </h2>
                 <button
                     onClick={() => changeMonth(1)}
-                    className="text-gray-600 hover:text-gray-800 select-none"
+                    className="text-xl text-gray-600 hover:text-gray-800 select-none"
                 >
                     &gt;
                 </button>
             </div>
 
             {/* Takvim İçeriği */}
-            <div className="grid grid-cols-7 gap-2 px-4 pb-4">
+            <div className="grid grid-cols-7 gap-2 px-3 pb-3">
                 {/* Gün Başlıkları */}
                 {['P', 'P', 'S', 'Ç', 'P', 'C', 'C'].map((day, index) => (
                     <div
                         key={index}
-                        className="text-center font-semibold text-gray-600"
+                        className="text-center font-semibold text-lg text-gray-600"
                     >
                         {day}
                     </div>
@@ -104,7 +99,7 @@ const Calendar = ({ events }) => {
                         <div
                             key={dayNumber}
                             onClick={() => handleDayClick(dayNumber)}
-                            className={`text-center py-2 rounded-lg cursor-pointer ${
+                            className={`text-center py-1 text-xl rounded-lg cursor-pointer ${
                                 isToday
                                     ? 'bg-blue-500 text-white'
                                     : 'text-gray-700'
