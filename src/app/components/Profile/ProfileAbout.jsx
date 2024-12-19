@@ -6,11 +6,18 @@ import {
     FaPhoneAlt,
 } from 'react-icons/fa';
 import { MdOutgoingMail } from 'react-icons/md';
+import { MdEdit } from 'react-icons/md';
 
 const ProfileAbout = () => {
     return (
-        <div className="p-6 bg-white shadow-md rounded-lg w-[400px] mt-12">
-            <h1 className="text-3xl font-semibold mb-4">Hakkımda</h1>
+        <div className="p-6 bg-white shadow-md rounded-lg w-[400px] h-fit mt-12">
+            <div className="flex justify-between items-center mb-4">
+                <h1 className="text-3xl font-semibold">Hakkımda</h1>
+                <div className="flex justify-center items-center gap-1">
+                    <MdEdit className="text-gray-400" size={24} />
+                    <p className="text-gray-400 cursor-pointer">Düzenle</p>
+                </div>
+            </div>
             <div className="text-gray-700 space-y-4">
                 <h2 className="text-lg font-medium text-gray-900">
                     Ben yazılım yaparım, kitap okurum, film izlerim, erkeklerle

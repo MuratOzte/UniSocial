@@ -11,7 +11,7 @@ const Page = () => {
             <div className="w-full">
                 <ProfileHeader />
             </div>
-            <div className="flex">
+            <div className="flex justify-center gap-32">
                 <ProfileAbout />
                 <ProfilePosts />
             </div>
