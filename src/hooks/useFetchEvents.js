@@ -22,7 +22,7 @@ export const useEvents = () => {
 
     const { data, error, isValidating, mutate } = useSWR(
         token ? ['http://localhost:3000/api/get-all-events', token] : null,
-        ([url, token]) => fetcher(url, token)
+        ([url, token]) => fetcher(url, token),
     );
 
     return {

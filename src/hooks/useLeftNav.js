@@ -25,10 +25,14 @@ const useLeftNav = () => {
     }, []);
     const { data, error, isValidating, isLoading, mutate } = useSWR(
         token ? ['http://localhost:3000/api/get-left-bar-info', token] : null,
-        ([url, token]) => fetcher(url, token)
+        ([url, token]) => fetcher(url, token),
+        {
+            revalidateOnFocus: false,
+            refreshInterval: 60000,
+        }
     );
     const dispatch = useDispatch();
-    console.log('data',data)
+    console.log('data', data);
 
     if (data) {
         dispatch(
