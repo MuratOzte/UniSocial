@@ -14,6 +14,11 @@ const feedSlice = createSlice({
         OpenShareModal: false,
         SelectedCalendarDate: '',
         loadingPosts: {},
+        optimisticPost: {
+            isVisible: false,
+            content: '',
+            image: '',
+        },
     },
 
     reducers: {
