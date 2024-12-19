@@ -1,4 +1,5 @@
 'use client';
+import ProfileAbout from '@/app/components/Profile/ProfileAbout';
 import ProfileHeader from '@/app/components/Profile/ProfileHeader';
 
 const Page = () => {
@@ -8,7 +9,7 @@ const Page = () => {
                 <ProfileHeader />
             </div>
             <div>
-                
+                <ProfileAbout />
             </div>
         </>
     );
