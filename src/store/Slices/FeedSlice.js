@@ -19,6 +19,7 @@ const feedSlice = createSlice({
             content: '',
             image: '',
         },
+        sharedEventsDate: [],
     },
 
     reducers: {
@@ -46,7 +47,10 @@ const feedSlice = createSlice({
         },
         setOptimisticPost(state, action) {
             state.optimisticPost = action.payload;
-        }
+        },
+        setSharedEventsDate(state, action) {
+            state.sharedEventsDate = state.sharedEventsDate.push(action.payload);
+        },
     },
 });
 

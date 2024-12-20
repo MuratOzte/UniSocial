@@ -10,13 +10,13 @@ const EventsList = () => {
   const { events = [], isValidating, error } = useEvents();
 
   useEffect(() => {
-    if (!events || events.length === 0) return; // Eğer events boşsa işlem yapma
+    if (!events || events.length === 0) return; 
 
     if (eventsRedux.SelectedCalendarDate) {
       const temp = events.filter((e) => e.date === eventsRedux.SelectedCalendarDate);
       setFilteredEvents(temp);
     } else {
-      setFilteredEvents(events); // Tarih seçili değilse tüm eventleri göster
+      setFilteredEvents(events); 
     }
   }, [events, eventsRedux.SelectedCalendarDate]);
 
@@ -31,6 +31,8 @@ const EventsList = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+
+  console.log(filteredEvents)
 
   return (
     <div className="p-6 space-y-4">
