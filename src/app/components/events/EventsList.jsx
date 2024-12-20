@@ -34,6 +34,13 @@ const EventsList = () => {
       </div>
     );
   }
+  if(filteredEvents.length==0){
+    return(
+      <p
+      className="text-gray-200 text-xl bg-gray-500 px-4 py-2 rounded-md" 
+      >Bugun hiç event yok</p>
+    )
+  }
 
   if (error) {
     return <div>Error: {error.message}</div>;
