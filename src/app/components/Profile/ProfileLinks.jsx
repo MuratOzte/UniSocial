@@ -67,7 +67,7 @@ const ProfileLinks = () => {
             <div className="text-gray-700 space-y-4">
                 {Object.entries(links).map(([platform, username]) => {
                     if (isHidden(platform) && !isEditing) {
-                        return null; // Eğer bilgi gizlenmişse ve edit modunda değilsek, gösterme.
+                        return null; 
                     }
 
                     return (
