@@ -11,6 +11,7 @@ import {
     IoArrowUndoCircleOutline,
     IoCloseCircleOutline,
 } from 'react-icons/io5';
+import { BsGenderAmbiguous } from "react-icons/bs";
 
 const ProfileAbout = () => {
     const [isEditing, setIsEditing] = useState(false);
@@ -155,8 +156,9 @@ const ProfileAbout = () => {
                                         ? 'none'
                                         : 'flex',
                             }}
-                        >
-                            <FaMale className="text-blue-500" size={24} />
+                        >   
+                        
+                            <BsGenderAmbiguous  className="text-blue-500" size={24} />
                             <span className="font-semibold">Cinsiyet:</span>
                             <input
                                 type="text"
