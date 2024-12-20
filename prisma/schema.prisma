@@ -53,19 +53,35 @@ model User {
     communities CommunityMember[]
     events      EventParticipant[]
     socialMedia SocialMediaLinks?
-
+    about       About?
 }
 
 model SocialMediaLinks {
-    id         String   @id @default(auto()) @map("_id") @db.ObjectId
-    userId     String   @unique @db.ObjectId
-    linkedin   String?
-    github     String?
-    twitter    String?
-    instagram  String?
-    facebook   String?
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId    String   @unique @db.ObjectId
+    linkedin  String?
+    github    String?
+    twitter   String?
+    instagram String?
+    facebook  String?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    user User @relation(fields: [userId], references: [id])
+}
+
+model About {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId    String   @unique @db.ObjectId
+    about     String?
+    location  String?
+    birthDate String?
+    gender    String?
+    hobbies   String?
+    telno     String?
+    email     String?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     user User @relation(fields: [userId], references: [id])
 }
