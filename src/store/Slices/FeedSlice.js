@@ -49,7 +49,7 @@ const feedSlice = createSlice({
             state.optimisticPost = action.payload;
         },
         setSharedEventsDate(state, action) {
-            state.sharedEventsDate = state.sharedEventsDate.push(action.payload);
+            state.sharedEventsDate = [...state.sharedEventsDate,action.payload]
         },
     },
 });

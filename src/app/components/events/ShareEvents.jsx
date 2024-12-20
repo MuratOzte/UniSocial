@@ -72,7 +72,6 @@ export default function ShareEvents() {
 
     const handleSubmit = async () => {
         console.log('Form Data:', formData);
-
         const data = {
             title: formData.title,
             description: formData.description,
@@ -82,7 +81,7 @@ export default function ShareEvents() {
             eventType: formData.eventType,
             price: parseInt(formData.price),
         };
-
+        console.log(formData)
         try {
             const response = await fetch(
                 'http://localhost:3000/api/create-event',

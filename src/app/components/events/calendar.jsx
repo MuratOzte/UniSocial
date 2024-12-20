@@ -2,7 +2,7 @@ import feedSlice from "@/store/Slices/FeedSlice";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const Calendar = ({ events }) => {
+const Calendar = () => {
   const dispatch = useDispatch();
   const Reduxfeed = useSelector((state) => state.feed);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -35,7 +35,7 @@ const Calendar = ({ events }) => {
   };
 
   const isEventDay = (day) =>
-    events.includes(`${currentYear}-${currentMonth + 1}-${day}`);
+    Reduxfeed.sharedEventsDate.includes(`${currentYear}-${currentMonth + 1}-${day}`);
 
   const handleDayClick = (day) => {
     const selectedDate = `${currentYear}-${1 + currentMonth}-${day}`;
@@ -74,9 +74,7 @@ const Calendar = ({ events }) => {
         </button>
       </div>
 
-      {/* Takvim İçeriği */}
       <div className="grid grid-cols-7 gap-2 px-3 pb-3">
-        {/* Gün Başlıkları */}
         {["P", "P", "S", "Ç", "P", "C", "C"].map((day, index) => (
           <div
             key={index}
@@ -86,12 +84,10 @@ const Calendar = ({ events }) => {
           </div>
         ))}
 
-        {/* Boş Hücreler */}
         {Array.from({ length: startDay }).map((_, index) => (
           <div key={index}></div>
         ))}
 
-        {/* Ayın Günleri */}
         {Array.from({ length: daysInMonth }, (_, day) => {
           const dayNumber = day + 1;
           const isToday =
