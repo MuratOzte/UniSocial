@@ -6,7 +6,6 @@ const prisma = new PrismaClient();
 
 export async function GET(req) {
     try {
-        // Authorization header'dan token al
         const token = req.headers.get('authorization')?.replace('Bearer ', '');
         if (!token) {
             return NextResponse.json(
@@ -15,7 +14,6 @@ export async function GET(req) {
             );
         }
 
-        // JWT doğrula
         let decoded;
         try {
             decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -26,7 +24,6 @@ export async function GET(req) {
             );
         }
 
-        // Token'dan user ID çek
         const userId = decoded?.id;
         if (!userId) {
             return NextResponse.json(
@@ -35,7 +32,6 @@ export async function GET(req) {
             );
         }
 
-        // Tüm toplulukları getir
         const communities = await prisma.community.findMany({
             select: {
                 id: true,
