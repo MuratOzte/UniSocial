@@ -35,7 +35,6 @@ export async function DELETE(req) {
         const userId = decoded.id;
 
         const postId = body.postId;
-        console.log(postId);
 
         if (!postId) {
             return NextResponse.json(

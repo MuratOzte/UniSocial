@@ -14,7 +14,6 @@ export async function POST(req) {
             process.env.EMAIL_SECRET_KEY
         );
 
-        console.log(email);
 
         // const response = await mailjetClient
         //     .post('send', { version: 'v3.1' })

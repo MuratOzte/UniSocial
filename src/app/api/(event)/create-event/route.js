@@ -5,8 +5,16 @@ const prisma = new PrismaClient();
 
 export async function POST(req) {
     try {
-        const { title, description, date, time, location, eventType, price } =
-            await req.json();
+        const {
+            title,
+            description,
+            date,
+            time,
+            location,
+            eventType,
+            price,
+            image,
+        } = await req.json();
 
         console.log(title, description, date, time, location, eventType, price);
 
@@ -32,8 +40,17 @@ export async function POST(req) {
                 { status: 401 }
             );
         }
+
         const communityId = decoded.id;
         console.log(decoded);
+        console.log('Request Data:', {
+            title,
+            date,
+            time,
+            eventType,
+            communityId,
+        });
+
         if (!title || !date || !time || !eventType || !communityId) {
             return NextResponse.json(
                 {
@@ -54,6 +71,7 @@ export async function POST(req) {
                 eventType,
                 price: price || null,
                 communityId,
+                image: image || null,
             },
         });
         return NextResponse.json(

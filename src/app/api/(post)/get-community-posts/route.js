@@ -43,7 +43,6 @@ export async function GET(req) {
             where: { id: communityId },
         });
 
-        console.log(community);
 
         if (!community) {
             return NextResponse.json(

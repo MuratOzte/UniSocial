@@ -63,7 +63,6 @@ export async function GET(req) {
                     });
                 }
 
-                console.log(author);
 
                 const comments = await prisma.comment.findMany({
                     where: { postId: post.id },

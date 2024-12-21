@@ -45,7 +45,6 @@ export async function POST(req) {
             where: { id: communityId },
         });
 
-        console.log('community:', community);
 
         if (!community) {
             return NextResponse.json(
@@ -53,7 +52,6 @@ export async function POST(req) {
                 { status: 404 }
             );
         }
-        console.log(content, image, communityId, decoded.id);
 
         const newPost = await prisma.post.create({
             data: {

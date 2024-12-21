@@ -16,7 +16,7 @@ export default function ShareEvents() {
         date: '',
         time: '',
         location: '',
-        eventType: '',
+        eventType: 'Social',
         price: '',
     });
     const [file, setFile] = useState(null);
@@ -54,33 +54,73 @@ export default function ShareEvents() {
         console.log('Form Data:', formData);
         console.log('File Data:', file);
 
-        const data = {
-            ...formData,
-            price: parseInt(formData.price),
-        };
+        let base64File = null;
+        if (file) {
+            const reader = new FileReader();
 
-        try {
-            const response = await fetch(
-                'http://localhost:3000/api/create-event',
-                {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${localStorage.getItem(
-                            'token'
-                        )}`,
-                    },
+            reader.onloadend = async () => {
+                base64File = reader.result;
+
+                const data = {
+                    ...formData,
+                    price: parseInt(formData.price),
+                    image: base64File, 
+                };
+
+                try {
+                    const response = await fetch(
+                        'http://localhost:3000/api/create-event',
+                        {
+                            method: 'POST',
+                            body: JSON.stringify(data),
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${localStorage.getItem(
+                                    'token'
+                                )}`,
+                            },
+                        }
+                    );
+
+                    const result = await response.json();
+                    console.log(result);
+                } catch (error) {
+                    console.error('Error submitting form:', error);
                 }
-            );
 
-            const result = await response.json();
-            console.log(result);
-        } catch (error) {
-            console.error('Error submitting form:', error);
+                handleClose();
+            };
+
+            reader.readAsDataURL(file);
+        } else {
+            const data = {
+                ...formData,
+                price: parseInt(formData.price),
+            };
+
+            try {
+                const response = await fetch(
+                    'http://localhost:3000/api/create-event',
+                    {
+                        method: 'POST',
+                        body: JSON.stringify(data),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${localStorage.getItem(
+                                'token'
+                            )}`,
+                        },
+                    }
+                );
+
+                const result = await response.json();
+                console.log(result);
+            } catch (error) {
+                console.error('Error submitting form:', error);
+            }
+
+            handleClose();
         }
-
-        handleClose();
     };
 
     return (
@@ -173,8 +213,10 @@ export default function ShareEvents() {
                             }
                             className="w-full p-3 rounded-lg focus:outline-none bg-gray-50 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 placeholder-gray-400 transition duration-200"
                         >
-                            <option value="social">Social</option>
-                            <option value="academic">Academic</option>
+                            <option value="Social" defaultValue={'Social'}>
+                                Social
+                            </option>
+                            <option value="Academic">Academic</option>
                         </select>
                         <input
                             type="number"
@@ -244,7 +286,7 @@ export default function ShareEvents() {
                             />
                             <button
                                 onClick={handleFileDelete}
-                                className="mt-2  bg-red-600 text-white py-2 rounded hover:bg-red-700 transition w-fit px-4 items-center justify-center text-center"
+                                className="mt-2 bg-red-600 text-white py-2 rounded hover:bg-red-700 transition w-fit px-4 items-center justify-center text-center"
                             >
                                 <div className="flex gap-2 items-center">
                                     <FaTrash size={16} />

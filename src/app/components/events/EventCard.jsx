@@ -70,15 +70,24 @@ const EventCard = ({ event }) => {
                         </p>
                     </div>
                 </div>
-                <div className='flex justify-between' >
+                <div className="flex justify-between">
                     <p className="text-sm text-gray-700">
                         Community: {communityName}
                     </p>
-                    <p className='text-sm text-gray-700' >
+                    <p className="text-sm text-gray-700">
                         Type: {event.eventType}
                     </p>
                 </div>
                 <p className="text-sm text-gray-700">{event.description}</p>
+                {event.image && (
+                    <div className="flex-shrink-0">
+                        <img
+                            src={event.image}
+                            alt={event.title}
+                            className="rounded-lg border border-gray-300"
+                        />
+                    </div>
+                )}
 
                 <div className="flex justify-between">
                     <p className="text-sm text-gray-600 mt-2">
@@ -99,16 +108,6 @@ const EventCard = ({ event }) => {
                     </button>
                 </div>
             </div>
-
-            {event.image && (
-                <div className="flex-shrink-0">
-                    <img
-                        src={event.image}
-                        alt={event.title}
-                        className="w-48 h-32 object-cover rounded-lg border border-gray-300"
-                    />
-                </div>
-            )}
         </div>
     );
 };

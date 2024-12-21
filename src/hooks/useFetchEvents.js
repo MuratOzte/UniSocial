@@ -20,9 +20,9 @@ export const useEvents = () => {
         setToken(localStorage.getItem('token'));
     }, []);
 
-    const { data, error, isValidating, mutate } = useSWR(
+    const { data, error, isValidating, mutate, isLoading } = useSWR(
         token ? ['http://localhost:3000/api/get-all-events', token] : null,
-        ([url, token]) => fetcher(url, token),
+        ([url, token]) => fetcher(url, token)
     );
 
     return {
@@ -30,32 +30,6 @@ export const useEvents = () => {
         error,
         isValidating,
         refreshPosts: mutate,
-    };
-};   
-
-
-
-
-
-
-
-export const useClubs = () => {
-    const [token, setToken] = useState('');
-
-    useEffect(() => {
-        setToken(localStorage.getItem('token'));
-    }, []);
-
-    const { data, error, isValidating, mutate } = useSWR(
-        token ? ['http://localhost:3000/api/get-all-events', token] : null,
-        ([url, token]) => fetcher(url, token),
-    );
-
-    return {
-        clubs: data?.events || [],
-        error,
-        isValidating,
-        refreshPosts: mutate,
+        isLoading,
     };
 };
-
