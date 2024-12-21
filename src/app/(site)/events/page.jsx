@@ -13,7 +13,6 @@ const Page = () => {
       <div className="flex justify-between px-8">
         <LeftNav />
         <div className="flex justify-start flex-col items-center">
-          <ShareEvents />
           <EventsList />
         </div>
         <div className="flex flex-col gap-5 mt-4">

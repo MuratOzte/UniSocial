@@ -18,7 +18,7 @@ const Buttons = () => {
       icon: <FaMasksTheater />,
       text: "Clubs",
       actions: () => {
-        console.log("to Clubs");
+        router.replace("/clubs")
       },
     },
     {

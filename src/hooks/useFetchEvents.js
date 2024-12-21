@@ -31,4 +31,31 @@ export const useEvents = () => {
         isValidating,
         refreshPosts: mutate,
     };
+};   
+
+
+
+
+
+
+
+export const useClubs = () => {
+    const [token, setToken] = useState('');
+
+    useEffect(() => {
+        setToken(localStorage.getItem('token'));
+    }, []);
+
+    const { data, error, isValidating, mutate } = useSWR(
+        token ? ['http://localhost:3000/api/get-all-events', token] : null,
+        ([url, token]) => fetcher(url, token),
+    );
+
+    return {
+        clubs: data?.events || [],
+        error,
+        isValidating,
+        refreshPosts: mutate,
+    };
 };
+
