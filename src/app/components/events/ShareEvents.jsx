@@ -1,42 +1,26 @@
-import feedSlice from '@/store/Slices/FeedSlice';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Modal from '@mui/material/Modal';
-import Select from '@mui/material/Select';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: '#ffffff',
-    borderRadius: '12px',
-    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
-    p: 4,
-};
+import { useState } from 'react';
+import { FiUpload } from 'react-icons/fi';
+import feedSlice from '@/store/Slices/FeedSlice';
+import { MdOutlineFileUpload } from 'react-icons/md';
+import { FaTrash } from 'react-icons/fa';
 
 export default function ShareEvents() {
     const dispatch = useDispatch();
     const feed = useSelector((state) => state.feed);
-    const [formData, setFormData] = React.useState({
-        title: 'Selamlaar',
-        description: 'Deneme',
-        date: '2024-12-15',
-        time: '18:00',
-        location: 'asda',
-        eventType: '12312',
+    const [isFileUploadModalOpen, setIsFileUploadModalOpen] = useState(false);
+
+    const [formData, setFormData] = useState({
+        title: '',
+        description: '',
+        date: '',
+        time: '',
+        location: '',
+        eventType: '',
         price: '',
     });
-
-    const [fileName, setFileName] = React.useState('');
+    const [file, setFile] = useState(null);
+    const [preview, setPreview] = useState(null);
 
     const handleClose = () => {
         dispatch(feedSlice.actions.OpenShareModalChangeHandler(false));
@@ -49,39 +33,32 @@ export default function ShareEvents() {
             eventType: '',
             price: '',
         });
-    };
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
+        setFile(null);
+        setPreview(null);
     };
 
     const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setFormData({
-                ...formData,
-                file: file,
-            });
-            setFileName(file.name);
+        const selectedFile = e.target.files[0];
+        if (selectedFile) {
+            setFile(selectedFile);
+            setPreview(URL.createObjectURL(selectedFile));
         }
+    };
+
+    const handleFileDelete = () => {
+        setFile(null);
+        setPreview(null);
     };
 
     const handleSubmit = async () => {
         console.log('Form Data:', formData);
+        console.log('File Data:', file);
+
         const data = {
-            title: formData.title,
-            description: formData.description,
-            date: formData.date,
-            time: formData.time,
-            location: formData.location,
-            eventType: formData.eventType,
+            ...formData,
             price: parseInt(formData.price),
         };
-        console.log(formData)
+
         try {
             const response = await fetch(
                 'http://localhost:3000/api/create-event',
@@ -108,145 +85,184 @@ export default function ShareEvents() {
 
     return (
         <div>
-            <Modal
-                open={feed.OpenShareModal}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+            <div
+                className={`${
+                    feed.OpenShareModal ? 'block' : 'hidden'
+                } fixed inset-0 z-50 flex items-center justify-center`}
             >
-                <Box sx={style}>
-                    <Typography
-                        id="modal-modal-title"
-                        variant="h6"
-                        component="h2"
-                        gutterBottom
-                        sx={{ color: '#1976D2', fontWeight: 'bold' }}
-                    >
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 z-40"
+                    onClick={handleClose}
+                ></div>
+
+                <div className="relative z-50 bg-white rounded-lg shadow-lg p-6 w-96">
+                    <h2 className="text-xl font-bold text-blue-600 mb-4">
                         Share an Event
-                    </Typography>
-                    <Box
-                        component="form"
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: 2,
-                        }}
-                    >
-                        <TextField
-                            label="Title"
+                    </h2>
+                    <form className="space-y-4 flex justify-center flex-col items-center">
+                        <input
+                            type="text"
                             name="title"
+                            placeholder="Title"
                             value={formData.title}
-                            onChange={handleChange}
-                            fullWidth
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    title: e.target.value,
+                                })
+                            }
+                            className="w-full p-3 rounded-lg focus:outline-none bg-gray-50 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 placeholder-gray-400 transition duration-200"
                         />
-
-                        <TextField
-                            label="Description"
+                        <textarea
                             name="description"
+                            placeholder="Description"
                             value={formData.description}
-                            onChange={handleChange}
-                            fullWidth
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    description: e.target.value,
+                                })
+                            }
+                            className="w-full p-3 rounded-lg focus:outline-none bg-gray-50 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 placeholder-gray-400 transition duration-200"
                         />
-                        <TextField
-                            label="Date"
-                            name="date"
+                        <input
                             type="date"
+                            name="date"
                             value={formData.date}
-                            onChange={handleChange}
-                            InputLabelProps={{ shrink: true }}
-                            fullWidth
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    date: e.target.value,
+                                })
+                            }
+                            className="w-full p-3 rounded-lg focus:outline-none bg-gray-50 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 placeholder-gray-400 transition duration-200"
                         />
-                        <TextField
-                            label="Time"
-                            name="time"
+                        <input
                             type="time"
+                            name="time"
                             value={formData.time}
-                            onChange={handleChange}
-                            InputLabelProps={{ shrink: true }}
-                            fullWidth
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    time: e.target.value,
+                                })
+                            }
+                            className="w-full p-3 rounded-lg focus:outline-none bg-gray-50 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 placeholder-gray-400 transition duration-200"
                         />
-                        <TextField
-                            label="Location"
+                        <input
+                            type="text"
                             name="location"
+                            placeholder="Location"
                             value={formData.location}
-                            onChange={handleChange}
-                            fullWidth
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    location: e.target.value,
+                                })
+                            }
+                            className="w-full p-3 rounded-lg focus:outline-none bg-gray-50 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 placeholder-gray-400 transition duration-200"
                         />
-                        <FormControl fullWidth>
-                            <InputLabel id="event-type-label">
-                                Event Type
-                            </InputLabel>
-                            <Select
-                                labelId="event-type-label"
-                                id="eventType"
-                                name="eventType"
-                                value={formData.eventType}
-                                onChange={handleChange}
-                            >
-                                <MenuItem value="social">Social</MenuItem>
-                                <MenuItem value="academic">Academic</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <TextField
-                            label="Price"
-                            name="price"
+                        <select
+                            name="eventType"
+                            value={formData.eventType}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    eventType: e.target.value,
+                                })
+                            }
+                            className="w-full p-3 rounded-lg focus:outline-none bg-gray-50 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 placeholder-gray-400 transition duration-200"
+                        >
+                            <option value="social">Social</option>
+                            <option value="academic">Academic</option>
+                        </select>
+                        <input
                             type="number"
+                            name="price"
+                            placeholder="Price"
                             value={formData.price}
-                            onChange={handleChange}
-                            fullWidth
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    price: e.target.value,
+                                })
+                            }
+                            className="w-full p-3 rounded-lg focus:outline-none bg-gray-50 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 placeholder-gray-400 transition duration-200"
                         />
-
-                        {/* File Upload Area */}
-                        <Box>
-                            <input
-                                type="file"
-                                id="file-upload"
-                                style={{ display: 'none' }}
-                                onChange={handleFileChange}
-                            />
-                            <label htmlFor="file-upload">
-                                <Button
-                                    variant="outlined"
-                                    component="span"
-                                    sx={{
-                                        color: '#1976D2',
-                                        borderColor: '#1976D2',
-                                        borderRadius: '8px',
-                                        '&:hover': {
-                                            borderColor: '#135ba1',
-                                            color: '#135ba1',
-                                        },
-                                    }}
-                                >
-                                    Upload File
-                                </Button>
-                            </label>
-                            {fileName && (
-                                <Typography
-                                    variant="body2"
-                                    sx={{ mt: 1, color: '#555' }}
-                                >
-                                    Selected File: {fileName}
-                                </Typography>
-                            )}
-                        </Box>
-
-                        <Button
-                            variant="contained"
+                        <button
+                            type="button"
+                            onClick={() => setIsFileUploadModalOpen(true)}
+                            className="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600 transition w-fit"
+                        >
+                            <div className="flex gap-2">
+                                <MdOutlineFileUpload size={20} />
+                                Upload File
+                            </div>
+                        </button>
+                        <button
+                            type="button"
                             onClick={handleSubmit}
-                            sx={{
-                                mt: 2,
-                                backgroundColor: '#1976D2',
-                                color: '#fff',
-                                borderRadius: '8px',
-                                '&:hover': { backgroundColor: '#135ba1' },
-                            }}
+                            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
                         >
                             Submit
-                        </Button>
-                    </Box>
-                </Box>
-            </Modal>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div
+                className={`${
+                    isFileUploadModalOpen ? 'block' : 'hidden'
+                } fixed inset-0 z-50 flex items-center justify-center`}
+            >
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 z-40"
+                    onClick={() => setIsFileUploadModalOpen(false)}
+                ></div>
+
+                <div className="relative z-50 bg-white rounded-lg shadow-lg p-6 w-96">
+                    <h2 className="text-xl font-bold mb-4">Upload a File</h2>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        id="file-upload"
+                        className="hidden"
+                        onChange={handleFileChange}
+                    />
+                    <label htmlFor="file-upload">
+                        <div className="flex justify-center items-center cursor-pointer bg-gray-700 text-white p-2 rounded-lg hover:opacity-90 transition">
+                            <FiUpload size={16} />
+                            <span className="ml-2">Choose a file</span>
+                        </div>
+                    </label>
+                    {preview ? (
+                        <div className="mt-4 flex justify-center flex-col items-center">
+                            <img
+                                src={preview}
+                                alt="Preview"
+                                className="w-full h-auto object-contain rounded-lg"
+                            />
+                            <button
+                                onClick={handleFileDelete}
+                                className="mt-2  bg-red-600 text-white py-2 rounded hover:bg-red-700 transition w-fit px-4 items-center justify-center text-center"
+                            >
+                                <div className="flex gap-2 items-center">
+                                    <FaTrash size={16} />
+                                    Remove File
+                                </div>
+                            </button>
+                        </div>
+                    ) : (
+                        <p className="text-gray-500 mt-2">No file selected</p>
+                    )}
+                    <button
+                        onClick={() => setIsFileUploadModalOpen(false)}
+                        className="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+                    >
+                        Close
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }
