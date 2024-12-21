@@ -26,21 +26,21 @@ const SelectBox = () => {
     const options = [
         {
             id: 'student',
-            title: 'Student',
-            description: 'Access resources and tools for students.',
+            title: 'Öğrenci',
+            description: 'Öğrencilerin kayıtlarının olacağı yer.',
             image: require('@/assets/auth/student.jpeg'),
         },
         {
             id: 'teacher',
-            title: 'Teacher',
-            description: 'Find teaching materials and courses.',
+            title: 'Öğretmen',
+            description: 'Öğretmenlerin kayıtlarının olacağı yer.',
             image: require('@/assets/auth/teacher.jpeg'),
         },
         {
             id: 'community',
-            title: 'community',
-            description: 'Discover services for companies.',
-            image: require('@/assets/auth/teacher.jpeg'),
+            title: 'Topluluk',
+            description: 'Toplulukların kayıtlarının olacağı yer.',
+            image: require('@/assets/auth/community.jpeg'),
         },
     ];
 
