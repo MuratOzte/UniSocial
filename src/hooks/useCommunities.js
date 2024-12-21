@@ -13,7 +13,7 @@ const fetcher = async (url, token) => {
     return res.json();
 };
 
-export const useEvents = () => {
+export const useCommunities = () => {
     const [token, setToken] = useState('');
 
     useEffect(() => {
@@ -26,7 +26,7 @@ export const useEvents = () => {
     );
 
     return {
-        communities: data?.communities || [],
+        clubs: data?.communities || [],
         error,
         isValidating,
         isLoading,
