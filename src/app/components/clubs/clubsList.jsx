@@ -21,10 +21,10 @@ const ClubList = () => {
     if (error) {
         return <div>Error: {error.message}</div>;
     }
+    console.log(clubs)
 
     return (
         <div className="p-6 space-y-4">
-            <p>Merhaba</p>
             {clubs &&
                 clubs.map((club) => (
                     <ClubCard
@@ -34,6 +34,8 @@ const ClubList = () => {
                         type={club.type}
                         image={club.image}
                         university={club.university}
+                        communityId={club.id}
+                        communityMembers={clubs.CommunityMember}
                     />
                 ))}
         </div>
