@@ -18,7 +18,8 @@ const ProfileAbout = () => {
         location: 'İstanbul',
         birthday: '12.12.1990',
         gender: 'Erkek',
-        hobbies: 'Kitap Okumak, Sinema, Seyahat',
+        hobbies:
+            'Ben yazılım yaparım, kitap okurum, film izlerim, erkeklerle gezerim',
         phone: '0123 123 12 12',
         email: 'admin@admin',
     });
@@ -289,19 +290,17 @@ const ProfileAbout = () => {
                 ) : (
                     <>
                         <h2 className="text-lg font-medium text-gray-900">
-                            Ben yazılım yaparım, kitap okurum, film izlerim,
-                            erkeklerle gezerim
+                            <input
+                                type="text"
+                                value={aboutInfo.hobbies}
+                                onChange={(e) =>
+                                    handleInputChange('hobbies', e.target.value)
+                                }
+                                className="border-none bg-transparent text-lg font-medium text-gray-900"
+                            />
                         </h2>
 
-                        <div
-                            className="flex items-center text-sm space-x-2"
-                            style={{
-                                display:
-                                    isHidden('location') && !isEditing
-                                        ? 'none'
-                                        : 'flex',
-                            }}
-                        >
+                        <div className="flex items-center text-sm space-x-2">
                             <FaMapMarkerAlt
                                 className="text-green-500"
                                 size={24}
@@ -310,15 +309,7 @@ const ProfileAbout = () => {
                             <span>{aboutInfo.location}</span>
                         </div>
 
-                        <div
-                            className="flex items-center text-sm space-x-2"
-                            style={{
-                                display:
-                                    isHidden('birthday') && !isEditing
-                                        ? 'none'
-                                        : 'flex',
-                            }}
-                        >
+                        <div className="flex items-center text-sm space-x-2">
                             <FaBirthdayCake
                                 className="text-pink-500"
                                 size={24}
@@ -327,57 +318,25 @@ const ProfileAbout = () => {
                             <span>{aboutInfo.birthday}</span>
                         </div>
 
-                        <div
-                            className="flex items-center text-sm space-x-2"
-                            style={{
-                                display:
-                                    isHidden('gender') && !isEditing
-                                        ? 'none'
-                                        : 'flex',
-                            }}
-                        >
+                        <div className="flex items-center text-sm space-x-2">
                             <FaMale className="text-blue-500" size={24} />
                             <span className="font-semibold">Cinsiyet:</span>
                             <span>{aboutInfo.gender}</span>
                         </div>
 
-                        <div
-                            className="flex items-center text-sm space-x-2"
-                            style={{
-                                display:
-                                    isHidden('hobbies') && !isEditing
-                                        ? 'none'
-                                        : 'flex',
-                            }}
-                        >
+                        <div className="flex items-center text-sm space-x-2">
                             <FaBookOpen className="text-orange-500" size={24} />
                             <span className="font-semibold">Hobiler:</span>
                             <span>{aboutInfo.hobbies}</span>
                         </div>
 
-                        <div
-                            className="flex items-center text-sm space-x-2"
-                            style={{
-                                display:
-                                    isHidden('phone') && !isEditing
-                                        ? 'none'
-                                        : 'flex',
-                            }}
-                        >
+                        <div className="flex items-center text-sm space-x-2">
                             <FaPhoneAlt className="text-teal-500" size={24} />
                             <span className="font-semibold">Telefon:</span>
                             <span>{aboutInfo.phone}</span>
                         </div>
 
-                        <div
-                            className="flex items-center text-sm space-x-2"
-                            style={{
-                                display:
-                                    isHidden('email') && !isEditing
-                                        ? 'none'
-                                        : 'flex',
-                            }}
-                        >
+                        <div className="flex items-center text-sm space-x-2">
                             <MdOutgoingMail
                                 className="text-red-500"
                                 size={24}
