@@ -32,9 +32,9 @@ export async function GET(req) {
             );
         }
 
-        const userId = decoded?.id;
+        const communityId = decoded?.id;
 
-        if (!userId) {
+        if (!communityId) {
             return NextResponse.json(
                 {
                     message: 'User ID is required',
@@ -45,13 +45,12 @@ export async function GET(req) {
 
         const community = await prisma.community.findFirst({
             where: {
-                userId,
+                id: communityId,
             },
             select: {
                 id: true,
                 posts: true,
-                CommunityMembers: true,
-                type: true,
+                CommunityMember: true,
                 name: true,
                 description: true,
                 profilePicture: true,
@@ -69,19 +68,19 @@ export async function GET(req) {
             );
         }
 
-        const totalPosts = user.posts.length;
-        const totalFollowers = user.followers.length;
-        const totalFollowing = user.following.length;
+        const totalPosts = community.posts.length;
+        const totalFollowers = community.CommunityMember.length;
+        const totalFollowing = community.CommunityMember.length;
 
         return NextResponse.json(
             {
                 message: 'User data retrieved successfully',
                 userData: {
-                    profilePicture: user.profilePicture,
-                    name: user.name,
-                    surname: user.surname,
-                    univercity: user.univercity,
-                    department: user.department,
+                    profilePicture: community.profilePicture,
+                    name: community.name,
+                    surname: '',
+                    univercity: community.type,
+                    department: community.activityField,
                     totalPosts,
                     totalFollowers,
                     totalFollowing,
