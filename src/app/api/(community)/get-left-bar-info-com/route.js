@@ -75,7 +75,7 @@ export async function GET(req) {
         return NextResponse.json(
             {
                 message: 'User data retrieved successfully',
-                userData: {
+                community: {
                     profilePicture: community.profilePicture,
                     name: community.name,
                     surname: '',

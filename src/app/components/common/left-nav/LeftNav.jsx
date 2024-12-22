@@ -6,6 +6,7 @@ import useLeftNav from '@/hooks/useLeftNav';
 
 const LeftNav = () => {
     const { uidata, error, isLoading } = useLeftNav();
+    console.log(uidata);
 
     if (isLoading) {
         return <div>Loading...</div>;
