@@ -18,6 +18,7 @@ const Nav = () => {
   return (
     <nav className="flex items-center justify-between px-12 py-2 bg-[#191a1f] shadow-md">
       <div className="flex items-center h-[80px]">
+      <SettingsModal/>
         <Link href={"/feed"}>
           <Image
             src={require("@/assets/logo/logo.png")}
@@ -28,13 +29,12 @@ const Nav = () => {
           />
         </Link>
       </div>
-      <SettingsModal/>
       <div className="flex items-center gap-4">
         <Link href={"/messages"}>
           <Icons title="Messages" icon={<TbMessages size={20} />} />
         </Link>
         <Icons
-        onClick={OpenSettingsModal} title="Settings" icon={<IoSettingsSharp size={20} />} />
+         title="Settings" icon={<IoSettingsSharp size={20} onClick={OpenSettingsModal}/>} />
         <Link href={"/profile"}>
           <Icons title="Account" icon={<FaUserCircle size={20} />} />
         </Link>
