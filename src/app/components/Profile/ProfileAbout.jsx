@@ -16,11 +16,12 @@ import { BsGenderAmbiguous } from "react-icons/bs";
 const ProfileAbout = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [aboutInfo, setAboutInfo] = useState({
+        description: 'Ben bir yazılımcıyım, kitap okurum, film izlerim',
         location: 'İstanbul',
         birthday: '12.12.1990',
         gender: 'Erkek',
         hobbies:
-            'Ben yazılım yaparım, kitap okurum, film izlerim, erkeklerle gezerim',
+            'Su İçmek',
         phone: '0123 123 12 12',
         email: 'admin@admin',
     });
@@ -292,13 +293,13 @@ const ProfileAbout = () => {
                 ) : (
                     <>
                         <h2 className="text-lg font-medium text-gray-900">
-                            <input
+                            <textarea
                                 type="text"
-                                value={aboutInfo.hobbies}
+                                value={aboutInfo.description}
                                 onChange={(e) =>
-                                    handleInputChange('hobbies', e.target.value)
+                                    handleInputChange('description', e.target.value)
                                 }
-                                className="border-none bg-transparent text-lg font-medium text-gray-900"
+                                className="border-none bg-transparent text-lg font-medium text-gray-900 w-[280px]"
                             />
                         </h2>
 

@@ -66,6 +66,7 @@ export async function POST(req) {
                 id: userOrCommunity.id,
                 name: userOrCommunity.name,
                 email: userOrCommunity.email,
+                profilePicture: userOrCommunity.profilePicture,
             },
             token,
         });

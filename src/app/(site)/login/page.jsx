@@ -73,9 +73,12 @@ const LoginPage = () => {
                 if (data.user) {
                     localStorage.setItem('userId', data.user.id);
                     localStorage.setItem('isCommunity', false);
+                    localStorage.setItem('pp', data.user.profilePicture);
                 } else {
                     localStorage.setItem('userId', data.community.id);
                     localStorage.setItem('isCommunity', true);
+                    localStorage.setItem('pp', data.community.profilePicture);
+
                 }
                 setIsRequestPending(false);
                 router.replace('/feed');

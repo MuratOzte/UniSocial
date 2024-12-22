@@ -46,9 +46,8 @@ export async function PUT(req) {
         const {
             name,
             surname,
-            univercity,
-            department,
             profilePicture,
+            password,
         } = await req.json();
 
         if (!name || !surname || !univercity || !department) {
@@ -66,9 +65,8 @@ export async function PUT(req) {
             data: {
                 name,
                 surname,
-                univercity,
-                department,
                 profilePicture,
+                password,
             },
         });
 
