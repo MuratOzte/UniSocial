@@ -29,12 +29,17 @@ const style = {
 export default function SettingsModal() {
   const dispatch = useDispatch();
   const isSetingsModalOpened = useSelector((state) => state.ui.IsSettingsModalOpened);
+  const ProfilePic = localStorage.getItem("pp");
+  const usrName = localStorage.getItem("name");
+  const usrEmail = localStorage.getItem("email");
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    photo: null, // Fotoğraf dosyası
+    name: usrName,
+    email: usrEmail,
+    photo: null, 
     preview: '', // Fotoğrafın önizleme URL'si
+    newPassword: '', // Yeni şifre
+    confirmPassword: '', // Yeni şifre tekrar
   });
 
   const handleClose = () => dispatch(uiSlice.actions.IsSettingsModalOpenedChangeHandler(false));
@@ -58,9 +63,28 @@ export default function SettingsModal() {
     }
   };
 
-  const handleSubmit = () => {
-    console.log('Updated user data:', formData);
-    // Backend'e veri gönderilebilir.
+  const handleSubmit = async () => {
+    if (formData.newPassword !== formData.confirmPassword) {
+      alert("Yeni şifreler eşleşmiyor!");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    const response = await fetch("http://localhost:3000/api/update-user-info", {
+      method: "POST",
+      body: JSON.stringify({
+        name: formData.name,
+        email: formData.email,
+        newPassword: formData.newPassword, 
+        photo:formData.photo,
+      }),
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+
     handleClose();
   };
 
@@ -78,7 +102,7 @@ export default function SettingsModal() {
 
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
           <Avatar
-            src={formData.preview || ''}
+            src={formData.preview || ProfilePic || ''}
             alt="Profile Picture"
             sx={{ width: 100, height: 100, mb: 2 }}
           />
@@ -110,6 +134,24 @@ export default function SettingsModal() {
           name="email"
           type="email"
           value={formData.email}
+          onChange={handleChange}
+          sx={{ mb: 2 }}
+        />
+        <TextField
+          fullWidth
+          label="Yeni Şifre"
+          name="newPassword"
+          type="password"
+          value={formData.newPassword}
+          onChange={handleChange}
+          sx={{ mb: 2 }}
+        />
+        <TextField
+          fullWidth
+          label="Yeni Şifre (Tekrar)"
+          name="confirmPassword"
+          type="password"
+          value={formData.confirmPassword}
           onChange={handleChange}
           sx={{ mb: 2 }}
         />
