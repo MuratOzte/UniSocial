@@ -1,8 +1,9 @@
 import useNav from '@/hooks/useNav';
 import { IoCloseSharp } from 'react-icons/io5';
 import { RiSearchLine } from 'react-icons/ri';
+import { useEffect } from 'react';
 
-const Search = ({ setFilteredClubs }) => {
+const Search = ({ setFilteredClubs, clubs }) => {
     const {
         clearSearch,
         handleSearch,
@@ -11,6 +12,18 @@ const Search = ({ setFilteredClubs }) => {
         toggleSearchBar,
     } = useNav();
 
+    // Use useEffect to update filtered clubs when searchQuery changes
+    useEffect(() => {
+        if (searchQuery === '') {
+            setFilteredClubs(clubs); // Reset to all clubs when search query is empty
+        } else {
+            setFilteredClubs(
+                clubs.filter((club) =>
+                    club.name.toLowerCase().includes(searchQuery.toLowerCase())
+                )
+            );
+        }
+    }, [searchQuery, clubs, setFilteredClubs]); // Dependency array ensures it runs when searchQuery or clubs change
 
     return (
         <div className="relative flex items-center w-2/3">
@@ -24,7 +37,9 @@ const Search = ({ setFilteredClubs }) => {
                 onFocus={toggleSearchBar}
                 onBlur={toggleSearchBar}
                 value={searchQuery}
-                onChange={handleSearch}
+                onChange={(e) => {
+                    handleSearch(e);
+                }}
                 type="text"
                 placeholder="Search..."
                 className="w-full pl-10 pr-10 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-50 text-gray-800"

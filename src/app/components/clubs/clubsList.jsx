@@ -7,18 +7,15 @@ import { useEffect, useState } from 'react';
 import Search from './Search';
 
 const ClubList = () => {
-    const dispatch = useDispatch();
-    const [filteredClubs, setFilteredClubs] = useState(null);
     const { clubs, error, isLoading } = useCommunities();
+    const [filteredClubs, setFilteredClubs] = useState([]);
 
-    // This useEffect will run when 'clubs' data is fetched
     useEffect(() => {
-        if (clubs) {
+        if (clubs.length > 0) {
             setFilteredClubs(clubs);
         }
     }, [clubs]);
 
-    // Early return if loading or error
     if (isLoading) {
         return (
             <div className="flex justify-center items-center mt-16">
@@ -31,10 +28,9 @@ const ClubList = () => {
         return <div>Error: {error.message}</div>;
     }
 
-    // Render the club list only if filteredClubs are available
     return (
         <div className="p-6 space-y-4 flex flex-col items-center">
-            <Search setFilteredClubs={setFilteredClubs} />
+            <Search clubs={clubs} setFilteredClubs={setFilteredClubs} />
             {filteredClubs &&
                 filteredClubs.map((club) => (
                     <ClubCard
