@@ -1,6 +1,6 @@
 import eventSlice from "@/store/Slices/eventsSlice";
 import React, { useEffect, useState } from "react";
-import Loading from '../common/Loading';
+import Loading from "../common/Loading";
 
 const ClubCard = ({
   name,
@@ -27,7 +27,7 @@ const ClubCard = ({
   }, []);
 
   const joinClub = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     const token = localStorage.getItem("token");
     try {
       const response = await fetch(
@@ -49,7 +49,7 @@ const ClubCard = ({
     } catch (error) {
       console.log(error);
     }
-    setIsLoading(false)
+    setIsLoading(false);
   };
 
   return (
@@ -63,20 +63,15 @@ const ClubCard = ({
         <h2 style={styles.title}>{name}</h2>
         <p style={styles.description}>{description}</p>
         <p style={styles.type}>
-          Tür: <strong>{type === "academic" ? "Akademik" : "Sosyal"}</strong>
+          Tür: <strong>{type}</strong>
         </p>
         <p style={styles.university}>
-          Üniversite: <strong>{university}</strong>
+          {type == "Şirket" ? "Sektör:" : "Üniversite"}{" "}
+          <strong>{university}</strong>
         </p>
       </div>
       <button style={styles.joinButton} onClick={joinClub}>
-
-
-
-
-      
-
-        {isLoading?<Loading/>:(isJoined ? "Katıldın" : "Katıl")}
+        {isLoading ? <Loading /> : isJoined ? "Katıldın" : "Katıl"}
       </button>
     </div>
   );
@@ -132,8 +127,8 @@ const styles = {
     cursor: "pointer",
     fontSize: "1em",
     transition: "background-color 0.3s ease",
-    width:100,
-    height:50
+    width: 100,
+    height: 50,
   },
 };
 
