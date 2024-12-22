@@ -4,15 +4,13 @@ import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
-export async function PUT(req) {
+export async function GET(req) {
     try {
         const token = req.headers.get('authorization')?.replace('Bearer ', '');
 
         if (!token) {
             return NextResponse.json(
-                {
-                    message: 'Token is required',
-                },
+                { message: 'Token is required' },
                 { status: 401 }
             );
         }
@@ -25,9 +23,7 @@ export async function PUT(req) {
             }
         } catch (err) {
             return NextResponse.json(
-                {
-                    message: 'Invalid or expired token',
-                },
+                { message: 'Invalid or expired token' },
                 { status: 401 }
             );
         }
@@ -36,49 +32,31 @@ export async function PUT(req) {
 
         if (!userId) {
             return NextResponse.json(
-                {
-                    message: 'User ID is required',
-                },
+                { message: 'User ID is required' },
                 { status: 400 }
             );
         }
 
-        const { name, surname, profilePicture, password, email } =
-            await req.json();
-
-        if (!name || !surname || !univercity || !department) {
-            return NextResponse.json(
-                {
-                    message:
-                        'Name, surname, university, and department are required fields',
-                },
-                { status: 400 }
-            );
-        }
-
-        const updatedUser = await prisma.user.update({
-            where: { id: userId },
-            data: {
-                name,
-                surname,
-                profilePicture,
-                password,
-                email,
-            },
+        const about = await prisma.about.findUnique({
+            where: { userId },
         });
 
+        if (!about) {
+            return NextResponse.json(
+                { message: 'No about information found for this user' },
+                { status: 404 }
+            );
+        }
+
         return NextResponse.json(
-            {
-                message: 'User updated successfully',
-                user: updatedUser,
-            },
+            { message: 'About information retrieved successfully', about },
             { status: 200 }
         );
     } catch (error) {
-        console.error('Error updating user:', error);
+        console.error('Error fetching about information:', error);
         return NextResponse.json(
             {
-                message: 'An error occurred while updating the user',
+                message: 'An error occurred while fetching about information',
                 error: error.message,
             },
             { status: 500 }
