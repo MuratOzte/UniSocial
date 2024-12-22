@@ -1,5 +1,6 @@
 import eventSlice from "@/store/Slices/eventsSlice";
 import React, { useEffect, useState } from "react";
+import Loading from '../common/Loading';
 
 const ClubCard = ({
   name,
@@ -11,6 +12,7 @@ const ClubCard = ({
   communityMembers,
 }) => {
   const [isJoined, setIsJoined] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
@@ -25,6 +27,7 @@ const ClubCard = ({
   }, []);
 
   const joinClub = async () => {
+    setIsLoading(true)
     const token = localStorage.getItem("token");
     try {
       const response = await fetch(
@@ -46,6 +49,7 @@ const ClubCard = ({
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false)
   };
 
   return (
@@ -66,7 +70,13 @@ const ClubCard = ({
         </p>
       </div>
       <button style={styles.joinButton} onClick={joinClub}>
-        {isJoined ? "Katıldın" : "Katıl"}
+
+
+
+
+      
+
+        {isLoading?<Loading/>:(isJoined ? "Katıldın" : "Katıl")}
       </button>
     </div>
   );
@@ -122,7 +132,8 @@ const styles = {
     cursor: "pointer",
     fontSize: "1em",
     transition: "background-color 0.3s ease",
-    width:100
+    width:100,
+    height:50
   },
 };
 
