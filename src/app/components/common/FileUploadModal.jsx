@@ -97,7 +97,7 @@ export default function FileUploadModal({ file, setFile }) {
                     ) : (
                         <Typography color="text.secondary">
                             No file selected
-                        </Typography> // Display a message if no file is selected
+                        </Typography> 
                     )}
 
                     <Button

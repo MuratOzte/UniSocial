@@ -49,7 +49,6 @@ export async function PUT(req) {
             univercity,
             department,
             profilePicture,
-            isTeacher,
         } = await req.json();
 
         if (!name || !surname || !univercity || !department) {
@@ -70,7 +69,6 @@ export async function PUT(req) {
                 univercity,
                 department,
                 profilePicture,
-                isTeacher,
             },
         });
 

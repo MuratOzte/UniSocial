@@ -11,7 +11,7 @@ import { MdEmojiEmotions } from 'react-icons/md';
 import { TbSend } from 'react-icons/tb';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../common/Loading';
-import FileUploadModal from './FileUploadModal';
+import FileUploadModal from '../../common/FileUploadModal';
 import ShareFooter from './ShareFooter';
 import { usePosts } from '@/hooks/useFetchPosts';
 

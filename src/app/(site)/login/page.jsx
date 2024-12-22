@@ -172,21 +172,21 @@ const LoginPage = () => {
                                 isRequestError={isRequestError}
                             />
                         )}
-                        <div></div>
-                        <Grid
-                            container
-                            justifyContent="center"
-                            className="text-center flex flex-col"
-                        >
+                        <Grid container className="text-center flex flex-col" style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                        }}>
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: 0.8 }}
+                                className="flex flex-col"
                             >
                                 <Grid item xs={12}>
                                     <Button
                                         disableRipple
                                         onClick={forgotPasswordHandler}
+                                        fullWidth
                                         sx={{
                                             textTransform: 'capitalize',
                                             color: 'primary.main',
