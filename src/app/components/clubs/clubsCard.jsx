@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import eventSlice from "@/store/Slices/eventsSlice";
+import React, { useEffect, useState } from "react";
 
 const ClubCard = ({
   name,
@@ -7,47 +8,53 @@ const ClubCard = ({
   image,
   university,
   communityId,
-  communityMembers = [], // Varsayılan değer olarak boş bir dizi tanımlandı
+  communityMembers,
 }) => {
-  const [isJoined, setIsJoined] = useState(
-    communityMembers.includes(localStorage.getItem("userId")) // Kullanıcının zaten topluluğa katılıp katılmadığını kontrol ediyoruz
-  );
+  const [isJoined, setIsJoined] = useState(false);
   const userId = localStorage.getItem("userId");
 
-  const toggleJoinClub = async () => {
+  useEffect(() => {
+    if (communityMembers.length == 0) {
+      return;
+    }
+    if (communityMembers.map((e) => console.log(e.user.id == userId))) {
+      setIsJoined(true);
+    } else {
+      setIsJoined(false);
+    }
+  }, []);
+
+  const joinClub = async () => {
     const token = localStorage.getItem("token");
-
     try {
-      const response = await fetch("http://localhost:3000/api/toggle-community", {
-        method: "POST",
-        body: JSON.stringify({
-          communityId: communityId,
-        }),
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        console.error("Failed to toggle community status:", response.statusText);
-        return;
-      }
-
+      const response = await fetch(
+        "http://localhost:3000/api/toggle-community",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            communityId: communityId,
+          }),
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const data = await response.json();
       console.log(data);
-
-      // `isJoined` durumunu tersine çevir
-      setIsJoined((prevState) => !prevState);
+      console.log(communityMembers);
+      setIsJoined((prev) => !prev);
     } catch (error) {
-      console.error("An error occurred:", error);
+      console.log(error);
     }
   };
 
-  console.log("ClubCard", name, description, type, image, university);
   return (
     <div style={styles.card} className="w-[500px]">
-      <img src={image} alt={`${name} logo`} style={styles.image} />
+      <img
+        src={image || "https://via.placeholder.com/100"}
+        alt={`${name} logo`}
+        style={styles.image}
+      />
       <div style={styles.content}>
         <h2 style={styles.title}>{name}</h2>
         <p style={styles.description}>{description}</p>
@@ -58,7 +65,7 @@ const ClubCard = ({
           Üniversite: <strong>{university}</strong>
         </p>
       </div>
-      <button style={styles.joinButton} onClick={toggleJoinClub}>
+      <button style={styles.joinButton} onClick={joinClub}>
         {isJoined ? "Katıldın" : "Katıl"}
       </button>
     </div>
@@ -115,6 +122,7 @@ const styles = {
     cursor: "pointer",
     fontSize: "1em",
     transition: "background-color 0.3s ease",
+    width:100
   },
 };
 

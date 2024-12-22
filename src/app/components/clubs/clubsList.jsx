@@ -33,9 +33,10 @@ const ClubList = () => {
                         description={club.description}
                         type={club.type}
                         image={club.image}
-                        university={club.university}
+                        university={club.activityField}
                         communityId={club.id}
-                        communityMembers={clubs.CommunityMember}
+                        communityMembers={club.CommunityMember
+                        }
                     />
                 ))}
         </div>
