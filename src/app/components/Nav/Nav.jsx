@@ -6,8 +6,15 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { TbMessages } from "react-icons/tb";
 import Link from "next/link";
 import Icons from "./Icons";
+import SettingsModal from "../settings/SettingsModal";
+import { useDispatch } from "react-redux";
+import uiSlice from "@/store/Slices/uiSlice";
 
 const Nav = () => {
+  const dispatch=useDispatch();
+  const OpenSettingsModal=()=>{
+    dispatch(uiSlice.actions.IsSettingsModalOpenedChangeHandler(true))
+  }
   return (
     <nav className="flex items-center justify-between px-12 py-2 bg-[#191a1f] shadow-md">
       <div className="flex items-center h-[80px]">
@@ -21,11 +28,13 @@ const Nav = () => {
           />
         </Link>
       </div>
+      <SettingsModal/>
       <div className="flex items-center gap-4">
         <Link href={"/messages"}>
           <Icons title="Messages" icon={<TbMessages size={20} />} />
         </Link>
-        <Icons title="Settings" icon={<IoSettingsSharp size={20} />} />
+        <Icons
+        onClick={OpenSettingsModal} title="Settings" icon={<IoSettingsSharp size={20} />} />
         <Link href={"/profile"}>
           <Icons title="Account" icon={<FaUserCircle size={20} />} />
         </Link>
