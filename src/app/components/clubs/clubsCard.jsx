@@ -71,7 +71,7 @@ const ClubCard = ({
         </p>
       </div>
       <button style={styles.joinButton} onClick={joinClub}>
-        {isLoading ? <Loading /> : isJoined ? "Katıldın" : "Katıl"}
+        {isLoading ? <Loading /> : isJoined ? "Following" : "Follow"}
       </button>
     </div>
   );

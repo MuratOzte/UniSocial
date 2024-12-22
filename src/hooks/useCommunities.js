@@ -24,12 +24,15 @@ export const useCommunities = () => {
         token ? ['http://localhost:3000/api/get-all-communities', token] : null,
         ([url, token]) => fetcher(url, token)
     );
-
+console.log(data)
     return {
         clubs: data?.communities || [],
         error,
         isValidating,
         isLoading,
+        joinedCommunities:data?.joinedCommunities || [],
+        
         refreshCommunities: mutate,
+
     };
 };

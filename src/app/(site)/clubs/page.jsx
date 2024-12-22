@@ -7,16 +7,10 @@ import LeftNav from '@/app/components/common/left-nav/LeftNav';
 import EventsList from '@/app/components/events/EventsList';
 import ClubCard from '@/app/components/clubs/clubsCard';
 import ClubList from '@/app/components/clubs/clubsList';
+import JoinedCommunities from '@/app/components/clubs/joinedCommunites';
 
 const Page = () => {
-    const clubData = {
-        name: 'Bilgisayar Mühendisliği Kulübü',
-        description:
-            'Bilgisayar bilimi alanında projeler geliştiren bir akademik kulüp.',
-        type: 'academic',
-        image: 'https://via.placeholder.com/100', // Kulüp logosunun URL'si
-        univercity: 'Karadeniz teknik',
-    };
+    
 
     return (
         <div>
@@ -26,7 +20,9 @@ const Page = () => {
                 <div className="flex justify-start flex-col items-center">
                     <ClubList />
                 </div>
-                <div className="flex flex-col gap-5 mt-4"></div>
+                <div className="flex flex-col gap-5 mt-4">
+                    <JoinedCommunities/>
+                </div>
             </div>
         </div>
     );
