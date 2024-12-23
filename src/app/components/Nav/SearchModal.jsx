@@ -16,7 +16,8 @@ const SearchModal = () => {
         },
     ];
 
-    //emre burdaki veriler maplenecek    
+    //emre burdaki veriler maplenecek
+    // search-user endpointine istek atılacak çıkan sonuç maplenecek loading compoenentleri ve sonuuç bulunamadı yazısı çıkacak
 
     return (
         <AnimatePresence mode="popLayout">
@@ -27,7 +28,14 @@ const SearchModal = () => {
                 transition={{ duration: 0.3 }}
                 className="absolute top-14 right-0 z-50 w-96 bg-white shadow-lg rounded-md px-6"
             >
-                <SearchedUsers  />
+                {DUMMY_SEARCHED_USERS.map((user) => (
+                    <SearchedUsers
+                        key={user.id}
+                        name={user.name}
+                        surname={user.surname}
+                        profilePicture={user.profilePicture}
+                    />
+                ))}
             </motion.div>
         </AnimatePresence>
     );

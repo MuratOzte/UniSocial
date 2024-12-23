@@ -13,6 +13,12 @@ const nextConfig = {
                 hostname: 'media-ist1-1.cdn.whatsapp.net',
                 port: '',
                 pathname: '/v/t61.24694-24/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'randomuser.me',
+                port: '',
+                pathname: '/api/portraits/**',
             }
         ],
     },
