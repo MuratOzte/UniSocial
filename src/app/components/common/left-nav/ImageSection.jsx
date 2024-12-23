@@ -16,7 +16,7 @@ const ImageSection = ({ background, avatar, image }) => {
                 <div className="rounded-full overflow-hidden border-2 border-white absolute -bottom-7 w-[100px] h-[100px] flex justify-center items-center bg-gray-100">
                     {image ? (
                         <Image
-                            src={null}
+                            src={image}
                             alt="avatar"
                             layout="fill"
                             objectFit="cover"

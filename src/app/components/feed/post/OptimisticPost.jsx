@@ -18,8 +18,8 @@ const OptimisticPost = () => {
         image: feed.optimisticPost.image,
         content: feed.optimisticPost.content,
         author: {
-            profilePicture: ui.userAvatar,
-            name: ui.userName,
+            profilePicture: localStorage.getItem('pp'),
+            name: localStorage.getItem('name'),
         },
     };
 

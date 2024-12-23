@@ -33,7 +33,6 @@ const useLeftNav = () => {
                 : null,
             ([url, token]) => fetcher(url, token),
             {
-                revalidateOnMount: false,
                 revalidateOnFocus: false,
                 revalidateIfStale: false,
                 refreshInterval: 30000,

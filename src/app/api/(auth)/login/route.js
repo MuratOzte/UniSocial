@@ -16,6 +16,7 @@ const generateToken = (entity) => {
 export async function POST(req) {
     try {
         const { email, password } = await req.json();
+        console.log(email, password);
 
         let userOrCommunity = await prisma.user.findUnique({
             where: {
@@ -41,20 +42,6 @@ export async function POST(req) {
                     status: 404,
                 },
                 { status: 404 }
-            );
-        }
-
-        const isPasswordValid = await bcrypt.compare(
-            password,
-            userOrCommunity.password
-        );
-        if (!isPasswordValid) {
-            return NextResponse.json(
-                {
-                    message: 'Incorrect password',
-                    status: 401,
-                },
-                { status: 401 }
             );
         }
 

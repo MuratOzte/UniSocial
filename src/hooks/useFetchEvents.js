@@ -24,7 +24,6 @@ export const useEvents = () => {
         token ? ['http://localhost:3000/api/get-all-events', token] : null,
         ([url, token]) => fetcher(url, token),
         {
-            revalidateOnMount: false,
             revalidateOnFocus: false,
             revalidateIfStale: false,
         }

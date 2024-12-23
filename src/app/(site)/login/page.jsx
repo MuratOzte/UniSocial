@@ -66,6 +66,7 @@ const LoginPage = () => {
     } else {
       try {
         setIsRequestPending(true);
+        console.log(enteredEmail, enteredPassword);
         const data = await loginRequest(enteredEmail, enteredPassword);
         console.log(data);
         localStorage.setItem("token", data.token);
