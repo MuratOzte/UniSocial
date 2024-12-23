@@ -319,7 +319,7 @@ const Inputs3 = (props) => {
                                     variant="contained"
                                     color="success"
                                     onClick={emailCheckModalHandleChange}
-                                    //   disabled={!isFormValid} emre bura
+                                      disabled={!isFormValid} 
 
                                     role="progressbar"
                                     className="w-[140px] h-10"

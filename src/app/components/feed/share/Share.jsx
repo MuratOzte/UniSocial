@@ -16,7 +16,6 @@ import ShareFooter from './ShareFooter';
 import { usePosts } from '@/hooks/useFetchPosts';
 
 const Share = () => {
-    //emre burda istek atıldıktan sonra inputun içinin temizlenmesi gerekiyor
 
     const dispatch = useDispatch();
     const [isEmojiOpened, setIsEmojiOpened] = useState(false);
@@ -26,6 +25,8 @@ const Share = () => {
     const [base64File, setBase64File] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const emojiPickerRef = useRef(null);
+    const [preview, setPreview] = useState(null);
+
 
     const { refreshPosts } = usePosts(token);
 
@@ -81,6 +82,8 @@ const Share = () => {
             );
         });
         inputValClearHandler();
+        setFile(null)
+        setPreview(null)
     };
 
     const keyPressHandler = (e) => {
@@ -185,7 +188,7 @@ const Share = () => {
                     />
                 </div>
             )}
-            <FileUploadModal file={file} setFile={setFile} />
+            <FileUploadModal file={file} setFile={setFile} preview={preview} setPreview={setPreview}/>
 
             <ShareFooter uploadFileModalHandler={uploadFileModalHandler} />
         </div>
