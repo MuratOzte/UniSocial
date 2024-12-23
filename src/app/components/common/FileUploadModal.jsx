@@ -21,10 +21,9 @@ const style = {
     borderRadius: 4,
 };
 
-export default function FileUploadModal({ file, setFile }) {
+export default function FileUploadModal({ file, setFile ,preview,setPreview}) {
     const dispatch = useDispatch();
     const feed = useSelector((state) => state.feed);
-    const [preview, setPreview] = React.useState(null);
 
     const handleFileModal = (bool) => {
         dispatch(feedSlice.actions.setIsFileUploadModalOpen(bool));
