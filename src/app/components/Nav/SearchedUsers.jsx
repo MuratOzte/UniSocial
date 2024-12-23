@@ -1,11 +1,18 @@
+import {motion} from 'framer-motion';
 import Image from 'next/image';
 import { FaUserCircle } from 'react-icons/fa';
 
-const SearchedUsers = ({ profilePicture, name, surname }) => {
+const SearchedUsers = ({ profilePicture, name, surname,index }) => {
     if (!profilePicture && !name && !surname) return null;
 
     return (
-        <div className='flex gap-4 my-4 text-xl bg-gray-500 text-gray-200 px-4 py-2 items-center cursor-pointer rounded-md' >
+        <motion.div 
+        initial={{ opacity: 0, y: -5 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -5 }}
+        transition={{ duration: 0.5 , delay: index * 0.15}}
+
+        className='flex gap-4 my-4 text-xl bg-gray-500 text-gray-200 px-4 py-2 items-center cursor-pointer rounded-md' >
             {profilePicture ? (
                 <Image
                     src={profilePicture}
@@ -21,7 +28,7 @@ const SearchedUsers = ({ profilePicture, name, surname }) => {
                 {name} {'  '}
                 {surname}{' '}
             </p>
-        </div>
+        </motion.div>
     );
 };
 

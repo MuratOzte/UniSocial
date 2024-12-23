@@ -28,8 +28,9 @@ const SearchModal = () => {
                 transition={{ duration: 0.3 }}
                 className="absolute top-14 right-0 z-50 w-96 bg-white shadow-lg rounded-md px-6"
             >
-                {DUMMY_SEARCHED_USERS.map((user) => (
+                {DUMMY_SEARCHED_USERS.map((user, index) => (
                     <SearchedUsers
+                        index={index}
                         key={user.id}
                         name={user.name}
                         surname={user.surname}
