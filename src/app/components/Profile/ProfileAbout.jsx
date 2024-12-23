@@ -1,74 +1,39 @@
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-    FaBirthdayCake,
-    FaBookOpen,
-    FaMale,
-    FaMapMarkerAlt,
-    FaPhoneAlt,
-} from 'react-icons/fa';
-import { MdOutgoingMail, MdEdit } from 'react-icons/md';
-import {
-    IoArrowUndoCircleOutline,
     IoCloseCircleOutline,
+    IoArrowUndoCircleOutline,
 } from 'react-icons/io5';
-import { BsGenderAmbiguous } from 'react-icons/bs';
+import { AiOutlineEdit, AiOutlineSave } from 'react-icons/ai';
 
 const ProfileAbout = () => {
     const [isEditing, setIsEditing] = useState(false);
-    const [aboutInfo, setAboutInfo] = useState({
-        description: 'Ben bir yazılımcıyım, kitap okurum, film izlerim',
-        location: 'İstanbul',
-        birthday: '12.12.1990',
-        gender: 'Erkek',
-        hobbies: 'Su İçmek',
-        phone: '0123 123 12 12',
-        email: 'admin@admin',
-    });
-
+    const [aboutInfo, setAboutInfo] = useState({});
     const [hiddenFields, setHiddenFields] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-
-    const handleInputChange = (field, value) => {
-        setAboutInfo((prev) => ({
-            ...prev,
-            [field]: value,
-        }));
-    };
 
     useEffect(() => {
-        const fetchAboutInfo = async () => {
-            setLoading(true);
+        const fetchData = async () => {
             try {
-                const token = localStorage.getItem('token');
                 const response = await fetch('/api/get-about', {
                     headers: {
-                        Authorization: `Bearer ${token}`,
+                        Authorization: `Bearer ${localStorage.getItem(
+                            'token'
+                        )}`,
                     },
                 });
-                if (!response.ok) throw new Error('Failed to fetch about info');
                 const data = await response.json();
-
-                console.log('About info:', data.about);
-                setAboutInfo({
-                    description: data.about.description,
-                    location: data.about.location,
-                    birthday: data.about.birthDate,
-                    gender: data.about.gender,
-                    hobbies: data.about.hobbies,
-                    phone: data.about.telno,
-                    email: data.about.email,
-                });
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
+                if (response.ok) {
+                    setAboutInfo(data.about);
+                } else {
+                    console.error(data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching profile data:', error);
             }
         };
-        fetchAboutInfo();
+        fetchData();
     }, []);
 
-    const toggleEdit = async () => {
+    const handleEditToggle = async () => {
         if (isEditing) {
             try {
                 const response = await fetch('/api/update-about', {
@@ -79,349 +44,103 @@ const ProfileAbout = () => {
                             'token'
                         )}`,
                     },
-                    body: JSON.stringify({
-                        description: aboutInfo.description,
-                        location: aboutInfo.location,
-                        birthDate: aboutInfo.birthday,
-                        gender: aboutInfo.gender,
-                        hobbies: aboutInfo.hobbies,
-                        telno: aboutInfo.phone,
-                        email: aboutInfo.email,
-                    }),
+                    body: JSON.stringify(aboutInfo),
                 });
-
-                if (!response.ok) {
-                    throw new Error('Failed to update profile');
-                }
-
                 const data = await response.json();
-                console.log('Profile updated successfully:', data);
+                if (!response.ok) {
+                    console.error(data.message);
+                }
             } catch (error) {
-                console.error('Error updating profile:', error);
+                console.error('Error updating profile data:', error);
+                return;
             }
         }
         setIsEditing(!isEditing);
     };
 
-    const removeHiddenField = (field) => {
-        setHiddenFields((prev) => prev.filter((item) => item !== field));
+    const handleFieldChange = (field, value) => {
+        setAboutInfo((prev) => ({ ...prev, [field]: value }));
     };
 
-    const hideField = (field) => {
-        setHiddenFields((prev) => [...prev, field]);
+    const toggleFieldVisibility = (field) => {
+        setHiddenFields((prev) =>
+            prev.includes(field)
+                ? prev.filter((f) => f !== field)
+                : [...prev, field]
+        );
     };
 
-    const isHidden = (field) => hiddenFields.includes(field);
-
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-
-    return (
-        <div className="p-6 bg-white shadow-md rounded-lg w-[400px] h-fit mt-12">
-            <div className="flex justify-between items-center mb-4">
-                <h1 className="text-3xl font-semibold">Hakkımda</h1>
-                <div
-                    className="flex justify-center items-center gap-1 cursor-pointer"
-                    onClick={toggleEdit}
-                >
-                    <MdEdit className="text-gray-400" size={24} />
-                    <p className="text-gray-400">
-                        {isEditing ? 'Kaydet' : 'Düzenle'}
-                    </p>
+    const renderField = (field, label, type = 'text') => {
+        if (hiddenFields.includes(field)) {
+            return (
+                <div className="flex items-center justify-between">
+                    <span className="italic text-gray-400">
+                        {label} is hidden
+                    </span>
+                    {isEditing && (
+                        <IoArrowUndoCircleOutline
+                            className="text-blue-500 cursor-pointer"
+                            size={24}
+                            onClick={() => toggleFieldVisibility(field)}
+                        />
+                    )}
                 </div>
-            </div>
-            <div className="text-gray-700 space-y-4">
+            );
+        }
+
+        return (
+            <div className="mb-4">
+                <label className="block font-semibold text-gray-700 mb-1">
+                    {label}:
+                </label>
                 {isEditing ? (
-                    <>
-                        <div
-                            className="flex items-center text-sm space-x-2 relative"
-                            style={{
-                                display:
-                                    isHidden('location') && !isEditing
-                                        ? 'none'
-                                        : 'flex',
-                            }}
-                        >
-                            <FaMapMarkerAlt
-                                className="text-green-500"
-                                size={24}
-                            />
-                            <span className="font-semibold">Yaşadığı Yer:</span>
-                            <input
-                                type="text"
-                                value={aboutInfo.location}
-                                onChange={(e) =>
-                                    handleInputChange(
-                                        'location',
-                                        e.target.value
-                                    )
-                                }
-                                className="border border-gray-300 rounded px-2 py-1 w-full"
-                            />
-                            {isHidden('location') ? (
-                                <IoArrowUndoCircleOutline
-                                    size={24}
-                                    className="text-green-500 cursor-pointer absolute right-0"
-                                    onClick={() =>
-                                        removeHiddenField('location')
-                                    }
-                                />
-                            ) : (
-                                <IoCloseCircleOutline
-                                    size={24}
-                                    className="text-gray-400 cursor-pointer absolute right-0"
-                                    onClick={() => hideField('location')}
-                                />
-                            )}
-                        </div>
-
-                        <div
-                            className="flex items-center text-sm space-x-2 relative"
-                            style={{
-                                display:
-                                    isHidden('birthday') && !isEditing
-                                        ? 'none'
-                                        : 'flex',
-                            }}
-                        >
-                            <FaBirthdayCake
-                                className="text-pink-500"
-                                size={24}
-                            />
-                            <span className="font-semibold">Doğum Tarihi:</span>
-                            <input
-                                type="text"
-                                value={aboutInfo.birthday}
-                                onChange={(e) =>
-                                    handleInputChange(
-                                        'birthday',
-                                        e.target.value
-                                    )
-                                }
-                                className="border border-gray-300 rounded px-2 py-1 w-full"
-                            />
-                            {isHidden('birthday') ? (
-                                <IoArrowUndoCircleOutline
-                                    size={24}
-                                    className="text-green-500 cursor-pointer absolute right-0"
-                                    onClick={() =>
-                                        removeHiddenField('birthday')
-                                    }
-                                />
-                            ) : (
-                                <IoCloseCircleOutline
-                                    size={24}
-                                    className="text-gray-400 cursor-pointer absolute right-0"
-                                    onClick={() => hideField('birthday')}
-                                />
-                            )}
-                        </div>
-
-                        <div
-                            className="flex items-center text-sm space-x-2 relative"
-                            style={{
-                                display:
-                                    isHidden('gender') && !isEditing
-                                        ? 'none'
-                                        : 'flex',
-                            }}
-                        >
-                            <BsGenderAmbiguous
-                                className="text-blue-500"
-                                size={24}
-                            />
-                            <span className="font-semibold">Cinsiyet:</span>
-                            <input
-                                type="text"
-                                value={aboutInfo.gender}
-                                onChange={(e) =>
-                                    handleInputChange('gender', e.target.value)
-                                }
-                                className="border border-gray-300 rounded px-2 py-1 w-full"
-                            />
-                            {isHidden('gender') ? (
-                                <IoArrowUndoCircleOutline
-                                    size={24}
-                                    className="text-green-500 cursor-pointer absolute right-0"
-                                    onClick={() => removeHiddenField('gender')}
-                                />
-                            ) : (
-                                <IoCloseCircleOutline
-                                    size={24}
-                                    className="text-gray-400 cursor-pointer absolute right-0"
-                                    onClick={() => hideField('gender')}
-                                />
-                            )}
-                        </div>
-
-                        <div
-                            className="flex items-center text-sm space-x-2 relative"
-                            style={{
-                                display:
-                                    isHidden('hobbies') && !isEditing
-                                        ? 'none'
-                                        : 'flex',
-                            }}
-                        >
-                            <FaBookOpen className="text-orange-500" size={24} />
-                            <span className="font-semibold">Hobiler:</span>
-                            <input
-                                type="text"
-                                value={aboutInfo.hobbies}
-                                onChange={(e) =>
-                                    handleInputChange('hobbies', e.target.value)
-                                }
-                                className="border border-gray-300 rounded px-2 py-1 w-full"
-                            />
-                            {isHidden('hobbies') ? (
-                                <IoArrowUndoCircleOutline
-                                    size={24}
-                                    className="text-green-500 cursor-pointer absolute right-0"
-                                    onClick={() => removeHiddenField('hobbies')}
-                                />
-                            ) : (
-                                <IoCloseCircleOutline
-                                    size={24}
-                                    className="text-gray-400 cursor-pointer absolute right-0"
-                                    onClick={() => hideField('hobbies')}
-                                />
-                            )}
-                        </div>
-
-                        <div
-                            className="flex items-center text-sm space-x-2 relative"
-                            style={{
-                                display:
-                                    isHidden('phone') && !isEditing
-                                        ? 'none'
-                                        : 'flex',
-                            }}
-                        >
-                            <FaPhoneAlt className="text-teal-500" size={24} />
-                            <span className="font-semibold">Telefon:</span>
-                            <input
-                                type="text"
-                                value={aboutInfo.phone}
-                                onChange={(e) =>
-                                    handleInputChange('phone', e.target.value)
-                                }
-                                className="border border-gray-300 rounded px-2 py-1 w-full"
-                            />
-                            {isHidden('phone') ? (
-                                <IoArrowUndoCircleOutline
-                                    size={24}
-                                    className="text-green-500 cursor-pointer absolute right-0"
-                                    onClick={() => removeHiddenField('phone')}
-                                />
-                            ) : (
-                                <IoCloseCircleOutline
-                                    size={24}
-                                    className="text-gray-400 cursor-pointer absolute right-0"
-                                    onClick={() => hideField('phone')}
-                                />
-                            )}
-                        </div>
-
-                        <div
-                            className="flex items-center text-sm space-x-2 relative"
-                            style={{
-                                display:
-                                    isHidden('email') && !isEditing
-                                        ? 'none'
-                                        : 'flex',
-                            }}
-                        >
-                            <MdOutgoingMail
-                                className="text-red-500"
-                                size={24}
-                            />
-                            <span className="font-semibold">E-posta:</span>
-                            <input
-                                type="text"
-                                value={aboutInfo.email}
-                                onChange={(e) =>
-                                    handleInputChange('email', e.target.value)
-                                }
-                                className="border border-gray-300 rounded px-2 py-1 w-full"
-                            />
-                            {isHidden('email') ? (
-                                <IoArrowUndoCircleOutline
-                                    size={24}
-                                    className="text-green-500 cursor-pointer absolute right-0"
-                                    onClick={() => removeHiddenField('email')}
-                                />
-                            ) : (
-                                <IoCloseCircleOutline
-                                    size={24}
-                                    className="text-gray-400 cursor-pointer absolute right-0"
-                                    onClick={() => hideField('email')}
-                                />
-                            )}
-                        </div>
-                    </>
+                    <input
+                        type={type}
+                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        value={aboutInfo[field] || ''}
+                        onChange={(e) =>
+                            handleFieldChange(field, e.target.value)
+                        }
+                    />
                 ) : (
-                    <>
-                        <h2 className="text-lg font-medium text-gray-900">
-                            <textarea
-                                type="text"
-                                value={aboutInfo.description}
-                                onChange={(e) =>
-                                    handleInputChange(
-                                        'description',
-                                        e.target.value
-                                    )
-                                }
-                                className="border-none bg-transparent text-lg font-medium text-gray-900 w-[280px]"
-                            />
-                        </h2>
-
-                        <div className="flex items-center text-sm space-x-2">
-                            <FaMapMarkerAlt
-                                className="text-green-500"
+                    <div className="flex items-center justify-between">
+                        <span>{aboutInfo[field] || 'Not provided'}</span>
+                        {isEditing && (
+                            <IoCloseCircleOutline
+                                className="text-red-500 cursor-pointer"
                                 size={24}
+                                onClick={() => toggleFieldVisibility(field)}
                             />
-                            <span className="font-semibold">Yaşadığı Yer:</span>
-                            <span>{aboutInfo.location}</span>
-                        </div>
-
-                        <div className="flex items-center text-sm space-x-2">
-                            <FaBirthdayCake
-                                className="text-pink-500"
-                                size={24}
-                            />
-                            <span className="font-semibold">Doğum Tarihi:</span>
-                            <span>{aboutInfo.birthday}</span>
-                        </div>
-
-                        <div className="flex items-center text-sm space-x-2">
-                            <FaMale className="text-blue-500" size={24} />
-                            <span className="font-semibold">Cinsiyet:</span>
-                            <span>{aboutInfo.gender}</span>
-                        </div>
-
-                        <div className="flex items-center text-sm space-x-2">
-                            <FaBookOpen className="text-orange-500" size={24} />
-                            <span className="font-semibold">Hobiler:</span>
-                            <span>{aboutInfo.hobbies}</span>
-                        </div>
-
-                        <div className="flex items-center text-sm space-x-2">
-                            <FaPhoneAlt className="text-teal-500" size={24} />
-                            <span className="font-semibold">Telefon:</span>
-                            <span>{aboutInfo.phone}</span>
-                        </div>
-
-                        <div className="flex items-center text-sm space-x-2">
-                            <MdOutgoingMail
-                                className="text-red-500"
-                                size={24}
-                            />
-                            <span className="font-semibold">E-posta:</span>
-                            <span>{aboutInfo.email}</span>
-                        </div>
-                    </>
+                        )}
+                    </div>
                 )}
             </div>
+        );
+    };
+
+    return (
+        <div className=" bg-white shadow-md rounded-lg p-6 w-80">
+            <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold">About Me</h2>
+                <button
+                    className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
+                    onClick={handleEditToggle}
+                >
+                    {isEditing ? (
+                        <AiOutlineSave size={20} />
+                    ) : (
+                        <AiOutlineEdit size={20} />
+                    )}
+                    <span className="ml-2">{isEditing ? 'Save' : 'Edit'}</span>
+                </button>
+            </div>
+            {renderField('description', 'Description')}
+            {renderField('location', 'Location')}
+            {renderField('birthDate', 'Birthdate', 'date')}
+            {renderField('gender', 'Gender')}
+            {renderField('hobbies', 'Hobbies')}
+            {renderField('telno', 'Phone', 'tel')}
+            {renderField('email', 'Email', 'email')}
         </div>
     );
 };
