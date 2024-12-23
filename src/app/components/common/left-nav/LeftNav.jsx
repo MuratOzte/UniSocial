@@ -6,7 +6,6 @@ import useLeftNav from '@/hooks/useLeftNav';
 
 const LeftNav = () => {
     const { uidata, error, isLoading } = useLeftNav();
-    console.log(uidata);
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -17,7 +16,6 @@ const LeftNav = () => {
         
     }
 
-    //emre burada uidatanın içindeki resme göre resim döndürmen gerekiyor imagesectiona prop olarak gönder resim null ise icon döndür
 
     return (
         <div className="w-[350px] rounded-md mt-6 ml-4">
