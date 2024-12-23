@@ -1,57 +1,67 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { FaUserCircle } from 'react-icons/fa';
-import { IoSettingsSharp } from 'react-icons/io5';
-import { TbMessages } from 'react-icons/tb';
-import Link from 'next/link';
-import Icons from './Icons';
-import SettingsModal from '../settings/SettingsModal';
-import { useDispatch, useSelector } from 'react-redux';
-import uiSlice from '@/store/Slices/uiSlice';
-import Search from './Search';
+import Image from "next/image";
+import { FaUserCircle } from "react-icons/fa";
+import { IoSettingsSharp } from "react-icons/io5";
+import { TbMessages } from "react-icons/tb";
+import Link from "next/link";
+import Icons from "./Icons";
+import SettingsModal from "../settings/SettingsModal";
+import { useDispatch, useSelector } from "react-redux";
+import uiSlice from "@/store/Slices/uiSlice";
+import Search from "./Search";
+import { TbLogout } from "react-icons/tb";
+import { useRouter } from "next/navigation";
 
 const Nav = () => {
-    const dispatch = useDispatch();
-    const OpenSettingsModal = () => {
-        dispatch(uiSlice.actions.IsSettingsModalOpenedChangeHandler(true));
-    };
-    const ui = useSelector((state) => state.ui);
-    return (
-        <nav className="flex items-center justify-between px-12 py-2 bg-[#191a1f] shadow-md">
-            <div className="flex items-center h-[80px]">
-                {ui.IsSettingsModalOpened && <SettingsModal />}
-                <Link href={'/feed'}>
-                    <Image
-                        src={require('@/assets/logo/logo.png')}
-                        alt="UniSocial"
-                        width={200}
-                        height={80}
-                        className="object-cover object-center"
-                    />
-                </Link>
-            </div>
-            <div>
-                <Search />
-            </div>
-            <div className="flex items-center gap-4">
-                <Link href={'/messages'}>
-                    <Icons title="Messages" icon={<TbMessages size={20} />} />
-                </Link>
-                <Icons
-                    onClick={OpenSettingsModal}
-                    title="Settings"
-                    icon={<IoSettingsSharp size={20} />}
-                />
-                <Link href={'/profile'}>
-                    <Icons title="Account" icon={<FaUserCircle size={20} />} />
-                </Link>
-                {
-                    // emre buraya logout iconu gelcek local storagedan token silincek ve login sayfasına yönlendirilecek emre
-                }
-            </div>
-        </nav>
-    );
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const OpenSettingsModal = () => {
+    dispatch(uiSlice.actions.IsSettingsModalOpenedChangeHandler(true));
+  };
+  const ui = useSelector((state) => state.ui);
+  const LogOutButton = () => {
+    localStorage.removeItem("token");
+    router.replace("/login");
+  };
+  return (
+    <nav className="flex items-center justify-between px-12 py-2 bg-[#191a1f] shadow-md">
+      <div className="flex items-center h-[80px]">
+        {ui.IsSettingsModalOpened && <SettingsModal />}
+        <Link href={"/feed"}>
+          <Image
+            src={require("@/assets/logo/logo.png")}
+            alt="UniSocial"
+            width={200}
+            height={80}
+            className="object-cover object-center"
+          />
+        </Link>
+      </div>
+      <div>
+        <Search />
+      </div>
+      <div className="flex items-center gap-4">
+        <Link href={"/messages"}>
+          <Icons title="Messages" icon={<TbMessages size={20} />} />
+        </Link>
+        <Icons
+          onClick={OpenSettingsModal}
+          title="Settings"
+          icon={<IoSettingsSharp size={20} />}
+        />
+        <Link href={"/profile"}>
+          <Icons title="Account" icon={<FaUserCircle size={20} />} />
+        </Link>
+
+        <Icons
+          title="LogOut"
+          icon={<TbLogout size={20} />}
+          onClick={LogOutButton}
+        />
+      </div>
+    </nav>
+  );
 };
 
 export default Nav;
