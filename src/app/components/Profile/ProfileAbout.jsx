@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     FaBirthdayCake,
     FaBookOpen,
@@ -11,7 +11,7 @@ import {
     IoArrowUndoCircleOutline,
     IoCloseCircleOutline,
 } from 'react-icons/io5';
-import { BsGenderAmbiguous } from "react-icons/bs";
+import { BsGenderAmbiguous } from 'react-icons/bs';
 
 const ProfileAbout = () => {
     const [isEditing, setIsEditing] = useState(false);
@@ -20,13 +20,14 @@ const ProfileAbout = () => {
         location: 'İstanbul',
         birthday: '12.12.1990',
         gender: 'Erkek',
-        hobbies:
-            'Su İçmek',
+        hobbies: 'Su İçmek',
         phone: '0123 123 12 12',
         email: 'admin@admin',
     });
 
     const [hiddenFields, setHiddenFields] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const handleInputChange = (field, value) => {
         setAboutInfo((prev) => ({
@@ -35,7 +36,70 @@ const ProfileAbout = () => {
         }));
     };
 
-    const toggleEdit = () => {
+    useEffect(() => {
+        const fetchAboutInfo = async () => {
+            setLoading(true);
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('/api/get-about', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                if (!response.ok) throw new Error('Failed to fetch about info');
+                const data = await response.json();
+
+                console.log('About info:', data.about);
+                setAboutInfo({
+                    description: data.about.description,
+                    location: data.about.location,
+                    birthday: data.about.birthDate,
+                    gender: data.about.gender,
+                    hobbies: data.about.hobbies,
+                    phone: data.about.telno,
+                    email: data.about.email,
+                });
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchAboutInfo();
+    }, []);
+
+    const toggleEdit = async () => {
+        if (isEditing) {
+            try {
+                const response = await fetch('/api/update-about', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem(
+                            'token'
+                        )}`,
+                    },
+                    body: JSON.stringify({
+                        description: aboutInfo.description,
+                        location: aboutInfo.location,
+                        birthDate: aboutInfo.birthday,
+                        gender: aboutInfo.gender,
+                        hobbies: aboutInfo.hobbies,
+                        telno: aboutInfo.phone,
+                        email: aboutInfo.email,
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update profile');
+                }
+
+                const data = await response.json();
+                console.log('Profile updated successfully:', data);
+            } catch (error) {
+                console.error('Error updating profile:', error);
+            }
+        }
         setIsEditing(!isEditing);
     };
 
@@ -48,6 +112,9 @@ const ProfileAbout = () => {
     };
 
     const isHidden = (field) => hiddenFields.includes(field);
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
     return (
         <div className="p-6 bg-white shadow-md rounded-lg w-[400px] h-fit mt-12">
@@ -158,9 +225,11 @@ const ProfileAbout = () => {
                                         ? 'none'
                                         : 'flex',
                             }}
-                        >   
-                        
-                            <BsGenderAmbiguous  className="text-blue-500" size={24} />
+                        >
+                            <BsGenderAmbiguous
+                                className="text-blue-500"
+                                size={24}
+                            />
                             <span className="font-semibold">Cinsiyet:</span>
                             <input
                                 type="text"
@@ -297,7 +366,10 @@ const ProfileAbout = () => {
                                 type="text"
                                 value={aboutInfo.description}
                                 onChange={(e) =>
-                                    handleInputChange('description', e.target.value)
+                                    handleInputChange(
+                                        'description',
+                                        e.target.value
+                                    )
                                 }
                                 className="border-none bg-transparent text-lg font-medium text-gray-900 w-[280px]"
                             />
