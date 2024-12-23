@@ -9,6 +9,7 @@ import Icons from './Icons';
 import SettingsModal from '../settings/SettingsModal';
 import { useDispatch, useSelector } from 'react-redux';
 import uiSlice from '@/store/Slices/uiSlice';
+import Search from './Search';
 
 const Nav = () => {
     const dispatch = useDispatch();
@@ -30,6 +31,9 @@ const Nav = () => {
                     />
                 </Link>
             </div>
+            <div>
+                <Search />
+            </div>
             <div className="flex items-center gap-4">
                 <Link href={'/messages'}>
                     <Icons title="Messages" icon={<TbMessages size={20} />} />
@@ -42,6 +46,9 @@ const Nav = () => {
                 <Link href={'/profile'}>
                     <Icons title="Account" icon={<FaUserCircle size={20} />} />
                 </Link>
+                {
+                    // emre buraya logout iconu gelcek local storagedan token silincek ve login sayfasına yönlendirilecek emre
+                }
             </div>
         </nav>
     );
