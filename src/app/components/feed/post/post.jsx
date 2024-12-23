@@ -13,6 +13,7 @@ const Post = ({ post }) => {
     const isPostLoading = feed.loadingPosts[post.id];
 
     const time = timeAgo(post.createdAt);
+    console.log(post)
 
     const isTeacher = post.author.isTeacher;
 

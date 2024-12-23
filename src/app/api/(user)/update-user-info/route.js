@@ -46,7 +46,9 @@ export async function PUT(req) {
         const { name, surname, profilePicture, password, email } =
             await req.json();
 
-        if (!name || !surname || !univercity || !department) {
+        console.log(name, password, email);
+
+        if (!name || !password || !email) {
             return NextResponse.json(
                 {
                     message:

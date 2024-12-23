@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-const ImageSection = ({ background, avatar }) => {
+const ImageSection = ({ background, avatar, image }) => {
     return (
         <div className="relative">
             <div
@@ -12,15 +12,14 @@ const ImageSection = ({ background, avatar }) => {
                     backgroundRepeat: 'no-repeat',
                 }}
             >
-                <Image
-                    src={
-                        'https://media-ist1-1.cdn.whatsapp.net/v/t61.24694-24/397884028_1042568196864685_3091923269807243330_n.jpg?ccb=11-4&oh=01_Q5AaIKQmUOCzd8T27xRaE1xk6hv1larJdXmoCzMxBD7ZMq3A&oe=67557ECD&_nc_sid=5e03e0&_nc_cat=101'
-                    }
-                    alt='avatar'
-                    width={100}
-                    height={100}
-                    className="rounded-full border-2 border-white absolute -bottom-7"
-                />
+                <div className="rounded-full overflow-hidden border-2 border-white absolute -bottom-7 w-[100px] h-[100px]">
+                    <Image
+                        src={image || '/images/avatar.png'}
+                        alt="avatar"
+                        layout="fill"
+                        objectFit="cover"
+                    />
+                </div>
             </div>
         </div>
     );

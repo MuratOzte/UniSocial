@@ -23,7 +23,7 @@ const LeftNav = () => {
         <div className="w-[350px] rounded-md mt-6 ml-4">
             {uidata && (
                 <>
-                    <ImageSection />
+                    <ImageSection  image={uidata.profilePicture} />
                     <About
                         department={uidata.department}
                         name={`${uidata.name} ${uidata.surname}`}
