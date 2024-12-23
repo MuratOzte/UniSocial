@@ -70,7 +70,7 @@ const ClubCard = ({
           <strong>{university}</strong>
         </p>
       </div>
-      <button style={styles.joinButton} onClick={joinClub}>
+      <button style={styles.joinButton} className="flex justify-center item-center" onClick={joinClub}>
         {isLoading ? <Loading /> : isJoined ? "Following" : "Follow"}
       </button>
     </div>

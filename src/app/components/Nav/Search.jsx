@@ -18,7 +18,7 @@ const Search = ({}) => {
 
     return (
         <div className="relative flex items-center w-2/3 min-w-[400px]">
-            {isModalOpened && <SearchModal />}
+            {isModalOpened && <SearchModal searchQuery={searchQuery} />}
             <RiSearchLine
                 className={`absolute left-2 ${
                     !isSearchBarFocused ? 'text-gray-600' : 'text-blue-500'
