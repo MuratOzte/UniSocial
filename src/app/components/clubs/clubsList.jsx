@@ -27,6 +27,7 @@ const ClubList = () => {
     if (error) {
         return <div>Error: {error.message}</div>;
     }
+    console.log(filteredClubs)
 
     return (
         <div className="p-6 space-y-4 flex flex-col items-center">
@@ -38,7 +39,7 @@ const ClubList = () => {
                         name={club.name}
                         description={club.description}
                         type={club.type}
-                        image={club.image}
+                        image={club.profilePicture}
                         university={club.activityField}
                         communityId={club.id}
                         communityMembers={club.CommunityMember}

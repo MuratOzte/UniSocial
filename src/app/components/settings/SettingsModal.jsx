@@ -92,15 +92,17 @@ export default function SettingsModal() {
         }
 
         const token = localStorage.getItem('token');
+        console.log(localStorage.getItem('isCommunity'));
 
         const response = await fetch(
             'http://localhost:3000/api/update-user-info',
             {
                 method: 'PUT',
                 body: JSON.stringify({
-                    type: localStorage.getItem('isCommunity')
-                        ? 'community'
-                        : 'user',
+                    type:
+                        localStorage.getItem('isCommunity') == 'true'
+                            ? 'community'
+                            : 'user',
                     name: formData.name,
                     email: formData.email,
                     password: formData.newPassword,
@@ -116,6 +118,20 @@ export default function SettingsModal() {
         console.log(data);
 
         handleClose();
+    };
+
+    const isButtonDisabled = () => {
+        if (
+            !formData.name ||
+            !formData.email ||
+            !formData.newPassword ||
+            !formData.confirmPassword ||
+            formData.newPassword !== formData.confirmPassword
+        ) {
+            return true;
+        }
+
+        return false;
     };
 
     return (
@@ -203,6 +219,7 @@ export default function SettingsModal() {
                     color="primary"
                     fullWidth
                     onClick={handleSubmit}
+                    disabled={isButtonDisabled()}
                     sx={{ py: 1.5, fontWeight: 'bold' }}
                 >
                     Kaydet

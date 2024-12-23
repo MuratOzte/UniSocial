@@ -1,3 +1,4 @@
+import { AccountCircle } from '@mui/icons-material';
 import Image from 'next/image';
 
 const ImageSection = ({ background, avatar, image }) => {
@@ -12,13 +13,20 @@ const ImageSection = ({ background, avatar, image }) => {
                     backgroundRepeat: 'no-repeat',
                 }}
             >
-                <div className="rounded-full overflow-hidden border-2 border-white absolute -bottom-7 w-[100px] h-[100px]">
-                    <Image
-                        src={image || '/images/avatar.png'}
-                        alt="avatar"
-                        layout="fill"
-                        objectFit="cover"
-                    />
+                <div className="rounded-full overflow-hidden border-2 border-white absolute -bottom-7 w-[100px] h-[100px] flex justify-center items-center bg-gray-100">
+                    {image ? (
+                        <Image
+                            src={null}
+                            alt="avatar"
+                            layout="fill"
+                            objectFit="cover"
+                        />
+                    ) : (
+                        <AccountCircle
+                            className="text-gray-500"
+                            style={{ fontSize: '120px' }}
+                        />
+                    )}
                 </div>
             </div>
         </div>

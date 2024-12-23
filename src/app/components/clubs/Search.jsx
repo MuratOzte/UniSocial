@@ -12,10 +12,9 @@ const Search = ({ setFilteredClubs, clubs }) => {
         toggleSearchBar,
     } = useNav();
 
-    // Use useEffect to update filtered clubs when searchQuery changes
     useEffect(() => {
         if (searchQuery === '') {
-            setFilteredClubs(clubs); // Reset to all clubs when search query is empty
+            setFilteredClubs(clubs); 
         } else {
             setFilteredClubs(
                 clubs.filter((club) =>
@@ -23,10 +22,10 @@ const Search = ({ setFilteredClubs, clubs }) => {
                 )
             );
         }
-    }, [searchQuery, clubs, setFilteredClubs]); // Dependency array ensures it runs when searchQuery or clubs change
+    }, [searchQuery, clubs, setFilteredClubs]); 
 
     return (
-        <div className="relative flex items-center w-2/3">
+        <div className="relative flex items-center w-2/3 min-w-[400px]">
             <RiSearchLine
                 className={`absolute left-2 ${
                     !isSearchBarFocused ? 'text-gray-600' : 'text-blue-500'

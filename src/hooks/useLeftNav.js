@@ -33,7 +33,9 @@ const useLeftNav = () => {
                 : null,
             ([url, token]) => fetcher(url, token),
             {
+                revalidateOnMount: false,
                 revalidateOnFocus: false,
+                revalidateIfStale: false,
                 refreshInterval: 30000,
             }
         );
@@ -57,16 +59,6 @@ const useLeftNav = () => {
             refreshInterval: 30000,
         }
     );
-    const dispatch = useDispatch();
-
-    if (data) {
-        dispatch(
-            uiSlice.actions.setUser({
-                name: data.userData.name,
-                avatar: data.userData.profilePicture,
-            })
-        );
-    }
 
     return {
         uidata: data?.userData,

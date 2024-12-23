@@ -17,7 +17,9 @@ export const usePosts = (token) => {
         token ? ['http://localhost:3000/api/get-all-posts', token] : null,
         ([url, token]) => fetcher(url, token),
         {
-            revalidateOnMount: true,
+            revalidateOnMount: false,
+            revalidateOnFocus: false,
+            revalidateIfStale: false,
             refreshInterval: 10000,
         }
     );
