@@ -10,9 +10,7 @@ export async function PUT(req) {
 
         if (!token) {
             return NextResponse.json(
-                {
-                    message: 'Token is required',
-                },
+                { message: 'Token is required' },
                 { status: 401 }
             );
         }
@@ -25,62 +23,70 @@ export async function PUT(req) {
             }
         } catch (err) {
             return NextResponse.json(
-                {
-                    message: 'Invalid or expired token',
-                },
+                { message: 'Invalid or expired token' },
                 { status: 401 }
             );
         }
 
         const userId = decoded?.id;
+        const { type, ...updateData } = await req.json();
 
-        if (!userId) {
+        console.log(type, updateData);
+
+        if (!userId || !type) {
             return NextResponse.json(
-                {
-                    message: 'User ID is required',
-                },
+                { message: 'User ID and type are required' },
                 { status: 400 }
             );
         }
 
-        const { name, surname, profilePicture, password, email } =
-            await req.json();
-
-        console.log(name, password, email);
-
-        if (!name || !password || !email) {
+        if (!['user', 'community'].includes(type)) {
             return NextResponse.json(
                 {
                     message:
-                        'Name, surname, university, and department are required fields',
+                        'Invalid type, must be either "user" or "community"',
                 },
                 { status: 400 }
             );
         }
 
-        const updatedUser = await prisma.user.update({
+        let existingRecord;
+        if (type === 'user') {
+            existingRecord = await prisma.user.findUnique({
+                where: { id: userId },
+            });
+        } else if (type === 'community') {
+            existingRecord = await prisma.community.findUnique({
+                where: { id: userId },
+            });
+        }
+
+        if (!existingRecord) {
+            return NextResponse.json(
+                { message: `${type} not found` },
+                { status: 404 }
+            );
+        }
+
+        const updatedRecord = await prisma[type].update({
             where: { id: userId },
             data: {
-                name,
-                surname,
-                profilePicture,
-                password,
-                email,
+                ...updateData,
+                ...(updateData.password && {
+                    password: updateData.password,
+                }),
             },
         });
 
         return NextResponse.json(
-            {
-                message: 'User updated successfully',
-                user: updatedUser,
-            },
+            { message: `${type} updated successfully`, data: updatedRecord },
             { status: 200 }
         );
     } catch (error) {
-        console.error('Error updating user:', error);
+        console.error('Error updating record:', error);
         return NextResponse.json(
             {
-                message: 'An error occurred while updating the user',
+                message: 'An error occurred while updating the record',
                 error: error.message,
             },
             { status: 500 }

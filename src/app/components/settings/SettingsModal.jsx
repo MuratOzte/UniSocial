@@ -32,9 +32,13 @@ export default function SettingsModal() {
         (state) => state.ui.IsSettingsModalOpened
     );
 
-    const [ProfilePic, setProfilePic] = useState('');
-    const [usrName, setUsrName] = useState('');
-    const [usrEmail, setUsrEmail] = useState('');
+    const [ProfilePic, setProfilePic] = useState(
+        localStorage.getItem('pp') || ''
+    );
+    const [usrName, setUsrName] = useState(localStorage.getItem('name') || '');
+    const [usrEmail, setUsrEmail] = useState(
+        localStorage.getItem('email') || ''
+    );
 
     React.useEffect(() => {
         setProfilePic(localStorage.getItem('pp'));
@@ -42,13 +46,17 @@ export default function SettingsModal() {
         setUsrEmail(localStorage.getItem('email'));
     }, []);
 
+    React.useEffect(() => {
+        console.log(ProfilePic, usrName, usrEmail);
+    }, [ProfilePic, usrName, usrEmail]);
+
     const [formData, setFormData] = useState({
         name: usrName,
         email: usrEmail,
-        photo: null || ProfilePic, 
-        preview: '', 
-        newPassword: '', 
-        confirmPassword: '', 
+        photo: null || ProfilePic,
+        preview: '',
+        newPassword: '',
+        confirmPassword: '',
     });
 
     const handleClose = () =>
@@ -69,11 +77,11 @@ export default function SettingsModal() {
             reader.onloadend = () => {
                 setFormData({
                     ...formData,
-                    photo: reader.result, // Fotoğrafın base64 formatındaki verisi
-                    preview: URL.createObjectURL(file), // Önizleme için URL oluştur
+                    photo: reader.result,
+                    preview: URL.createObjectURL(file),
                 });
             };
-            reader.readAsDataURL(file); // Base64 formatına çevir
+            reader.readAsDataURL(file);
         }
     };
 
@@ -90,10 +98,13 @@ export default function SettingsModal() {
             {
                 method: 'PUT',
                 body: JSON.stringify({
+                    type: localStorage.getItem('isCommunity')
+                        ? 'community'
+                        : 'user',
                     name: formData.name,
                     email: formData.email,
                     password: formData.newPassword,
-                    profilePicture: formData.photo, // Base64 formatındaki fotoğraf
+                    profilePicture: formData.photo,
                 }),
                 headers: {
                     'Content-Type': 'application/json',
@@ -109,7 +120,7 @@ export default function SettingsModal() {
 
     return (
         <Modal
-            open={isSetingsModalOpened}
+            open={true}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
