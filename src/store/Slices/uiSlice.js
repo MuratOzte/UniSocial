@@ -8,6 +8,7 @@ const uiSlice = createSlice({
         userAvatar:'',
         //settings
         IsSettingsModalOpened:false,
+        IsAnnouncementModuleOpened:false,
     },
     reducers: {
         setUserId(state, action) {
@@ -19,6 +20,9 @@ const uiSlice = createSlice({
         },
         IsSettingsModalOpenedChangeHandler(state,action){
             state.IsSettingsModalOpened=action.payload;
+        },
+        IsAnnouncementModuleOpenedChangeHandler(state,action){
+            state.IsAnnouncementModuleOpened=action.payload;
         }
     },
 });
