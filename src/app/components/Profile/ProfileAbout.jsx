@@ -14,6 +14,7 @@ import {
     MdEmail,
     MdTheaters,
 } from 'react-icons/md';
+import Loading from '../common/Loading';
 
 const ProfileAbout = () => {
     const [isEditing, setIsEditing] = useState(false);
@@ -24,7 +25,6 @@ const ProfileAbout = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                setIsLoading(true);
                 const response = await fetch('/api/get-about', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem(
@@ -35,12 +35,10 @@ const ProfileAbout = () => {
                 const data = await response.json();
                 if (response.ok) {
                     setAboutInfo(data.about);
-                    setIsLoading(false);
                 } else {
                     console.error(data.message);
                 }
             } catch (error) {
-                setIsLoading(false);
                 console.error('Error fetching profile data:', error);
             }
         };
@@ -50,6 +48,7 @@ const ProfileAbout = () => {
     const handleEditToggle = async () => {
         if (isEditing) {
             try {
+                setIsLoading(true);
                 const response = await fetch('/api/update-about', {
                     method: 'PUT',
                     headers: {
@@ -63,12 +62,15 @@ const ProfileAbout = () => {
                 const data = await response.json();
                 if (!response.ok) {
                     console.error(data.message);
+                    setIsLoading(false);
                 }
             } catch (error) {
                 console.error('Error updating profile data:', error);
+                setIsLoading(false);
                 return;
             }
         }
+        setIsLoading(false);
         setIsEditing(!isEditing);
     };
 
@@ -155,8 +157,8 @@ const ProfileAbout = () => {
                     className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
                     onClick={handleEditToggle}
                 >
-                    {isEditing ? (
-                        <AiOutlineSave size={20} />
+                    {isLoading ? (
+                        <Loading />
                     ) : (
                         <AiOutlineEdit size={20} />
                     )}
