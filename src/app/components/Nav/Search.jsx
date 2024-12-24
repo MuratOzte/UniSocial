@@ -1,7 +1,7 @@
 import useNav from '@/hooks/useNav';
 import { IoCloseSharp } from 'react-icons/io5';
 import { RiSearchLine } from 'react-icons/ri';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import SearchModal from './SearchModal';
 
 const Search = ({}) => {
@@ -16,9 +16,25 @@ const Search = ({}) => {
         handleEnter,
     } = useNav();
 
+    const searchRef = useRef(null);
+
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            if (searchRef.current && !searchRef.current.contains(event.target)) {
+                clearSearch(); // Dışarı tıklandığında clearSearch fonksiyonunu çalıştır
+            }
+        };
+
+        document.addEventListener('mousedown', handleOutsideClick);
+
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, [clearSearch]);
+
     return (
-        <div className="relative flex items-center w-2/3 min-w-[400px]">
-            {isModalOpened && <SearchModal />}
+        <div ref={searchRef} className="relative flex items-center w-2/3 min-w-[400px]">
+            {isModalOpened && <SearchModal searchQuery={searchQuery} />}
             <RiSearchLine
                 className={`absolute left-2 ${
                     !isSearchBarFocused ? 'text-gray-600' : 'text-blue-500'

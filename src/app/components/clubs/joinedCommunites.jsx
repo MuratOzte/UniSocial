@@ -4,7 +4,6 @@ import { useCommunities } from "@/hooks/useCommunities";
 const JoinedCommunities = () => {
   const { joinedCommunities } = useCommunities();
 
-  // Inline Styling
   const styles = {
     container: {
       maxWidth: "800px",
@@ -78,12 +77,17 @@ const JoinedCommunities = () => {
   };
 
   if (!joinedCommunities || joinedCommunities.length === 0) {
-    return <p style={styles.noCommunities}>No joined communities yet!</p>;
+    return(
+    <div style={styles.container}>
+
+      <p style={styles.title}>No joined communities</p>
+    </div>
+    ) 
   }
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>Joined Communities</h2>
+      <h2 style={styles.title}>Following Communities</h2>
       <ul style={styles.list}>
         {joinedCommunities.map((community, index) => (
           <li
@@ -93,13 +97,11 @@ const JoinedCommunities = () => {
               ...(index === joinedCommunities.length - 1 && styles.listItemLast),
             }}
           >
-            {/* Fotoğraf */}
             <img
               src={community.profilePicture || "https://via.placeholder.com/60"}
               alt={`${community.name} Profile`}
               style={styles.image}
             />
-            {/* Detaylar */}
             <div style={styles.details}>
               <h3 style={styles.name}>{community.name}</h3>
               <p style={styles.description}>
