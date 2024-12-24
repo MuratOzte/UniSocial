@@ -77,10 +77,10 @@ const ProfileAbout = () => {
     };
 
     const renderField = (field, label, type = 'text') => (
-        <div className="mb-4 flex items-center">
+        <div className="mb-4 flex items-center w-full">
             {icons[field]}
-            <div className="w-full">
-                <label className="block font-semibold text-gray-700">
+            <div className="w-full flex gap-2">
+                <label className="block font-semibold text-gray-700 h-fit">
                     {label}:
                 </label>
                 {isEditing ? (
@@ -93,14 +93,16 @@ const ProfileAbout = () => {
                         }
                     />
                 ) : (
-                    <span>{aboutInfo[field] || 'Not provided'}</span>
+                    <span className="">
+                        {aboutInfo[field] || 'Not provided'}
+                    </span>
                 )}
             </div>
         </div>
     );
 
     return (
-        <div className="bg-white shadow-md rounded-lg p-6 w-80 h-fit mt-8">
+        <div className="bg-white shadow-md rounded-lg p-6 w-[350px] h-fit mt-8">
             <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold">About Me</h2>
                 <button
