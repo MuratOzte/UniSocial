@@ -55,12 +55,6 @@ export async function GET(req) {
                 },
             },
             take: 5,
-            select: {
-                id: true,
-                name: true,
-                surname: true,
-                profilePicture: true,
-            },
         });
 
         return NextResponse.json(
