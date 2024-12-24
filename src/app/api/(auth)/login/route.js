@@ -54,6 +54,7 @@ export async function POST(req) {
                 name: userOrCommunity.name,
                 email: userOrCommunity.email,
                 profilePicture: userOrCommunity.profilePicture,
+                isTeacher: userOrCommunity.isTeacher || false,
             },
             token,
         });

@@ -10,6 +10,7 @@ import {
     FaTiktok,
     FaYoutube,
 } from 'react-icons/fa';
+import { useLinks } from '@/hooks/useProfile';
 
 const ProfileLinks = () => {
     const [isEditing, setIsEditing] = useState(false);
@@ -23,7 +24,27 @@ const ProfileLinks = () => {
         tiktok: '',
         youtube: '',
     });
-    const [loading, setLoading] = useState(true);
+
+    const { links: initialLinks, isLoading, refreshLinks, error } = useLinks();
+    console.log('initialLinks:', initialLinks.links);
+
+    useEffect(() => {
+        setLinks((prevLinks) => {
+            const newLinks = {
+                facebook: initialLinks.links?.facebook || '',
+                instagram: initialLinks.links?.instagram || '',
+                github: initialLinks.links?.github || '',
+                snapchat: initialLinks.links?.snapchat || '',
+                twitter: initialLinks.links?.twitter || '',
+                linkedin: initialLinks.links?.linkedin || '',
+                tiktok: initialLinks.links?.tiktok || '',
+                youtube: initialLinks.links?.youtube || '',
+            };
+            return JSON.stringify(prevLinks) === JSON.stringify(newLinks)
+                ? prevLinks
+                : newLinks;
+        });
+    }, [initialLinks]);
 
     const platformIcons = {
         facebook: <FaFacebook size={20} className="text-blue-600" />,
@@ -36,33 +57,33 @@ const ProfileLinks = () => {
         youtube: <FaYoutube size={20} className="text-red-600" />,
     };
 
-    useEffect(() => {
-        const fetchLinks = async () => {
-            try {
-                const res = await fetch('/api/get-profile-link', {
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            'token'
-                        )}`,
-                    },
-                });
+    // useEffect(() => {
+    //     const fetchLinks = async () => {
+    //         try {
+    //             const res = await fetch('/api/get-profile-link', {
+    //                 method: 'GET',
+    //                 headers: {
+    //                     Authorization: `Bearer ${localStorage.getItem(
+    //                         'token'
+    //                     )}`,
+    //                 },
+    //             });
 
-                if (!res.ok) {
-                    throw new Error('Failed to fetch links');
-                }
+    //             if (!res.ok) {
+    //                 throw new Error('Failed to fetch links');
+    //             }
 
-                const data = await res.json();
-                setLinks(data.links || {});
-            } catch (error) {
-                console.error('Error fetching links:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    //             const data = await res.json();
+    //             setLinks(data.links || {});
+    //         } catch (error) {
+    //             console.error('Error fetching links:', error);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
 
-        fetchLinks();
-    }, []);
+    //     fetchLinks();
+    // }, []);
 
     const saveLinks = async () => {
         try {
@@ -87,8 +108,12 @@ const ProfileLinks = () => {
         }
     };
 
-    if (loading) {
+    if (isLoading) {
         return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error loading links: {error.message}</div>;
     }
 
     function capitalizeFirstLetter(val) {

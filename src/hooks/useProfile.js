@@ -45,7 +45,6 @@ export const useLinks = () => {
         token ? ['http://localhost:3000/api/get-profile-link', token] : null,
         ([url, token]) => fetcher(url, token)
     );
-    console.log(data);
     return {
         links: data || {},
         error,
