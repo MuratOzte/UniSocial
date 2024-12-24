@@ -53,3 +53,26 @@ export const useLinks = () => {
         refreshLinks: mutate,
     };
 }
+
+export const useProfileHeader = () => {
+    const [token, setToken] = useState('');
+    const location = window.location.href
+    console.log(location)
+
+
+    useEffect(() => {
+        setToken(localStorage.getItem('token'));
+    }, []);
+
+    const { data, error, isValidating, mutate, isLoading } = useSWR(
+        token ? [`http://localhost:3000/api/get-profile-link?userId=${'asdas'}`, token] : null,
+        ([url, token]) => fetcher(url, token)
+    );
+    return {
+        links: data || {},
+        error,
+        isValidating,
+        isLoading,
+        refreshProfileHeader: mutate,
+    };
+}

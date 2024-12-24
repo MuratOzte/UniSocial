@@ -1,3 +1,4 @@
+
 const About = ({ name, university, department }) => {
     return (
         <div className="flex justify-center items-center flex-col pt-8 w-full bg-gray-200">
