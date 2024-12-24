@@ -1,49 +1,68 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Modal from '@mui/material/Modal';
-import { useDispatch, useSelector } from 'react-redux';
-import uiSlice from '@/store/Slices/uiSlice';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Modal from "@mui/material/Modal";
+import { useDispatch, useSelector } from "react-redux";
+import uiSlice from "@/store/Slices/uiSlice";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 450,
-  bgcolor: 'background.paper',
-  borderRadius: '12px',
-  boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
+  bgcolor: "background.paper",
+  borderRadius: "12px",
+  boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
   p: 4,
-  display: 'flex',
-  flexDirection: 'column',
+  display: "flex",
+  flexDirection: "column",
   gap: 2,
 };
 
 export default function AnnouncementModal() {
   const dispatch = useDispatch();
+  const [isEmpty, setIsEmpty] = React.useState(false);
   const IsAnnouncementModuleOpened = useSelector(
     (state) => state.ui.IsAnnouncementModuleOpened
   );
-  const [announcement, setAnnouncement] = React.useState('');
+  const [announcement, setAnnouncement] = React.useState("");
 
   const handleClose = () => {
     dispatch(uiSlice.actions.IsAnnouncementModuleOpenedChangeHandler(false));
-    setAnnouncement('');
+    setAnnouncement("");
   };
 
   const handleAnnouncementChange = (event) => {
-    setAnnouncement(event.target.value);
+    const InputVal = event.target.value;
+    setAnnouncement(InputVal);
+    if (InputVal) {
+      setIsEmpty(true);
+    } else {
+      setIsEmpty(false);
+    }
   };
 
-  const handleSendAnnouncement = () => {
-    if (announcement.trim() !== '') {
-      console.log('Duyuru gönderildi:', announcement);
+  const handleSendAnnouncement = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch("http://localhost:3000/api/add-news", {
+        method: "POST",
+        body: JSON.stringify({
+          content: announcement,
+        }),
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      console.log(data);
       handleClose();
-    } else {
-      alert('Lütfen bir duyuru metni girin.');
+    } catch (error) {
+        handleClose();
+      console.log(error);
     }
   };
 
@@ -81,6 +100,7 @@ export default function AnnouncementModal() {
               variant="contained"
               color="primary"
               onClick={handleSendAnnouncement}
+              disabled={!isEmpty}
               sx={{ px: 4, py: 1 }}
             >
               Gönder
@@ -92,11 +112,11 @@ export default function AnnouncementModal() {
               sx={{
                 px: 4,
                 py: 1,
-                borderColor: 'grey.400',
-                color: 'grey.700',
-                '&:hover': {
-                  borderColor: 'grey.600',
-                  color: 'grey.900',
+                borderColor: "grey.400",
+                color: "grey.700",
+                "&:hover": {
+                  borderColor: "grey.600",
+                  color: "grey.900",
                 },
               }}
             >

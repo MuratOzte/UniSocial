@@ -10,6 +10,7 @@ import WhoToFollow from '@/app/components/feed/wtfollow/wtFollow';
 import Nav from '@/app/components/Nav/Nav';
 import AnnouncementModal from '@/app/components/announcements/AnnouncmentsModule';
 import AnnounceList from '@/app/components/announcements/announceList';
+import WhoToFollowList from '@/app/components/whoToFollow/WhoToFollowList';
 
 const Page = () => {
     return (
@@ -24,7 +25,7 @@ const Page = () => {
                     <AnnouncementModal/>
                 </div>
                 <div className='flex flex-col gap-5 mt-4' >
-                    <WhoToFollow />
+                    <WhoToFollowList/>
                     <AnnounceList/>
                 </div>
             </div>

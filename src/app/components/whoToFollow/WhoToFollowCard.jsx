@@ -61,7 +61,7 @@ const WhoToFollowCard = ({ id, avatar, name, role }) => {
             />
             <div>
               <p className="font-medium">{name}</p>
-              <p className="text-sm text-gray-400">{user.role}</p>
+              <p className="text-sm text-gray-400">{role}</p>
             </div>
           </div>
           <button
