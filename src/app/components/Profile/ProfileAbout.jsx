@@ -4,15 +4,27 @@ import {
     IoArrowUndoCircleOutline,
 } from 'react-icons/io5';
 import { AiOutlineEdit, AiOutlineSave } from 'react-icons/ai';
+import {
+    MdOutlineDescription,
+    MdLocationOn,
+    MdDateRange,
+    MdPerson,
+    MdTheaterComedy,
+    MdPhone,
+    MdEmail,
+    MdTheaters,
+} from 'react-icons/md';
 
 const ProfileAbout = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [aboutInfo, setAboutInfo] = useState({});
     const [hiddenFields, setHiddenFields] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setIsLoading(true);
                 const response = await fetch('/api/get-about', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem(
@@ -23,10 +35,12 @@ const ProfileAbout = () => {
                 const data = await response.json();
                 if (response.ok) {
                     setAboutInfo(data.about);
+                    setIsLoading(false);
                 } else {
                     console.error(data.message);
                 }
             } catch (error) {
+                setIsLoading(false);
                 console.error('Error fetching profile data:', error);
             }
         };
@@ -70,6 +84,18 @@ const ProfileAbout = () => {
         );
     };
 
+    const icons = {
+        description: (
+            <MdOutlineDescription size={20} className="mr-2 text-gray-800" />
+        ),
+        location: <MdLocationOn size={20} className="mr-2 text-blue-500" />,
+        birthDate: <MdDateRange size={20} className="mr-2 text-pink-500" />,
+        gender: <MdPerson size={20} className="mr-2 text-gray-600" />,
+        hobbies: <MdTheaters size={20} className="mr-2 text-purple-500" />,
+        telno: <MdPhone size={20} className="mr-2 text-green-500" />,
+        email: <MdEmail size={20} className="mr-2 text-orange-500" />,
+    };
+
     const renderField = (field, label, type = 'text') => {
         if (hiddenFields.includes(field)) {
             return (
@@ -89,37 +115,40 @@ const ProfileAbout = () => {
         }
 
         return (
-            <div className="mb-4">
-                <label className="block font-semibold text-gray-700 mb-1">
-                    {label}:
-                </label>
-                {isEditing ? (
-                    <input
-                        type={type}
-                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        value={aboutInfo[field] || ''}
-                        onChange={(e) =>
-                            handleFieldChange(field, e.target.value)
-                        }
-                    />
-                ) : (
-                    <div className="flex items-center justify-between">
-                        <span>{aboutInfo[field] || 'Not provided'}</span>
-                        {isEditing && (
-                            <IoCloseCircleOutline
-                                className="text-red-500 cursor-pointer"
-                                size={24}
-                                onClick={() => toggleFieldVisibility(field)}
-                            />
-                        )}
-                    </div>
-                )}
+            <div className="mb-4 flex items-center">
+                {icons[field]}
+                <div className="w-full flex items-center gap-2">
+                    <label className="block font-semibold text-gray-700">
+                        {label}:
+                    </label>
+                    {isEditing ? (
+                        <input
+                            type={type}
+                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value={aboutInfo[field] || ''}
+                            onChange={(e) =>
+                                handleFieldChange(field, e.target.value)
+                            }
+                        />
+                    ) : (
+                        <div className="flex items-center justify-between">
+                            <span>{aboutInfo[field] || 'Not provided'}</span>
+                            {isEditing && (
+                                <IoCloseCircleOutline
+                                    className="text-red-500 cursor-pointer"
+                                    size={24}
+                                    onClick={() => toggleFieldVisibility(field)}
+                                />
+                            )}
+                        </div>
+                    )}
+                </div>
             </div>
         );
     };
 
     return (
-        <div className=" bg-white shadow-md rounded-lg p-6 w-80">
+        <div className=" bg-white shadow-md rounded-lg p-6 w-80 h-fit mt-8">
             <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold">About Me</h2>
                 <button
