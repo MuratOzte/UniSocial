@@ -1,5 +1,4 @@
 'use client';
-import { useDispatch } from 'react-redux';
 import Loading from '../common/Loading';
 import { useCommunities } from '@/hooks/useCommunities';
 import ClubCard from './clubsCard';
