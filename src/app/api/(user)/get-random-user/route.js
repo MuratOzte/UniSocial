@@ -50,16 +50,16 @@ export async function GET(req) {
                 },
                 followers: {
                     none: {
-                        followerId: userId, 
+                        followerId: userId,
                     },
                 },
             },
-            take: 5, 
+            take: 5,
             select: {
                 id: true,
                 name: true,
                 surname: true,
-                profilePicture: true, 
+                profilePicture: true,
             },
         });
 
