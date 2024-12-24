@@ -30,7 +30,7 @@ const WhoToFollowCard = ({ id, avatar, name, role }) => {
                                 className="w-10 h-10 rounded-full mr-3"
                             />
                         ) : (
-                            <MdAccountCircle className="w-10 h-10 rounded-full mr-3 border-2 border-gray-500" />
+                            <MdAccountCircle className="w-10 h-10 rounded-full mr-3 border-2 border-gray-500 text-gray-300" />
                         )}
 
                         <div>
