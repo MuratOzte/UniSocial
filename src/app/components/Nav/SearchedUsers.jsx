@@ -8,7 +8,7 @@ const SearchedUsers = ({ profilePicture, name, surname, index,userId}) => {
     const router=useRouter();
   if (!profilePicture && !name && !surname) return null;
   const GoToUserPage=()=>{
-    router.replace(`/profile/${userId}`)
+    router.replace(`/user/${userId}`)
   }
   
 

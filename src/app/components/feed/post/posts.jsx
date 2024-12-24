@@ -5,6 +5,7 @@ import Loading from '../../common/Loading';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import OptimisticPost from './OptimisticPost';
+import Panda from '../../common/Panda';
 
 const Posts = () => {
     const feed = useSelector((state) => state.feed);
@@ -37,7 +38,7 @@ const Posts = () => {
             {posts.map((post) => <Post key={post.id} post={post} />)}
         </>
     ) : (
-        <div>No posts available</div>
+        <Panda />
     );
 };
 
