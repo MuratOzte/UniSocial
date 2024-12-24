@@ -10,23 +10,20 @@ import {
     FaTiktok,
     FaYoutube,
 } from 'react-icons/fa';
-import { useLinks } from '@/hooks/useProfile';
 
 const ProfileLinks = () => {
     const [isEditing, setIsEditing] = useState(false);
-    const { links, refreshLinks, error, isLoading } = useLinks();
-    const [localLinks, setLocalLinks] = useState({}); // Başlangıçta boş nesne
-
-    useEffect(() => {
-        if (links && typeof links === 'object') {
-            setLocalLinks((prevLinks) => {
-                if (JSON.stringify(prevLinks) !== JSON.stringify(links)) {
-                    return { ...links };
-                }
-                return prevLinks;
-            });
-        }
-    }, [links]);
+    const [links, setLinks] = useState({
+        facebook: '',
+        instagram: '',
+        github: '',
+        snapchat: '',
+        twitter: '',
+        linkedin: '',
+        tiktok: '',
+        youtube: '',
+    });
+    const [loading, setLoading] = useState(true);
 
     const platformIcons = {
         facebook: <FaFacebook size={20} className="text-blue-600" />,
@@ -39,37 +36,63 @@ const ProfileLinks = () => {
         youtube: <FaYoutube size={20} className="text-red-600" />,
     };
 
+    useEffect(() => {
+        const fetchLinks = async () => {
+            try {
+                const res = await fetch('/api/get-profile-link', {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            'token'
+                        )}`,
+                    },
+                });
+
+                if (!res.ok) {
+                    throw new Error('Failed to fetch links');
+                }
+
+                const data = await res.json();
+                setLinks(data.links || {});
+            } catch (error) {
+                console.error('Error fetching links:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchLinks();
+    }, []);
+
     const saveLinks = async () => {
         try {
-            const response = await fetch('/api/add-profile-link', {
+            const res = await fetch('/api/add-profile-link', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
-                body: JSON.stringify(localLinks),
+                body: JSON.stringify(links),
             });
 
-            if (!response.ok) {
+            if (!res.ok) {
                 throw new Error('Failed to update links');
             }
 
-            await refreshLinks();
+            const data = await res.json();
+            console.log('Updated links:', data);
             setIsEditing(false);
         } catch (error) {
             console.error('Error updating links:', error);
         }
     };
 
-    const capitalizeFirstLetter = (val) =>
-        String(val).charAt(0).toUpperCase() + String(val).slice(1);
-
-    if (isLoading) {
+    if (loading) {
         return <div>Loading...</div>;
     }
 
-    if (error) {
-        return <div>Error loading links: {error.message}</div>;
+    function capitalizeFirstLetter(val) {
+        return String(val).charAt(0).toUpperCase() + String(val).slice(1);
     }
 
     return (
@@ -78,13 +101,7 @@ const ProfileLinks = () => {
                 <h1 className="text-3xl font-semibold">Sosyal Medyalarım</h1>
                 <div
                     className="flex justify-center items-center gap-1 cursor-pointer"
-                    onClick={() => {
-                        if (isEditing) {
-                            saveLinks();
-                        } else {
-                            setIsEditing(true);
-                        }
-                    }}
+                    onClick={() => setIsEditing(!isEditing)}
                 >
                     <MdEdit className="text-gray-400" size={24} />
                     <p className="text-gray-400">
@@ -93,54 +110,50 @@ const ProfileLinks = () => {
                 </div>
             </div>
             <div className="text-gray-700 space-y-4">
-                {Object.keys(localLinks || {}).length === 0 && !isEditing ? (
+                {Object.keys(links).length === 0 && !isEditing ? (
                     <p className="text-gray-500">
                         Henüz sosyal medya linkleriniz eklenmemiş. Düzenle
                         modunu açarak ekleyebilirsiniz.
                     </p>
                 ) : (
-                    Object.entries(localLinks || {}).map(
-                        ([platform, username]) => (
-                            <div
-                                key={platform}
-                                className="flex items-center gap-4"
-                            >
-                                {platformIcons[platform.toLowerCase()] || (
-                                    <span className="text-gray-400">?</span>
-                                )}
-                                <p>{capitalizeFirstLetter(platform)}</p>
-                                {isEditing ? (
-                                    <input
-                                        type="text"
-                                        value={username || ''}
-                                        onChange={(e) =>
-                                            setLocalLinks((prev) => ({
-                                                ...prev,
-                                                [platform]: e.target.value,
-                                            }))
-                                        }
-                                        className="border rounded px-2 py-1 w-full"
-                                    />
-                                ) : (
-                                    <a
-                                        href={username}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-blue-500"
-                                    >
-                                        {username || 'Not provided'}
-                                    </a>
-                                )}
-                            </div>
-                        )
-                    )
+                    Object.entries(links).map(([platform, username]) => (
+                        <div key={platform} className="flex items-center gap-4">
+                            {(
+                                <>
+                                    {platformIcons[platform.toLowerCase()]}
+                                    <p>{capitalizeFirstLetter(platform)}</p>
+                                </>
+                            ) || <span className="text-gray-400">?</span>}
+                            {isEditing ? (
+                                <input
+                                    type="text"
+                                    value={username || ''}
+                                    onChange={(e) =>
+                                        setLinks((prev) => ({
+                                            ...prev,
+                                            [platform]: e.target.value,
+                                        }))
+                                    }
+                                    className="border rounded px-2 py-1 w-full"
+                                />
+                            ) : (
+                                <a
+                                    href={username}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-500"
+                                >
+                                    {username}
+                                </a>
+                            )}
+                        </div>
+                    ))
                 )}
             </div>
-
             {isEditing && (
                 <button
                     onClick={saveLinks}
-                    className="bg-blue-500 text-white p-2 rounded mt-4"
+                    className="bg-blue-500 text-white p-2 rounded"
                 >
                     Kaydet
                 </button>

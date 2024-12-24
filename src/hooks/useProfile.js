@@ -53,4 +53,4 @@ export const useLinks = () => {
         isLoading,
         refreshLinks: mutate,
     };
-};
+}
