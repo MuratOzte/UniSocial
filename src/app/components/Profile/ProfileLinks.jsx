@@ -26,7 +26,6 @@ const ProfileLinks = () => {
     });
 
     const { links: initialLinks, isLoading, refreshLinks, error } = useLinks();
-    console.log('initialLinks:', initialLinks.links);
 
     useEffect(() => {
         setLinks((prevLinks) => {
@@ -56,34 +55,6 @@ const ProfileLinks = () => {
         tiktok: <FaTiktok size={20} className="text-black" />,
         youtube: <FaYoutube size={20} className="text-red-600" />,
     };
-
-    // useEffect(() => {
-    //     const fetchLinks = async () => {
-    //         try {
-    //             const res = await fetch('/api/get-profile-link', {
-    //                 method: 'GET',
-    //                 headers: {
-    //                     Authorization: `Bearer ${localStorage.getItem(
-    //                         'token'
-    //                     )}`,
-    //                 },
-    //             });
-
-    //             if (!res.ok) {
-    //                 throw new Error('Failed to fetch links');
-    //             }
-
-    //             const data = await res.json();
-    //             setLinks(data.links || {});
-    //         } catch (error) {
-    //             console.error('Error fetching links:', error);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
-
-    //     fetchLinks();
-    // }, []);
 
     const saveLinks = async () => {
         try {
@@ -129,7 +100,15 @@ const ProfileLinks = () => {
                     onClick={() => setIsEditing(!isEditing)}
                 >
                     <MdEdit className="text-gray-400" size={24} />
-                    <p className="text-gray-400">
+                    <p
+                        className="text-gray-400"
+                        onClick={() => {
+                            if (isEditing) {
+                                saveLinks();
+                                refreshLinks();
+                            }
+                        }}
+                    >
                         {isEditing ? 'Kaydet' : 'Düzenle'}
                     </p>
                 </div>
@@ -142,13 +121,16 @@ const ProfileLinks = () => {
                     </p>
                 ) : (
                     Object.entries(links).map(([platform, username]) => (
-                        <div key={platform} className="flex items-center gap-4">
-                            {(
-                                <>
-                                    {platformIcons[platform.toLowerCase()]}
-                                    <p>{capitalizeFirstLetter(platform)}</p>
-                                </>
-                            ) || <span className="text-gray-400">?</span>}
+                        <div
+                            key={platform}
+                            className="flex items-center justify-between"
+                        >
+                            <div className="flex items-center gap-2">
+                                {platformIcons[platform.toLowerCase()] || (
+                                    <span className="text-gray-400">?</span>
+                                )}
+                                <p>{capitalizeFirstLetter(platform)}</p>
+                            </div>
                             {isEditing ? (
                                 <input
                                     type="text"
@@ -159,9 +141,9 @@ const ProfileLinks = () => {
                                             [platform]: e.target.value,
                                         }))
                                     }
-                                    className="border rounded px-2 py-1 w-full"
+                                    className="border rounded px-2 py-1 w-60"
                                 />
-                            ) : (
+                            ) : username ? (
                                 <a
                                     href={username}
                                     target="_blank"
@@ -170,19 +152,13 @@ const ProfileLinks = () => {
                                 >
                                     {username}
                                 </a>
+                            ) : (
+                                <p className="text-gray-500">Henüz eklenmedi</p>
                             )}
                         </div>
                     ))
                 )}
             </div>
-            {isEditing && (
-                <button
-                    onClick={saveLinks}
-                    className="bg-blue-500 text-white p-2 rounded"
-                >
-                    Kaydet
-                </button>
-            )}
         </div>
     );
 };
