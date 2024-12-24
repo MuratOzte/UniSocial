@@ -1,7 +1,7 @@
 import eventSlice from "@/store/Slices/eventsSlice";
 import React, { useEffect, useState } from "react";
 import Loading from "../common/Loading";
-
+import { useCommunities } from "@/hooks/useCommunities";
 const ClubCard = ({
   name,
   description,
@@ -11,6 +11,7 @@ const ClubCard = ({
   communityId,
   communityMembers,
 }) => {
+  const { refreshCommunities } = useCommunities();
   const [isJoined, setIsJoined] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const userId = localStorage.getItem("userId");
@@ -43,13 +44,12 @@ const ClubCard = ({
         }
       );
       const data = await response.json();
-      console.log(data);
-      console.log(communityMembers);
       setIsJoined((prev) => !prev);
     } catch (error) {
       console.log(error);
     }
     setIsLoading(false);
+    refreshCommunities();
   };
 
   return (
@@ -70,7 +70,12 @@ const ClubCard = ({
           <strong>{university}</strong>
         </p>
       </div>
-      <button style={styles.joinButton} className="flex justify-center item-center" onClick={joinClub}>
+      <button
+        style={styles.joinButton}
+        className="flex justify-center item-center"
+        onClick={joinClub}
+        disabled={isLoading}
+      >
         {isLoading ? <Loading /> : isJoined ? "Following" : "Follow"}
       </button>
     </div>
