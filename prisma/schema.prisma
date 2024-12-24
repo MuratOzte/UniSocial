@@ -54,6 +54,7 @@ model User {
     events      EventParticipant[]
     socialMedia SocialMediaLinks?
     about       About?
+    news        news[]
 }
 
 model SocialMediaLinks {
@@ -163,4 +164,13 @@ model Comment {
 
     post   Post?   @relation(fields: [postId], references: [id])
     postId String? @db.ObjectId
+}
+
+model news {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    authorId  String   @db.ObjectId
+    author    User     @relation(fields: [authorId], references: [id])
+    content   String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
