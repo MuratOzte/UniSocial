@@ -78,15 +78,18 @@ const LoginPage = () => {
           localStorage.setItem("pp", data.user.profilePicture);
           localStorage.setItem("email", data.user.email);
           localStorage.setItem("name", data.user.name);
+          localStorage.setItem("isTeacher",data.user.isTeacher);
         } else {
           localStorage.setItem("userId", data.community.id);
           localStorage.setItem("isCommunity", true);
           localStorage.setItem("pp", data.community.profilePicture);
           localStorage.setItem("email", data.community.email);
           localStorage.setItem("name", data.community.name);
+          localStorage.setItem("isTeacher",false);
+
         }
         setIsRequestPending(false);
-        router.replace('/feed');
+       router.replace('/feed');
       } catch (error) {
         console.log(error.message);
         setIsRequestPending(false);
