@@ -75,3 +75,26 @@ export const useProfileHeader = (userId) => {
     };
 };
 
+export const useMyProfileHeader = () => {
+    const [token, setToken] = useState('');
+
+    useEffect(() => {
+        setToken(localStorage.getItem('token'));
+    }, []);
+
+    const { data, error, isValidating, mutate, isLoading } = useSWR(
+        userId && token ? [`http://localhost:3000/api/get-my-profile-header`, token] : null,
+        ([url, token]) => fetcher(url, token)
+    );
+
+    return {
+        data: data || {},
+        error,
+        isValidating,
+        isLoading,
+        refreshProfileHeader: mutate,
+    };
+};
+
+
+
