@@ -6,7 +6,6 @@ import WhoToFollowCard from './WhoToFollowCard';
 import { useWhoToFollow } from '@/hooks/useWhoToFollow';
 
 const WhoToFollowList = () => {
-    const { clubs, errorg, isLoadingg } = useCommunities();
     const { peoples, error, isLoading } = useWhoToFollow();
 
     if (isLoading) {
@@ -33,6 +32,7 @@ const WhoToFollowList = () => {
                         avatar={people.profilePicture}
                         name={people.name + ' ' + people.surname}
                         role={''}
+                        userId={people.id}
                     />
                 ))}
         </div>

@@ -3,8 +3,10 @@ import { IoMdAdd } from 'react-icons/io';
 import { FaUserCheck } from 'react-icons/fa';
 import Image from 'next/image';
 import { MdAccountCircle } from 'react-icons/md';
+import { useRouter } from 'next/navigation';
 
-const WhoToFollowCard = ({ id, avatar, name, role }) => {
+const WhoToFollowCard = ({ id, avatar, name, role,userId }) => {
+    const router =useRouter()
     const [following, setFollowing] = useState([]);
 
     const toggleFollow = (id) => {
@@ -14,6 +16,9 @@ const WhoToFollowCard = ({ id, avatar, name, role }) => {
                 : [...prev, id.toString()]
         );
     };
+    const VisitUser=()=>{
+        router.replace(`/profile/${userId}`)
+    }
 
     return (
         <div>
@@ -21,6 +26,7 @@ const WhoToFollowCard = ({ id, avatar, name, role }) => {
                 <li
                     key={id}
                     className="flex items-center justify-between mb-4 last:mb-0"
+                    
                 >
                     <div className="flex items-center">
                         {avatar ? (
@@ -33,7 +39,9 @@ const WhoToFollowCard = ({ id, avatar, name, role }) => {
                             <MdAccountCircle className="w-10 h-10 rounded-full mr-3 border-2 border-gray-500 text-gray-300" />
                         )}
 
-                        <div>
+                        <div 
+                        onClick={VisitUser}
+                        >
                             <p className="font-medium">{name}</p>
                             <p className="text-sm text-gray-400">{role}</p>
                         </div>
