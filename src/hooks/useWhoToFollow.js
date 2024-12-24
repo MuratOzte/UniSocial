@@ -21,12 +21,12 @@ export const useWhoToFollow = () => {
   }, []);
 
   const { data, error, isValidating, mutate, isLoading } = useSWR(
-    token ? ["http://localhost:3000/api/get-news", token] : null,
+    token ? ["http://localhost:3000/api/get-random-user", token] : null,
     ([url, token]) => fetcher(url, token)
   );
   console.log(data);
   return {
-    announcments: data?.news || [],
+    peoples: data?.users || [],
     error,
     isValidating,
     isLoading,
