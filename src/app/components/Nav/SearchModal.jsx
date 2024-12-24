@@ -56,6 +56,7 @@ const SearchModal = ({ searchQuery }) => {
           <SearchedUsers
             index={index}
             key={user.id}
+            userId={user.id}
             name={user.name}
             surname={user.surname}
             profilePicture={user.profilePicture}
