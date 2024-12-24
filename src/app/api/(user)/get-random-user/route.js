@@ -43,37 +43,38 @@ export async function GET(req) {
             );
         }
 
-
-        const news = await prisma.news.findMany({
+        const users = await prisma.user.findMany({
             where: {
-                authorId: userId,
-            },
-            take: 5,
-            orderBy: {
-                createdAt: 'desc',
-            },
-            include: {
-                author: {
-                    select: {
-                        name: true,
-                        surname: true,
+                id: {
+                    not: userId,
+                },
+                followers: {
+                    none: {
+                        followerId: userId, 
                     },
                 },
+            },
+            take: 5, 
+            select: {
+                id: true,
+                name: true,
+                surname: true,
+                profilePicture: true, 
             },
         });
 
         return NextResponse.json(
             {
-                message: 'News fetched successfully',
-                news,
+                message: 'Random users fetched successfully',
+                users,
             },
             { status: 200 }
         );
     } catch (error) {
-        console.error('Error fetching news:', error);
+        console.error('Error fetching users:', error);
         return NextResponse.json(
             {
-                message: 'An error occurred while fetching news',
+                message: 'An error occurred while fetching users',
                 error: error.message,
             },
             { status: 500 }
