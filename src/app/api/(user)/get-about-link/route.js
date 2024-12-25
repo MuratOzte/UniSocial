@@ -48,24 +48,15 @@ export async function GET(req) {
 
         const links = await prisma.socialMediaLinks.findUnique({
             where: { userId: userId },
-        }); 
+        });
 
         console.log(about, links);
-
-        if (!about || !links) {
-            return NextResponse.json(
-                {
-                    message: 'User data not found',
-                },
-                { status: 404 }
-            );
-        }
 
         return NextResponse.json(
             {
                 message: 'User data retrieved successfully',
-                about,
-                links,
+                about: about,
+                links: links,
             },
             { status: 200 }
         );

@@ -149,7 +149,16 @@ export const useProfileAboutLink = (userId) => {
 
     return {
         about: data?.about || {},
-        links: data?.links || {},
+        links: data?.links || {
+            facebook: '',
+            instagram: '',
+            github: '',
+            snapchat: '',
+            twitter: '',
+            linkedin: '',
+            tiktok: '',
+            youtube: '',
+        },
         error,
         isValidating,
         isLoading,

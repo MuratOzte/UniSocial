@@ -12,7 +12,6 @@ import { useAbout, useProfileAboutLink } from '@/hooks/useProfile';
 
 const About = ({ userId }) => {
     const { about } = useProfileAboutLink(userId);
-    console.log(about);
 
     const icons = {
         description: (
