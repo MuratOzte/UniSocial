@@ -10,18 +10,15 @@ import { useProfilePosts } from "@/hooks/useProfilePosts";
 
 const Page = () => {
   const { error, isValidating, posts, refreshPosts } = useProfilePosts();
-  const { uidata} = useLeftNav();
   if(!posts){
     return <Loading/>
   }
-  if (!uidata) {
-    return <Loading />;
-  }
+  
   return (
     <>
       <Nav />
       <div className="w-full">
-        <ProfileHeader uidata={uidata} />
+        <ProfileHeader/>
       </div>
       <div className="flex justify-between mt-8 mx-8">
         <ProfileAbout />
