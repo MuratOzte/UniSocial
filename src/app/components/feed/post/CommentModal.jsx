@@ -30,7 +30,7 @@ const CommentModal = ({ showModal, setShowModal, comments, postId }) => {
 
     const handleAddComment = async () => {
         if (comment.trim() === '') return;
-        setIsLoading(true); 
+        setIsLoading(true);
         try {
             const response = await fetch(
                 'http://localhost:3000/api/add-comment',
@@ -45,6 +45,10 @@ const CommentModal = ({ showModal, setShowModal, comments, postId }) => {
                     body: JSON.stringify({
                         content: comment,
                         postId,
+                        authorType:
+                            localStorage.getItem('isCommunity') == 'true'
+                                ? 'COMMUNITY'
+                                : 'USER',
                     }),
                 }
             );

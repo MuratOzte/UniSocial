@@ -112,6 +112,7 @@ model Community {
     posts           Post[]
     CommunityMember CommunityMember[]
     events          Event[]
+    comments        Comment[]
 }
 
 model CommunityMember {
@@ -159,12 +160,16 @@ model Comment {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    author   User   @relation(fields: [authorId], references: [id])
-    authorId String @db.ObjectId
+    authorId   String? @db.ObjectId
+    authorType String  // 'USER' veya 'COMMUNITY'
+
+    user   User?      @relation(fields: [authorId], references: [id])
+    community Community? @relation(fields: [authorId], references: [id])
 
     post   Post?   @relation(fields: [postId], references: [id])
     postId String? @db.ObjectId
 }
+
 
 model news {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId

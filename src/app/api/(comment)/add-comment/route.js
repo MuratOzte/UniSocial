@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 export async function POST(req) {
     try {
-        const { content, postId } = await req.json(); 
+        const { content, postId, authorType } = await req.json(); // `authorType` ekleniyor
 
         const token = req.headers.get('authorization')?.replace('Bearer ', '');
 
@@ -22,7 +22,7 @@ export async function POST(req) {
 
         let decoded;
         try {
-            decoded = jwt.verify(token, process.env.JWT_SECRET); 
+            decoded = jwt.verify(token, process.env.JWT_SECRET);
         } catch (err) {
             return NextResponse.json(
                 {
@@ -35,21 +35,37 @@ export async function POST(req) {
 
         const authorId = decoded.id;
 
-        if (!content || !postId || !authorId) {
+        // Gerekli alanların doğrulanması
+        if (!content || !postId || !authorId || !authorType) {
             return NextResponse.json(
                 {
-                    message: 'Content, postId, and authorId are required',
+                    message:
+                        'Content, postId, authorId, and authorType are required',
                     status: 400,
                 },
                 { status: 400 }
             );
         }
 
+        // `authorType` kontrolü
+        if (authorType !== 'USER' && authorType !== 'COMMUNITY') {
+            return NextResponse.json(
+                {
+                    message:
+                        'Invalid authorType. It must be either "USER" or "COMMUNITY".',
+                    status: 400,
+                },
+                { status: 400 }
+            );
+        }
+
+        // Yorum oluşturma
         const newComment = await prisma.comment.create({
             data: {
                 content,
-                authorId, 
-                postId, 
+                authorId,
+                authorType, // Author türünü belirtiyoruz
+                postId,
             },
         });
 

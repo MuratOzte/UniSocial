@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 
 export async function GET(req) {
     try {
-        // Extract query parameters from the URL
         const { searchParams } = new URL(req.url);
         const postId = searchParams.get('postId');
 
@@ -16,7 +15,6 @@ export async function GET(req) {
             );
         }
 
-        // Fetch comments for the specified postId
         const comments = await prisma.comment.findMany({
             where: { postId },
             orderBy: { createdAt: 'desc' },

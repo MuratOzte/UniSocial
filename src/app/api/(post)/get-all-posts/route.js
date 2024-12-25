@@ -38,9 +38,8 @@ export async function GET(req) {
 
         const enrichedPosts = await Promise.all(
             posts.map(async (post) => {
-                let author;
-                if (post.authorId) {
-                    author = await prisma.user.findUnique({
+                const author =
+                    (await prisma.user.findUnique({
                         where: { id: post.authorId },
                         select: {
                             id: true,
@@ -48,21 +47,16 @@ export async function GET(req) {
                             profilePicture: true,
                             isTeacher: true,
                         },
-                    });
-                }
-
-                if (author == null) {
-                    author = await prisma.community.findUnique({
+                    })) ||
+                    (await prisma.community.findUnique({
                         where: { id: post.authorId },
                         select: {
                             id: true,
                             name: true,
                             profilePicture: true,
                         },
-                    });
-                }
+                    }));
 
-                
                 const comments = await prisma.comment.findMany({
                     where: { postId: post.id },
                     orderBy: { createdAt: 'desc' },
@@ -70,21 +64,44 @@ export async function GET(req) {
                         id: true,
                         content: true,
                         createdAt: true,
-                        author: {
-                            select: {
-                                id: true,
-                                name: true,
-                                profilePicture: true,
-                                isTeacher: true,
-                            },
-                        },
+                        authorId: true,
+                        authorType: true, 
                     },
                 });
+
+                const enrichedComments = await Promise.all(
+                    comments.map(async (comment) => {
+                        const commentAuthor =
+                            comment.authorType === 'USER'
+                                ? await prisma.user.findUnique({
+                                      where: { id: comment.authorId },
+                                      select: {
+                                          id: true,
+                                          name: true,
+                                          profilePicture: true,
+                                          isTeacher: true,
+                                      },
+                                  })
+                                : await prisma.community.findUnique({
+                                      where: { id: comment.authorId },
+                                      select: {
+                                          id: true,
+                                          name: true,
+                                          profilePicture: true,
+                                      },
+                                  });
+
+                        return {
+                            ...comment,
+                            author: commentAuthor,
+                        };
+                    })
+                );
 
                 return {
                     ...post,
                     author,
-                    comments,
+                    comments: enrichedComments,
                     isYourPost: post.authorId === userId,
                 };
             })
