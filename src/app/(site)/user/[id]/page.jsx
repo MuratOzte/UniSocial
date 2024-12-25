@@ -26,7 +26,7 @@ const Page = ({ params }) => {
         <>
             <Nav />
             <div className="w-full">
-                <UserProfileHeader uidata={data.userData} />
+                <UserProfileHeader uidata={data.userData} userId={userId} />
             </div>
             <div className="flex justify-between mt-8 mx-8">
                 <About userId={userId} />

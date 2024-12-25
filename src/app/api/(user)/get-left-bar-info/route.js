@@ -54,6 +54,7 @@ export async function GET(req) {
                 following: true,
                 followers: true,
                 profilePicture: true,
+                id:true,
             },
         });
 
