@@ -20,8 +20,7 @@ const getRandomGradient = () => {
   return colors[Math.floor(Math.random() * colors.length)];
 };
 
-const ProfileHeader = () => {
-  const { uidata, error, isLoading } = useLeftNav();
+const ProfileHeader = ({uidata}) => {
   console.log(uidata);
   const [gradient, setGradient] = useState("");
 
@@ -41,6 +40,7 @@ const ProfileHeader = () => {
           {uidata.profilePicture ? (
             <Image
               src={uidata.profilePicture}
+              alt="Profile Picture"
               width={200}
               height={20}
               className="text-gray-400 bg-white rounded-full shadow-md border-4 border-gray-300 "
@@ -61,20 +61,7 @@ const ProfileHeader = () => {
             <h3 className="text-lg opacity-80">{uidata.univercity}</h3>
           </div>
         </div>
-        <div className="flex gap-6 justify-center items-center bg-white p-2 rounded-md mt-4 shadow-md">
-          <Tooltip title="Facebook" arrow placement="bottom">
-            <FaFacebook
-              size={40}
-              className="text-blue-500 cursor-pointer hover:text-blue-700 transition-all"
-            />
-          </Tooltip>
-          <Tooltip title="Instagram" arrow placement="bottom">
-            <AiFillInstagram
-              size={45}
-              className="text-red-500 cursor-pointer hover:text-red-700 transition-all"
-            />
-          </Tooltip>
-        </div>
+     
       </div>
     </div>
   );
