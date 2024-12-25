@@ -81,6 +81,9 @@ export async function GET(req) {
                     totalPosts,
                     totalFollowers,
                     totalFollowing,
+                    isFollowing: user.followers.some(
+                        (follower) => follower.id === decoded.id
+                    ),
                 },
             },
             { status: 200 }
