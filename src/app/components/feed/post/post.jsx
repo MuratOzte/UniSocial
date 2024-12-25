@@ -46,7 +46,7 @@ const Post = ({ post }) => {
     }
 
     return (
-        <div className="w-full max-w-lg bg-gray-800 text-white p-4 rounded-lg shadow-lg my-8">
+        <div className="w-full bg-gray-800 text-white p-4 rounded-lg shadow-lg my-8 min-w-96">
             <PostHeader post={post} time={time} isTeacher={isTeacher} />
 
             <p className="mb-4">{post.content}</p>
