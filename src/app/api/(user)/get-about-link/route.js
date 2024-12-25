@@ -43,12 +43,14 @@ export async function GET(req) {
         }
 
         const about = await prisma.about.findUnique({
-            where: { id: userId },
+            where: { userId: userId },
         });
 
         const links = await prisma.socialMediaLinks.findUnique({
-            where: { id: userId },
-        });
+            where: { userId: userId },
+        }); 
+
+        console.log(about, links);
 
         if (!about || !links) {
             return NextResponse.json(
