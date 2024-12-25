@@ -29,7 +29,7 @@ export const useFollow = (userId) => {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ userId }),
+                    body: JSON.stringify({ followingId: userId }),
                 }
             );
 
