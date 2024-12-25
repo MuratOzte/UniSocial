@@ -45,9 +45,6 @@ export async function GET(req) {
 
 
         const news = await prisma.news.findMany({
-            where: {
-                authorId: userId,
-            },
             take: 5,
             orderBy: {
                 createdAt: 'desc',

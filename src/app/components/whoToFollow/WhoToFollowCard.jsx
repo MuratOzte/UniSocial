@@ -32,7 +32,9 @@ const WhoToFollowCard = ({ id, avatar, name, role, userId }) => {
                             <Image
                                 src={avatar}
                                 alt={`${name}'s avatar`}
-                                className="w-10 h-10 rounded-full mr-3"
+                                width={40}
+                                height={40}
+                                className="rounded-full mr-3"
                             />
                         ) : (
                             <MdAccountCircle className="w-10 h-10 rounded-full mr-3 border-2 border-gray-500 text-gray-300" />
