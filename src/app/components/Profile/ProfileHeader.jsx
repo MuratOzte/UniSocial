@@ -20,7 +20,9 @@ const getRandomGradient = () => {
   return colors[Math.floor(Math.random() * colors.length)];
 };
 
-const ProfileHeader = ({uidata}) => {
+const ProfileHeader = () => {
+  const { uidata} = useLeftNav();
+
   console.log(uidata);
   const [gradient, setGradient] = useState("");
 

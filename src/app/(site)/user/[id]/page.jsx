@@ -5,6 +5,7 @@ import { useProfileHeader, useUserPosts } from "@/hooks/useProfile";
 import ProfileHeader from "@/app/components/Profile/ProfileHeader";
 import Nav from "@/app/components/Nav/Nav";
 import ProfilePosts from "@/app/components/Profile/ProfilePosts";
+import UserProfileHeader from "@/app/components/UserProfile/UserProfile";
 
 const Page = ({ params }) => {
   const { id: userId } = use(params);
@@ -18,16 +19,15 @@ const Page = ({ params }) => {
   if(!posts){
     return <Loading/>
   }
-  if (!data) {
-    return <Loading />;
-  }
+  
 
   return (
     <>
       <Nav />
       <div className="w-full">
-        <ProfileHeader uidata={data.userData} />
-
+    <UserProfileHeader
+        uidata={data.userData}
+    />
       </div>
       <div className="flex justify-between mt-8 mx-8">
         <ProfilePosts
