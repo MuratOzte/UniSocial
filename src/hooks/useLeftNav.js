@@ -58,7 +58,7 @@ const useLeftNav = () => {
             refreshInterval: 30000,
         }
     );
-
+console.log(data)
     return {
         uidata: data?.userData,
         error,
