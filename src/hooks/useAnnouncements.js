@@ -22,7 +22,11 @@ export const useAnnouncments = () => {
 
   const { data, error, isValidating, mutate, isLoading } = useSWR(
     token ? ["http://localhost:3000/api/get-news", token] : null,
-    ([url, token]) => fetcher(url, token)
+    ([url, token]) => fetcher(url, token),
+    {
+        revalidateOnFocus: false,
+        revalidateOnMount: true,
+    }
   );
   console.log(data);
   return {
