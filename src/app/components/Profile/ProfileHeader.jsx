@@ -40,6 +40,7 @@ const ProfileHeader = ({uidata}) => {
           {uidata.profilePicture ? (
             <Image
               src={uidata.profilePicture}
+              alt="Profile Picture"
               width={200}
               height={20}
               className="text-gray-400 bg-white rounded-full shadow-md border-4 border-gray-300 "
