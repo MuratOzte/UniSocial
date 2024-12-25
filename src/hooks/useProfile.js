@@ -97,4 +97,27 @@ export const useMyProfileHeader = () => {
 };
 
 
+//emre bura
+export const useUserPosts = (userId) => {
+    const [token, setToken] = useState('');
+
+    useEffect(() => {
+        setToken(localStorage.getItem('token'));
+    }, []);
+
+    const { data, error, isValidating, mutate, isLoading } = useSWR(
+        userId && token ? [`http://localhost:3000/api/get-user-post?userId=${userId}`, token] : null,
+        ([url, token]) => fetcher(url, token)
+    );
+
+    return {
+        posts: data?.posts || [],
+        error,
+        isValidating,
+        isLoading,
+        refreshUserPosts: mutate,
+    };
+}
+
+
 

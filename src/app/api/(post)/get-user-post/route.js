@@ -38,19 +38,72 @@ export async function GET(req) {
             );
         }
 
-        const url = new URL(req.url);
-        const targetUserId = url.searchParams.get('targetUserId') || userId;
+        const targetUserId = req.nextUrl.searchParams.get('userId');
 
-        const userPosts = await prisma.post.findMany({
-            where: {
-                userId: targetUserId,
-            },
+
+        const posts = await prisma.post.findMany({
+            where: { authorId: targetUserId },
+            orderBy: { createdAt: 'desc' },
         });
+
+        const enrichedPosts = await Promise.all(
+            posts.map(async (post) => {
+                let author;
+                if (post.authorId) {
+                    author = await prisma.user.findUnique({
+                        where: { id: post.authorId },
+                        select: {
+                            id: true,
+                            name: true,
+                            profilePicture: true,
+                            isTeacher: true,
+                        },
+                    });
+                }
+
+                if (author == null) {
+                    author = await prisma.community.findUnique({
+                        where: { id: post.authorId },
+                        select: {
+                            id: true,
+                            name: true,
+                            profilePicture: true,
+                        },
+                    });
+                }
+
+
+                const comments = await prisma.comment.findMany({
+                    where: { postId: post.id },
+                    orderBy: { createdAt: 'desc' },
+                    select: {
+                        id: true,
+                        content: true,
+                        createdAt: true,
+                        author: {
+                            select: {
+                                id: true,
+                                name: true,
+                                profilePicture: true,
+                                isTeacher: true,
+                            },
+                        },
+                    },
+                });
+
+                return {
+                    ...post,
+                    author,
+                    comments,
+                    isYourPost: post.authorId === userId,
+                };
+            })
+        );
 
         return NextResponse.json(
             {
                 message: 'Posts fetched successfully',
-                posts: userPosts,
+                posts: enrichedPosts,
             },
             { status: 200 }
         );
