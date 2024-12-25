@@ -52,7 +52,7 @@ export const useLinks = () => {
         isLoading,
         refreshLinks: mutate,
     };
-}
+};
 
 export const useProfileHeader = (userId) => {
     const [token, setToken] = useState('');
@@ -62,7 +62,12 @@ export const useProfileHeader = (userId) => {
     }, []);
 
     const { data, error, isValidating, mutate, isLoading } = useSWR(
-        userId && token ? [`http://localhost:3000/api/get-profile-header?userId=${userId}`, token] : null,
+        userId && token
+            ? [
+                  `http://localhost:3000/api/get-profile-header?userId=${userId}`,
+                  token,
+              ]
+            : null,
         ([url, token]) => fetcher(url, token)
     );
 
@@ -83,7 +88,9 @@ export const useMyProfileHeader = () => {
     }, []);
 
     const { data, error, isValidating, mutate, isLoading } = useSWR(
-        userId && token ? [`http://localhost:3000/api/get-my-profile-header`, token] : null,
+        userId && token
+            ? [`http://localhost:3000/api/get-my-profile-header`, token]
+            : null,
         ([url, token]) => fetcher(url, token)
     );
 
@@ -96,7 +103,6 @@ export const useMyProfileHeader = () => {
     };
 };
 
-
 //emre bura
 export const useUserPosts = (userId) => {
     const [token, setToken] = useState('');
@@ -106,7 +112,12 @@ export const useUserPosts = (userId) => {
     }, []);
 
     const { data, error, isValidating, mutate, isLoading } = useSWR(
-        userId && token ? [`http://localhost:3000/api/get-user-post?userId=${userId}`, token] : null,
+        userId && token
+            ? [
+                  `http://localhost:3000/api/get-user-post?userId=${userId}`,
+                  token,
+              ]
+            : null,
         ([url, token]) => fetcher(url, token)
     );
 
@@ -117,7 +128,31 @@ export const useUserPosts = (userId) => {
         isLoading,
         refreshUserPosts: mutate,
     };
-}
+};
 
+export const useProfileAboutLink = (userId) => {
+    const [token, setToken] = useState('');
 
+    useEffect(() => {
+        setToken(localStorage.getItem('token'));
+    }, []);
 
+    const { data, error, isValidating, mutate, isLoading } = useSWR(
+        userId && token
+            ? [
+                  `http://localhost:3000/api/get-about-link?userId=${userId}`,
+                  token,
+              ]
+            : null,
+        ([url, token]) => fetcher(url, token)
+    );
+
+    return {
+        about: data?.about || {},
+        links: data?.links || {},
+        error,
+        isValidating,
+        isLoading,
+        refreshAboutLink: mutate,
+    };
+};
