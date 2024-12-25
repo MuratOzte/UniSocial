@@ -54,4 +54,4 @@ const About = ({ userId }) => {
     );
 };
 
-export default ProfileAboutView;
+export default About;
