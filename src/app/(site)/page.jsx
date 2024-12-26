@@ -2,27 +2,25 @@
 import gif from '@/assets/loadingSpinnerGif.gif';
 import logo from '@/assets/logo/logo.png';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const Main = () => {
     return (
-        <div className="flex justify-center items-center h-screen w-full bg-main1">
-            <div className="flex justify-center items-center">
-                {/* Logo için sadece sol tarafını gösterme */}
-                <div className="relative w-[400px] h-[120px] overflow-hidden">
-                    <Image
-                        src={logo}
-                        alt="logo"
-                        fill // `layout="fill"` yerine `fill` kullanımı
-                        style={{
-                            objectFit: 'cover',
-                            objectPosition: 'left center',
-                        }} // Tailwind yerine inline CSS
-                    />
-                    <div className="absolute bg-red-500 w-[250px] h-32 right-[15px]" />
-                    <Image src={gif} width={120} height={120} alt="gif" className='absolute right-[160px] z-40' />
-                </div>
-
-                {/* Spinner Gif */}
+        <div className="bg-main1 h-screen w-full relative overflow-hidden">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-hidden">
+                <Image
+                    src={logo}
+                    alt="logo"
+                    width={600}
+                    height={300}
+                    className="object-cover"
+                />
+                <motion.div
+                    initial={{ x: 600 }}
+                    animate={{ x: [600, 0, 600] }}
+                    transition={{ duration: 5, repeat: Infinity }}
+                    className="bg-main1 w-[600px] h-80 absolute top-10"
+                />
             </div>
         </div>
     );
