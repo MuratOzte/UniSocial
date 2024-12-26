@@ -1,15 +1,14 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
+import { usePosts } from '@/hooks/useFetchPosts';
+import feedSlice from '@/store/Slices/FeedSlice';
+import { deletePostRequest } from '@/util/feedService';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { CiMenuKebab } from 'react-icons/ci';
+import * as React from 'react';
 import { FaTrash } from 'react-icons/fa';
+import { SlOptionsVertical } from "react-icons/sl";
 import { TbEdit } from 'react-icons/tb';
-import { deletePostRequest } from '@/util/feedService';
 import { useDispatch } from 'react-redux';
-import feedSlice, { fetchPosts } from '@/store/Slices/FeedSlice';
 import EditPostModal from './EditPostModal';
-import { usePosts } from '@/hooks/useFetchPosts';
 
 export default function PostOptions({ post }) {
     const dispatch = useDispatch();
@@ -66,9 +65,11 @@ export default function PostOptions({ post }) {
 
     return (
         <div>
-            <CiMenuKebab
-                className="ml-auto cursor-pointer"
+            <SlOptionsVertical
+                className="ml-auto cursor-pointer text-gray-700"
                 onClick={handleClick}
+                size={20}
+
             />
             <EditPostModal post={post} key={post.id} />
 

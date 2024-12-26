@@ -51,7 +51,7 @@ const PostFooter = ({ setShowModal, post }) => {
     };
 
     return (
-        <div className="flex justify-between items-center text-gray-400 text-sm mb-4">
+        <div className="flex justify-between items-center text-gray-400 text-sm mb-2 px-8">
             <p
                 className={`cursor-pointer ${hasLiked ? 'text-blue-500' : ''}`}
                 onClick={handleLike}
@@ -62,9 +62,6 @@ const PostFooter = ({ setShowModal, post }) => {
             <p className="cursor-pointer" onClick={() => setShowModal(true)}>
                 <FaCommentAlt className="inline mr-1" /> Comments (
                 {post.comments.length})
-            </p>
-            <p className="cursor-pointer">
-                <FaShare className="inline mr-1" /> Share
             </p>
         </div>
     );

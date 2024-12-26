@@ -106,12 +106,10 @@ export default function EditPostModal({ post }) {
             aria-labelledby="edit-modal-title"
             aria-describedby="edit-modal-description"
         >
-            <Box sx={style}>
-                <Typography id="edit-modal-title" variant="h6" component="h2">
-                    Edit Post
-                </Typography>
+            <div className="absolute top-[50%] left-[50%] w-1/3 h-fit px-4 py-8 bg-main1 text-gray-800 z-40 translate-x-[-50%] translate-y-[-50%] rounded-lg">
+                <p className="text-2xl font-semibold">Edit Post</p>
                 {isLoading && (
-                    <div className="absolute top-0 left-0 w-full h-full bg-gray-800 bg-opacity-80 flex items-center justify-center z-50">
+                    <div className="absolute top-0 left-0 w-full h-full bg-main1 text-gray-800 bg-opacity-80 flex items-center justify-center z-50">
                         <Loading />
                     </div>
                 )}
@@ -119,7 +117,7 @@ export default function EditPostModal({ post }) {
                 <textarea
                     onChange={setContent}
                     value={feed.selectedPost.content}
-                    className="w-full bg-gray-700 text-gray-200 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 my-4 placeholder:text-gray-500 hover:opacity-90 transition-all duration-150"
+                    className="w-full bg-main3 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 my-4 placeholder:text-gray-500 hover:opacity-90 transition-all duration-150 text-gray-800"
                     placeholder="New Content"
                 />
 
@@ -149,7 +147,7 @@ export default function EditPostModal({ post }) {
                 >
                     Cancel
                 </button>
-            </Box>
+            </div>
         </Modal>
     );
 }

@@ -190,9 +190,9 @@ const Share = () => {
                         </div>
                     </div>
                     <TbSend
-                        className="ml-2 cursor-pointer"
+                        className="ml-2 cursor-pointer text-blue-500 "
                         onClick={sharePostHandler}
-                        size={24}
+                        size={32}
                     />
                 </div>
             )}

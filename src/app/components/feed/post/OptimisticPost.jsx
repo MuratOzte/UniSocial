@@ -44,7 +44,7 @@ const OptimisticPost = () => {
     }, [showModal]);
 
     return (
-        <div className="w-full max-w-lg bg-gray-800 text-white p-4 rounded-lg shadow-lg my-8">
+        <div className="w-full max-w-lg bg-main1 text-gray-700 p-4 rounded-lg shadow-lg my-8">
             <PostHeader post={post} time={'now'} />
 
             <p className="mb-4">{post.content}</p>

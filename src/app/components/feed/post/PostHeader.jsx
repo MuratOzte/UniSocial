@@ -25,8 +25,8 @@ const PostHeader = ({ post, time, isTeacher }) => {
 
       <div className="w-full">
         <div className="text-sm text-gray-400 flex flex-row items-center justify-between w-full">
-          <div className="flex">
-            <p className="font-semibold">{post.author.name}</p>
+          <div className="flex justify-center items-center">
+            <p className="font-semibold text-gray-700 text-lg">{post.author.name}</p>
             {isTeacher && (
               <Tooltip title="Teacher" arrow>
                 <TbSchool className="text-lg text-blue-500 ml-1" />
@@ -45,7 +45,7 @@ const PostHeader = ({ post, time, isTeacher }) => {
           </div>
           {post.isYourPost && <PostOptions post={post} />}
         </div>
-        <p className="text-xs text-gray-500">{time}</p>
+        <p className="text-xs text-gray-800">{time}</p>
       </div>
     </div>
   );

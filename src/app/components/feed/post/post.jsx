@@ -13,7 +13,7 @@ const Post = ({ post }) => {
     const isPostLoading = feed.loadingPosts[post.id];
 
     const time = timeAgo(post.createdAt);
-    console.log(post)
+    console.log(post);
 
     const isTeacher = post.author.isTeacher;
 
@@ -46,20 +46,22 @@ const Post = ({ post }) => {
     }
 
     return (
-        <div className="w-full bg-gray-800 text-white p-4 rounded-lg shadow-lg my-8 min-w-96">
+        <div className="w-full bg-main1 text-white p-4 rounded-xl shadow-lg my-8 min-w-96 relative">
             <PostHeader post={post} time={time} isTeacher={isTeacher} />
 
-            <p className="mb-4">{post.content}</p>
+            <p className="mb-4 text-gray-700">{post.content}</p>
 
             {post.image && (
                 <img
                     src={post.image}
                     alt="Post content"
-                    className="w-full rounded-lg mb-4"
+                    className="w-full rounded-lg mb-6 shadow-lg "
                 />
             )}
 
             <PostFooter setShowModal={setShowModal} post={post} />
+            <div className="w-11/12 h-[1px] bg-gray-200 absolute bottom-[55px] rounded-full mx-auto" />
+
             <CommentModal
                 showModal={showModal}
                 comments={post.comments}

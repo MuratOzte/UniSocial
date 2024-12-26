@@ -13,15 +13,18 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: '#1f2937',
-    color: '#fff',
     boxShadow: 24,
     p: 6,
     textAlign: 'center',
     borderRadius: 4,
 };
 
-export default function FileUploadModal({ file, setFile ,preview,setPreview}) {
+export default function FileUploadModal({
+    file,
+    setFile,
+    preview,
+    setPreview,
+}) {
     const dispatch = useDispatch();
     const feed = useSelector((state) => state.feed);
 
@@ -31,20 +34,20 @@ export default function FileUploadModal({ file, setFile ,preview,setPreview}) {
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
-        setFile(selectedFile); 
+        setFile(selectedFile);
 
         if (selectedFile) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setPreview(reader.result); 
+                setPreview(reader.result);
             };
-            reader.readAsDataURL(selectedFile); 
+            reader.readAsDataURL(selectedFile);
         }
     };
 
     const handleFileDelete = () => {
-        setFile(null); 
-        setPreview(null); 
+        setFile(null);
+        setPreview(null);
     };
 
     return (
@@ -54,8 +57,9 @@ export default function FileUploadModal({ file, setFile ,preview,setPreview}) {
                 onClose={() => handleFileModal(false)}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                className=""
             >
-                <Box sx={style}>
+                <Box className="bg-main1 text-gray-700 p-4 rounded-lg" sx={style}>
                     <Typography
                         id="modal-modal-title"
                         variant="h6"
@@ -80,9 +84,9 @@ export default function FileUploadModal({ file, setFile ,preview,setPreview}) {
                     {preview ? (
                         <Box mt={2}>
                             <img
-                                src={preview} 
+                                src={preview}
                                 alt="File Preview"
-                                className="w-full h-auto max-h-64 object-contain mx-auto"
+                                className="w-full h-auto max-h-64 object-contain mx-auto rounded-md shadow-lg"
                             />
                             <Button
                                 variant="contained"
@@ -96,7 +100,7 @@ export default function FileUploadModal({ file, setFile ,preview,setPreview}) {
                     ) : (
                         <Typography color="text.secondary">
                             No file selected
-                        </Typography> 
+                        </Typography>
                     )}
 
                     <Button

@@ -5,6 +5,7 @@ import { IoIosSend } from 'react-icons/io';
 import { useDispatch } from 'react-redux';
 import Loading from '../../common/Loading';
 import { usePosts } from '@/hooks/useFetchPosts';
+import { TbSend } from "react-icons/tb";
 
 const CommentModal = ({ showModal, setShowModal, comments, postId }) => {
     const dispatch = useDispatch();
@@ -73,15 +74,15 @@ const CommentModal = ({ showModal, setShowModal, comments, postId }) => {
                     }
                 }}
             >
-                <div className="bg-gray-900 text-white w-full max-w-xl p-6 rounded-lg shadow-xl relative">
+                <div className="bg-main1 w-full max-w-xl p-6 rounded-lg shadow-xl relative">
                     <button
                         onClick={() => setShowModal(false)}
-                        className="absolute top-2 right-2 text-gray-400 hover:text-gray-100 transition-colors duration-200"
+                        className="absolute top-2 right-2 text-gray-700 transition-colors duration-200"
                     >
                         ✕
                     </button>
 
-                    <h2 className="text-2xl font-bold mb-6 border-b border-gray-700 pb-2">
+                    <h2 className="text-2xl font-bold mb-6 border-b border-gray-300 pb-2 text-gray-700 text-center">
                         Comments
                     </h2>
 
@@ -90,7 +91,7 @@ const CommentModal = ({ showModal, setShowModal, comments, postId }) => {
                             comments.map((comment) => (
                                 <div
                                     key={comment.id}
-                                    className="flex flex-col bg-gray-800 p-4 rounded-lg shadow-lg hover:opacity-95 transition-all duration-150"
+                                    className="flex flex-col bg-main2 p-4 rounded-lg shadow-md"
                                 >
                                     <div className="flex items-center mb-3">
                                         <img
@@ -99,10 +100,10 @@ const CommentModal = ({ showModal, setShowModal, comments, postId }) => {
                                                 'https://via.placeholder.com/40'
                                             }
                                             alt={`${comment.author.name}'s avatar`}
-                                            className="w-10 h-10 rounded-full border-2 border-gray-700 mr-3"
+                                            className="w-10 h-10 rounded-full  mr-3"
                                         />
                                         <div className="flex flex-col">
-                                            <p className="font-medium text-sm text-gray-100">
+                                            <p className="font-medium text-md text-gray-800">
                                                 {comment.author.name}
                                             </p>
                                             <p className="text-xs text-gray-500">
@@ -110,13 +111,13 @@ const CommentModal = ({ showModal, setShowModal, comments, postId }) => {
                                             </p>
                                         </div>
                                     </div>
-                                    <p className="text-sm text-gray-300 mb-2 ml-1">
+                                    <p className="text-sm text-gray-600 mb-2 ml-1">
                                         {comment.content}
                                     </p>
                                 </div>
                             ))
                         ) : (
-                            <div className="flex flex-col items-center justify-center bg-gray-800 p-6 rounded-lg shadow-md">
+                            <div className="flex flex-col items-center justify-center bg-main1 p-6 rounded-lg shadow-md">
                                 <p className="text-gray-400 text-sm">
                                     No comments yet. Be the first to comment!
                                 </p>
@@ -124,14 +125,15 @@ const CommentModal = ({ showModal, setShowModal, comments, postId }) => {
                         )}
                     </div>
 
-                    <div className="flex items-center border-t border-gray-700 pt-4 mt-4">
+                    <div className="flex items-center border-t border-gray-200 pt-4 mt-4">
                         <input
                             type="text"
                             onChange={handleInputComment}
                             value={comment}
                             onKeyDown={handleKeyboardAction}
                             placeholder="Add a comment..."
-                            className="flex-1 bg-gray-800 text-gray-300 rounded-full px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                            className="flex-1 bg-main3
+                             text-gray-300 rounded-full px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all shadow-lg"
                             disabled={isLoading}
                         />
                         <button
@@ -142,7 +144,7 @@ const CommentModal = ({ showModal, setShowModal, comments, postId }) => {
                             {isLoading ? (
                                 <Loading size={20} />
                             ) : (
-                                <IoIosSend size={20} />
+                                <TbSend size={20} />
                             )}
                         </button>
                     </div>
