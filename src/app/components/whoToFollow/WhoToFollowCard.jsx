@@ -1,68 +1,82 @@
-import { useState } from 'react';
-import { IoMdAdd } from 'react-icons/io';
-import { FaUserCheck } from 'react-icons/fa';
-import Image from 'next/image';
-import { MdAccountCircle } from 'react-icons/md';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from "react";
+import { IoMdAdd } from "react-icons/io";
+import { FaUserCheck } from "react-icons/fa";
+import Image from "next/image";
+import { MdAccountCircle } from "react-icons/md";
+import { useRouter } from "next/navigation";
+import { useProfileHeader } from "@/hooks/useProfile";
 
 const WhoToFollowCard = ({ id, avatar, name, role, userId }) => {
-    const router = useRouter();
-    const [following, setFollowing] = useState([]);
 
-    const toggleFollow = (id) => {
-        setFollowing((prev) =>
-            prev.includes(id.toString())
-                ? prev.filter((userId) => userId !== id.toString())
-                : [...prev, id.toString()]
-        );
-    };
-    const VisitUser = () => {
-        router.replace(`/user/${userId}`);
-    };
 
-    return (
-        <div>
-            <ul>
-                <li
-                    key={id}
-                    className="flex items-center justify-between mb-4 last:mb-0"
-                >
-                    <div className="flex items-center">
-                        {avatar ? (
-                            <Image
-                                src={avatar}
-                                alt={`${name}'s avatar`}
-                                width={40}
-                                height={40}
-                                className="rounded-full mr-3"
-                            />
-                        ) : (
-                            <MdAccountCircle className="w-10 h-10 rounded-full mr-3 border-2 border-gray-500 text-gray-300" />
-                        )}
+  const router = useRouter();
+  const [following, setFollowing] = useState(false);
 
-                        <div onClick={VisitUser} className='cursor-pointer hover:text-gray-300 transition-all duration-150' >
-                            <p className="font-medium">{name}</p>
-                            <p className="text-sm text-gray-400">{role}</p>
-                        </div>
-                    </div>
-                    <button
-                        onClick={() => toggleFollow(id)}
-                        className={`flex items-center justify-center w-8 h-8 rounded-full ${
-                            following.includes(id.toString())
-                                ? 'bg-blue-500 text-white'
-                                : 'bg-gray-700 text-white hover:bg-gray-600'
-                        }`}
-                    >
-                        {following.includes(id.toString()) ? (
-                            <FaUserCheck />
-                        ) : (
-                            <IoMdAdd size={20} />
-                        )}
-                    </button>
-                </li>
-            </ul>
-        </div>
-    );
+  const VisitUser = () => {
+    router.replace(`/user/${userId}`);
+  };
+
+  const FollowButton = async () => {
+    try {
+
+      const response = await fetch("http://localhost:3000/api/toggle-follow", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ followingId: userId }),
+      });
+      const buffer = await response.json();
+      console.log(buffer);
+
+      setFollowing((prev) => !prev);
+    } catch (err) {
+        console.log(err)
+    }
+  };
+  return (
+    <div>
+      <ul>
+        <li
+          key={id}
+          className="flex items-center justify-between mb-4 last:mb-0"
+        >
+          <div className="flex items-center">
+            {avatar ? (
+              <Image
+                src={avatar}
+                alt={`${name}'s avatar`}
+                width={40}
+                height={40}
+                className="rounded-full mr-3"
+              />
+            ) : (
+              <MdAccountCircle className="w-10 h-10 rounded-full mr-3 border-2 border-gray-500 text-gray-300" />
+            )}
+
+            <div
+              onClick={VisitUser}
+              className="cursor-pointer hover:text-gray-300 transition-all duration-150"
+            >
+              <p className="font-medium">{name}</p>
+              <p className="text-sm text-gray-400">{role}</p>
+            </div>
+          </div>
+          <button
+            onClick={FollowButton}
+            className={`flex items-center justify-center w-8 h-8 rounded-full ${
+              following
+                ? "bg-blue-500 text-white"
+                : "bg-gray-700 text-white hover:bg-gray-600"
+            }`}
+          >
+            {following ? <FaUserCheck /> : <IoMdAdd size={20} />}
+          </button>
+        </li>
+      </ul>
+    </div>
+  );
 };
 
 export default WhoToFollowCard;
