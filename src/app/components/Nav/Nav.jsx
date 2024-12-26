@@ -25,7 +25,7 @@ const Nav = () => {
     router.replace("/login");
   };
   return (
-    <nav className="flex items-center justify-between px-12 py-2 bg-[#191a1f] shadow-md">
+    <nav className="flex items-center justify-between px-12 py-2 bg-main1 shadow-md">
       <div className="flex items-center h-[80px]">
         {ui.IsSettingsModalOpened && <SettingsModal />}
         <Link href={"/feed"}>

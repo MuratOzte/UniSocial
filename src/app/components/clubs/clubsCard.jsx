@@ -92,7 +92,7 @@ const styles = {
     maxWidth: "600px",
     margin: "16px auto",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    backgroundColor: "#fff",
+    backgroundColor: "white",
   },
   image: {
     width: "120px",
