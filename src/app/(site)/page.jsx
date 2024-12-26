@@ -1,8 +1,7 @@
 'use client';
-import gif from '@/assets/loadingSpinnerGif.gif';
 import logo from '@/assets/logo/logo.png';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const Main = () => {
     return (
