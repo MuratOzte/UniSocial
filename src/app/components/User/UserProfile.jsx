@@ -20,11 +20,16 @@ const getRandomGradient = () => {
 const UserProfileHeader = ({ uidata, userId }) => {
   const [gradient, setGradient] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isFollowed, setIsFollowed] = useState(userId.isFollowing);
+  const [isFollowed, setIsFollowed] = useState(false);
   const [token, setToken] = useState();
   const [error, setError] = useState();
   console.log(uidata);
 
+  useEffect(() => {
+    if (uidata) {
+      setIsFollowed(uidata.isFollowing);
+    }
+  }, [uidata]);
   useEffect(() => {
     setGradient(getRandomGradient());
     setToken(localStorage.getItem("token"));
@@ -44,7 +49,7 @@ const UserProfileHeader = ({ uidata, userId }) => {
       const buffer = await response.json();
       console.log(buffer);
 
-      setIsFollowed(true);
+      setIsFollowed((prev) => !prev);
     } catch (err) {
       setError(err.response?.data?.message || "An error occurred");
     } finally {
