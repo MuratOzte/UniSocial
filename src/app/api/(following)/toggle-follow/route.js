@@ -42,7 +42,6 @@ export async function POST(req) {
       );
     }
 
-    // Check if the following entity exists
     const followingEntity = await prisma.user.findUnique({ where: { id: followingId } }) || 
                             await prisma.community.findUnique({ where: { id: followingId } });
 
@@ -53,13 +52,11 @@ export async function POST(req) {
       );
     }
 
-    // Check if already following
     const existingFollower = await prisma.follower.findFirst({
       where: { followerId, followingId },
     });
 
     if (existingFollower) {
-      // Unfollow logic
       await prisma.follower.delete({ where: { id: existingFollower.id } });
       return NextResponse.json(
         { message: "Successfully unfollowed the entity.", status: 200 },
@@ -67,7 +64,6 @@ export async function POST(req) {
       );
     }
 
-    // Follow logic
     const newFollower = await prisma.follower.create({
       data: { followerId, followingId },
     });

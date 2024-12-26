@@ -66,8 +66,12 @@ export async function GET(req) {
         }
 
         const totalPosts = user.posts.length;
-        const totalFollowers = user.followers.length;
-        const totalFollowing = user.following.length;
+        const totalFollowers = user.following.length;
+        const totalFollowing = user.followers.length;
+
+        const isFollowing = user.following.some(
+            (e) => e.followerId == decoded.id
+        );
 
         return NextResponse.json(
             {
@@ -81,9 +85,7 @@ export async function GET(req) {
                     totalPosts,
                     totalFollowers,
                     totalFollowing,
-                    isFollowing: user.followers.some(
-                        (follower) => follower.id === decoded.id
-                    ),
+                    isFollowing,
                 },
             },
             { status: 200 }
