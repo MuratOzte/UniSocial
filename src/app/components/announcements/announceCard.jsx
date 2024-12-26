@@ -11,11 +11,11 @@ const AnnounceCard = ({ title, time, index, author }) => {
 
     return (
         <>
-            {index > 0 && <div className="w-full bg-gray-500 h-[1px] rounded-lg" />}
-            <div className="w-full max-w-sm bg-gray-800 text-white px-4 pt-3">
+            {index > 0 && <div className="w-full bg-gray-300 h-[1px] rounded-lg" />}
+            <div className="w-full max-w-sm bg-main1 text-gray-800 px-4 pt-3">
                 <ul>
-                    <li key={index} className="mb-3">
-                        <p className="text-md font-medium text-gray-300">
+                    <li key={index} className="mb-1">
+                        <p className="text-md font-medium text-gray-700">
                             {title}
                         </p>
                         <div className="flex justify-between items-center text-md text-gray-500">

@@ -20,7 +20,7 @@ const AnnounceList = () => {
   }
 
   return (
-    <div className="w-full max-w-sm bg-gray-800 text-white p-4 rounded-lg shadow-lg">
+    <div className="w-full max-w-sm bg-main1 text-gray-800 p-4 rounded-lg shadow-lg">
       <h2 className="text-lg font-semibold mb-2">Today's news</h2>
       {announcments &&
         announcments.map((announcment, index) => (

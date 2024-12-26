@@ -21,7 +21,7 @@ const WhoToFollowList = () => {
     }
 
     return (
-        <div className="w-full h-fit max-w-sm p-4 bg-gray-800 text-white rounded-lg shadow-lg flex gap-2 flex-col">
+        <div className="w-full h-fit max-w-sm p-4 bg-main1 text-gray-800 rounded-lg shadow-lg flex gap-2 flex-col min-w-[350px]">
             <h3 className="text-lg font-semibold mb-1">Who to follow</h3>
 
             {peoples &&
