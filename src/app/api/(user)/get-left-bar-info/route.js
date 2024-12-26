@@ -68,8 +68,8 @@ export async function GET(req) {
         }
 
         const totalPosts = user.posts.length;
-        const totalFollowers = user.followers.length;
-        const totalFollowing = user.following.length;
+        const totalFollowers = user.following.length;
+        const totalFollowing = user.followers.length;
 
         return NextResponse.json(
             {
