@@ -20,7 +20,7 @@ const getRandomGradient = () => {
 const UserProfileHeader = ({ uidata, userId }) => {
   const [gradient, setGradient] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isFollowed, setIsFollowed] = useState(false);
+  const [isFollowed, setIsFollowed] = useState(userId.isFollowing);
   const [token, setToken] = useState();
   const [error, setError] = useState();
   console.log(uidata);
@@ -33,7 +33,7 @@ const UserProfileHeader = ({ uidata, userId }) => {
   const toggleFollow = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/api/set-follower", {
+      const response = await fetch("http://localhost:3000/api/toggle-follow", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
