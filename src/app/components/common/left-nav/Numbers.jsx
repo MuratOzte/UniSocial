@@ -1,6 +1,6 @@
 const Numbers = ({ post, follower, followings }) => {
     return (
-        <div className="bg-main2 flex items-center justify-center py-3">
+        <div className="bg-main1 flex items-center justify-center py-3">
             <div className="bg-transparent w-fit px-4 rounded-md text-center py-1 text-gray-600">
                 <p className="font-bold">{post}</p>
                 <p className="text-sm">Post</p>

@@ -18,7 +18,7 @@ const LeftNav = () => {
 
 
     return (
-        <div className="w-[350px] rounded-md mt-6 ml-4 shadow-lg">
+        <div className="w-[350px] rounded-md mt-6 ml-4 shadow-lg h-fit">
             {uidata && (
                 <>
                     <ImageSection  image={uidata.profilePicture} />

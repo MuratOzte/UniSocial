@@ -16,6 +16,8 @@ module.exports = {
                 softGray: '#f2f4f7',
                 main1: '#ffffff',
                 main2: '#f2f4f7',
+                main3: '#f0f2f5',
+                maintext: '#6f7276',
             },
             animation: {
                 ripple: 'ripple 10s infinite',

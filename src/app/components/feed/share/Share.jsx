@@ -136,14 +136,14 @@ const Share = () => {
         return <Loading />;
     }
     return (
-        <div className="w-full max-w-md p-4 h-fit rounded-lg shadow-lg bg-gray-800 text-white mt-4">
+        <div className="w-full max-w-md p-4 h-fit rounded-lg shadow-2xl bg-main1 text-white mt-4">
             {isLoading && (
                 <div className="w-full flex justify-center items-center py-4">
                     <Loading />
                 </div>
             )}
             {!isLoading && (
-                <div className="flex items-center mb-4 relative">
+                <div className="flex items-center mb-6 relative">
                     {uidata.profilePicture ? (
                         <Image
                             src={uidata.profilePicture}
@@ -173,9 +173,8 @@ const Share = () => {
                                 type="text"
                                 onKeyDown={keyPressHandler}
                                 onChange={inputValChangeHandler}
-                                
                                 placeholder="Share your thoughts..."
-                                className="w-full bg-gray-700 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
+                                className="w-full bg-main3  p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10 text-gray-700"
                             />
                             <MdEmojiEmotions
                                 style={{
@@ -184,7 +183,8 @@ const Share = () => {
                                     top: 10,
                                     cursor: 'pointer',
                                 }}
-                                size={20}
+                                color="gray"
+                                size={24}
                                 onClick={EmojiModuleOpenHandler}
                             />
                         </div>
