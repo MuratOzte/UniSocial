@@ -74,14 +74,14 @@ const LoginPage = () => {
         dispatch(loginSlice.actions.resetAllData());
         if (data.user) {
           localStorage.setItem("userId", data.user.id);
-          localStorage.setItem("isCommunity", false);
+          localStorage.setItem("isCommunity", "false");
           localStorage.setItem("pp", data.user.profilePicture);
           localStorage.setItem("email", data.user.email);
           localStorage.setItem("name", data.user.name);
           localStorage.setItem("isTeacher",data.user.isTeacher);
         } else {
           localStorage.setItem("userId", data.community.id);
-          localStorage.setItem("isCommunity", true);
+          localStorage.setItem("isCommunity", "true");
           localStorage.setItem("pp", data.community.profilePicture);
           localStorage.setItem("email", data.community.email);
           localStorage.setItem("name", data.community.name);

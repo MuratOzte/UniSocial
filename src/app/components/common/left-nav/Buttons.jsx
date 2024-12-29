@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 const Buttons = () => {
   const [IsCommintity, setIsCommintity] = useState(false);
   useEffect(() => {
-    setIsCommintity(localStorage.getItem("isCommuinty"));
+    setIsCommintity(localStorage.getItem("isCommunity"));
   }, []);
 
   const router = useRouter();
