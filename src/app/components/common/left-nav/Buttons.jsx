@@ -1,17 +1,19 @@
 import { IoHomeOutline } from "react-icons/io5";
 import { FaMasksTheater } from "react-icons/fa6";
-import { FaPeopleGroup } from "react-icons/fa6";
 import { MdOutlineEventNote } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const Buttons = () => {
   const [IsCommintity, setIsCommintity] = useState(false);
+
   useEffect(() => {
-    setIsCommintity(localStorage.getItem("isCommunity"));
+    const isCommunityValue = localStorage.getItem("isCommunity");
+    setIsCommintity(isCommunityValue === "true"); 
   }, []);
 
   const router = useRouter();
+
   const buttons = [
     {
       icon: <IoHomeOutline />,
@@ -27,7 +29,7 @@ const Buttons = () => {
       actions: () => {
         router.replace("/clubs");
       },
-      display: IsCommintity,
+      display: !IsCommintity, 
     },
     {
       icon: <MdOutlineEventNote />,
@@ -41,7 +43,7 @@ const Buttons = () => {
 
   return (
     <div className="flex flex-col bg-main1 pt-4 pb-2 rounded-bl-md rounded-br-md">
-      <div className="w-[300px] h-[1px] bg-gray-400 my-3 mt-0 mx-6" />{" "}
+      <div className="w-[300px] h-[1px] bg-gray-400 my-3 mt-0 mx-6" />
       {buttons.map(
         (button, index) =>
           button.display && (
@@ -54,7 +56,6 @@ const Buttons = () => {
               <p className="text-lg font-medium z-50 leading-tight px-2">
                 {button.text}
               </p>
-
               <div className="absolute left-0 bottom-0 w-0 h-12 bg-blue-500 transition-all group-hover:w-full"></div>
             </div>
           )
