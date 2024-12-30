@@ -42,9 +42,6 @@ const Nav = () => {
         <Search />
       </div>
       <div className="flex items-center gap-4">
-        <Link href={"/messages"}>
-          <Icons title="Messages" icon={<TbMessages size={20} />} />
-        </Link>
         <Icons
           onClick={OpenSettingsModal}
           title="Settings"

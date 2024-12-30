@@ -7,8 +7,10 @@ import { MdAnnouncement } from 'react-icons/md';
 import { useEffect, useState } from 'react';
 
 const ShareFooter = ({ uploadFileModalHandler }) => {
-    const [IsCommintity, setIsCommintity] = useState(false);
+    const [ IsCommintity, setIsCommintity] = useState(false);
     const [isTeacher, setIsTeacher] = useState(false);
+
+    console.log(IsCommintity,isTeacher)
     const dispatch = useDispatch();
     const ShareModalOpenHandler = () => {
         dispatch(feedSlice.actions.OpenShareModalChangeHandler(true));
@@ -17,10 +19,10 @@ const ShareFooter = ({ uploadFileModalHandler }) => {
         dispatch(uiSlice.actions.IsAnnouncementModuleOpenedChangeHandler(true));
     };
     useEffect(() => {
-        setIsCommintity(localStorage.getItem('isCommuinty'));
+        setIsCommintity(localStorage.getItem('isCommunity'));
         setIsTeacher(localStorage.getItem('isTeacher'));
     }, []);
-
+console.log(IsCommintity)
     return (
         <div className="flex items-center justify-evenly relative">
             <div className="w-full h-[1px] bg-gray-300 absolute -top-2 rounded-full" />
@@ -31,7 +33,7 @@ const ShareFooter = ({ uploadFileModalHandler }) => {
                 <FaImage className="mr-2 " size={24} color="green" />
                 Photo
             </button>
-            {IsCommintity && (
+            {IsCommintity=="true" && (
                 <button
                     className="flex items-center px-4 py-2 mt-2 text-maintext font-semibold"
                     onClick={ShareModalOpenHandler}
@@ -40,7 +42,7 @@ const ShareFooter = ({ uploadFileModalHandler }) => {
                     Event
                 </button>
             )}
-            {isTeacher && (
+            {isTeacher=="true" && (
                 <button
                     className="flex items-center px-4 py-2 mt-2 text-maintext font-semibold"
                     onClick={AnounceModalOpenHandler}
