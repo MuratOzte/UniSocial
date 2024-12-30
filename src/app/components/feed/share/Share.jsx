@@ -16,6 +16,7 @@ import ShareFooter from './ShareFooter';
 import { usePosts } from '@/hooks/useFetchPosts';
 import useLeftNav from '@/hooks/useLeftNav';
 import { MdAccountCircle } from 'react-icons/md';
+import ButtonLoading from '../../common/ButtonLoading';
 
 const Share = () => {
     const dispatch = useDispatch();
@@ -139,7 +140,7 @@ const Share = () => {
         <div className="w-full max-w-md p-4 h-fit rounded-lg shadow-2xl bg-main1 text-white mt-4">
             {isLoading && (
                 <div className="w-full flex justify-center items-center py-4">
-                    <Loading />
+                    <ButtonLoading/>
                 </div>
             )}
             {!isLoading && (
