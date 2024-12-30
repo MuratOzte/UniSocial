@@ -83,11 +83,11 @@ const UserProfileHeader = ({ uidata, userId }) => {
           ) : (
             <MdAccountCircle
               size={200}
-              className="text-gray-400 bg-white rounded-full shadow-md"
+              className="text-gray-400 bg-white rounded-full shadow-md w-[240px]"
             />
           )}
           <div className="flex flex-col justify-center text-white space-y-3">
-            <h1 className="text-4xl font-bold tracking-tight">
+            <h1 className="text-4xl font-bold tracking-tight  whitespace-nowrap overflow-visible">
               {uidata.name + " " + uidata.surname}
             </h1>
             <h2 className="text-xl font-semibold opacity-90">

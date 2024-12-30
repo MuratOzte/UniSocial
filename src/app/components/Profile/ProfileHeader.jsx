@@ -21,7 +21,7 @@ const getRandomGradient = () => {
 };
 
 const ProfileHeader = () => {
-  const { uidata} = useLeftNav();
+  const { uidata } = useLeftNav();
 
   console.log(uidata);
   const [gradient, setGradient] = useState("");
@@ -38,7 +38,7 @@ const ProfileHeader = () => {
       <div
         className={`w-full ring-2 ring-gray-200 relative h-64 bg-gradient-to-r ${gradient} flex justify-end items-end p-4 rounded-md`}
       >
-        <div className="w-[500px] h-[200px] absolute left-4 top-[75px] rounded-md flex gap-5">
+        <div className="w-[800px] h-[200px] absolute left-4 top-[75px] rounded-md flex gap-5">
           {uidata.profilePicture ? (
             <Image
               src={uidata.profilePicture}
@@ -54,7 +54,7 @@ const ProfileHeader = () => {
             />
           )}
           <div className="flex flex-col justify-center text-white space-y-3">
-            <h1 className="text-4xl font-bold tracking-tight">
+            <h1 className="text-4xl font-bold tracking-tight w-full whitespace-nowrap overflow-visible text-ellipsis">
               {uidata.name + " " + uidata.surname}
             </h1>
             <h2 className="text-xl font-semibold opacity-90">
@@ -63,7 +63,6 @@ const ProfileHeader = () => {
             <h3 className="text-lg opacity-80">{uidata.univercity}</h3>
           </div>
         </div>
-     
       </div>
     </div>
   );

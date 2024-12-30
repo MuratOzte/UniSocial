@@ -21,7 +21,7 @@ const AnnounceList = () => {
 
   return (
     <div className="w-full max-w-sm bg-main1 text-gray-800 p-4 rounded-lg shadow-lg">
-      <h2 className="text-lg font-semibold mb-2">Today's news</h2>
+      <h2 className="text-lg font-semibold mb-2">Duyurular</h2>
       {announcments.length < 1 && <p>Herhangi bir duyuru paylaşılmamış</p>}
       {announcments &&
         announcments.map((announcment, index) => (
