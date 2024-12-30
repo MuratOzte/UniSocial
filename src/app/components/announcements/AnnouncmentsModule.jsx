@@ -7,6 +7,7 @@ import Modal from '@mui/material/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import uiSlice from '@/store/Slices/uiSlice';
 import { useAnnouncments } from '@/hooks/useAnnouncements';
+import ButtonLoading from '../common/ButtonLoading';
 
 const style = {
     position: 'absolute',
@@ -25,6 +26,7 @@ const style = {
 
 export default function AnnouncementModal() {
     const dispatch = useDispatch();
+    const [isLoading,setisLoading]=React.useState(false);
     const [isEmpty, setIsEmpty] = React.useState(false);
     const { refreshNews } = useAnnouncments();
     const IsAnnouncementModuleOpened = useSelector(
@@ -51,6 +53,7 @@ export default function AnnouncementModal() {
 
     const handleSendAnnouncement = async () => {
         try {
+            setisLoading(true)
             const token = localStorage.getItem('token');
             const response = await fetch('http://localhost:3000/api/add-news', {
                 method: 'POST',
@@ -64,8 +67,11 @@ export default function AnnouncementModal() {
             const data = await response.json();
             console.log(data);
             refreshNews();
+            setisLoading(false);
+            setIsEmpty(false);
             handleClose();
         } catch (error) {
+            setisLoading(false);
             handleClose();
             console.log(error);
         }
@@ -108,7 +114,7 @@ export default function AnnouncementModal() {
                             disabled={!isEmpty}
                             sx={{ px: 4, py: 1 }}
                         >
-                            Gönder
+                            {isLoading?<ButtonLoading/>:"Gönder"}
                         </Button>
                         <Button
                             variant="outlined"
