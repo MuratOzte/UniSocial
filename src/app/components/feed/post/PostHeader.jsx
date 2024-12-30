@@ -6,15 +6,25 @@ import PostOptions from "./PostOptions";
 import { PiStudentBold } from "react-icons/pi";
 import { FaPeopleRoof } from "react-icons/fa6";
 import Link from "next/link";
+import Image from "next/image";
 
-const PostHeader = ({ post, time, isTeacher }) => {
+const PostHeader = ({ post, time, isTeacher,isOptimistic }) => {
   const isCommunity = isTeacher === undefined;
-  console.log(post.author.id);
 
   return (
     <div className="flex items-center mb-4 w-full">
       <Link href={"user/" + post.author.id} className="flex" >
-        <VscAccount className="w-12 h-8 rounded-full mr-3 bg-gray-500 border-2 border-gray-400 " />
+      {post.author.profilePicture && !isOptimistic ? (
+          <Image
+            className="w-10 h-10 rounded-full mr-3 bg-gray-500 border-2 border-gray-400 "
+            alt={"pp"}
+            src={post.author.profilePicture}
+            width={60}
+            height={60}
+          />
+        ) : (
+          <VscAccount className="w-12 h-8 rounded-full mr-3 bg-gray-500 border-2 border-gray-400 " />
+        )}
 
         <div className="w-full">
           <div className="text-sm text-gray-400 flex flex-row items-center justify-between w-full">

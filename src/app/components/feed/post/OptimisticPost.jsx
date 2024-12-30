@@ -45,7 +45,7 @@ const OptimisticPost = () => {
 
     return (
         <div className="w-full max-w-lg bg-main1 text-gray-700 p-4 rounded-lg shadow-lg my-8">
-            <PostHeader post={post} time={'now'} />
+            <PostHeader post={post} time={'now'} isOptimistic={true} />
 
             <p className="mb-4">{post.content}</p>
 
