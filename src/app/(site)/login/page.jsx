@@ -172,7 +172,7 @@ const LoginPage = () => {
             </motion.div>
             {isRequestError && (
               <LoginAlert
-                errorText={errorText}
+                errorText={'Bir Sorun Oluştu,Lütfen Tekrar deneyiniz'}
                 isRequestError={isRequestError}
               />
             )}
