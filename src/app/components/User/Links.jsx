@@ -10,6 +10,8 @@ import {
     FaYoutube,
 } from 'react-icons/fa';
 
+import Loading from '@/app/components/common/Loading'
+
 const ProfileLinks = ({ userId }) => {
     const { links, isLoading, error } = useProfileAboutLink(userId);
 
@@ -28,7 +30,7 @@ const ProfileLinks = ({ userId }) => {
         String(val).charAt(0).toUpperCase() + String(val).slice(1);
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <Loading />
     }
 
     if (error) {
