@@ -9,7 +9,6 @@ const Calendar = () => {
 
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();
-
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   const startDay = new Date(currentYear, currentMonth, 1).getDay();
 
@@ -55,7 +54,7 @@ const Calendar = () => {
   };
 
   return (
-    <div className="w-[350px] mx-auto mt-6 bg-white shadow-lg rounded-lg p-4">
+    <div className="w-[350px] mx-auto mt-6 bg-white shadow-lg rounded-lg p-4 select-none">
       <div className="p-3 flex justify-between items-center">
         <button
           onClick={() => changeMonth(-1)}
