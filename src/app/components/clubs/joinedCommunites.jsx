@@ -109,12 +109,12 @@ const JoinedCommunities = () => {
               </p>
               {community.activityField && (
                 <p style={styles.field}>
-                  <strong>Activity Field:</strong> {community.activityField}
+                  <strong>Topluluk türü</strong> {community.activityField}
                 </p>
               )}
               {community.CommunityMember?.length > 0 && (
                 <p style={styles.admin}>
-                  <strong>Admin:</strong> {community.CommunityMember[0].user.name}
+                  <strong>Üye Sayısı</strong> {community.CommunityMember.length}
                 </p>
               )}
             </div>
