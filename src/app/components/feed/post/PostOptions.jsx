@@ -64,7 +64,7 @@ export default function PostOptions({ post }) {
     };
 
     return (
-        <div>
+        <div className='absolute left-0' >
             <SlOptionsVertical
                 className="ml-auto cursor-pointer text-gray-700"
                 onClick={handleClick}
