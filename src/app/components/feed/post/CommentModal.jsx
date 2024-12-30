@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import Loading from '../../common/Loading';
 import { usePosts } from '@/hooks/useFetchPosts';
 import { TbSend } from "react-icons/tb";
+import ButtonLoading from '../../common/ButtonLoading';
 
 const CommentModal = ({ showModal, setShowModal, comments, postId }) => {
     const dispatch = useDispatch();
@@ -142,7 +143,7 @@ const CommentModal = ({ showModal, setShowModal, comments, postId }) => {
                             disabled={isLoading}
                         >
                             {isLoading ? (
-                                <Loading size={20} />
+                                <ButtonLoading/>
                             ) : (
                                 <TbSend size={20} />
                             )}
