@@ -52,66 +52,68 @@ export default function FileUploadModal({
   };
 
   return (
-    <motion.div
-        initial={{opacity:0,y:20}}
-        animate={{opacity:1,y:0}}
-        exit={{opacity:0,y:-20}}
-        transition={{duration:0.5}}
-    >
-      <Modal
-        open={feed.isFileUploadModalOpen}
-        onClose={() => handleFileModal(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        className=""
+    feed.isFileUploadModalOpen && (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.5 }}
       >
-        <Box className="bg-main1 text-gray-700 p-4 rounded-lg" sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Upload a File
-          </Typography>
-          <input
-            type="file"
-            onChange={handleFileChange}
-            accept="image/*"
-            id="img"
-            className="hidden"
-          />
-          <label htmlFor="img">
-            <div className="flex justify-center items-center cursor-pointer bg-gray-700 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 my-4 hover:opacity-90 transition-all duration-150">
-              <FiUpload size={16} />
-              <span className="ml-2">Choose a file</span>
-            </div>
-          </label>
+        <Modal
+          open={true}
+          onClose={() => handleFileModal(false)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          className=""
+        >
+          <Box className="bg-main1 text-gray-700 p-4 rounded-lg" sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Upload a File
+            </Typography>
+            <input
+              type="file"
+              onChange={handleFileChange}
+              accept="image/*"
+              id="img"
+              className="hidden"
+            />
+            <label htmlFor="img">
+              <div className="flex justify-center items-center cursor-pointer bg-gray-700 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 my-4 hover:opacity-90 transition-all duration-150">
+                <FiUpload size={16} />
+                <span className="ml-2">Choose a file</span>
+              </div>
+            </label>
 
-          {preview ? (
-            <Box mt={2}>
-              <img
-                src={preview}
-                alt="File Preview"
-                className="w-full h-auto max-h-64 object-contain mx-auto rounded-md shadow-lg"
-              />
-              <Button
-                variant="contained"
-                color="error"
-                onClick={handleFileDelete}
-                sx={{ mt: 2 }}
-              >
-                Delete
-              </Button>
-            </Box>
-          ) : (
-            <Typography color="text.secondary">No file selected</Typography>
-          )}
+            {preview ? (
+              <Box mt={2}>
+                <img
+                  src={preview}
+                  alt="File Preview"
+                  className="w-full h-auto max-h-64 object-contain mx-auto rounded-md shadow-lg"
+                />
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={handleFileDelete}
+                  sx={{ mt: 2 }}
+                >
+                  Delete
+                </Button>
+              </Box>
+            ) : (
+              <Typography color="text.secondary">No file selected</Typography>
+            )}
 
-          <Button
-            variant="contained"
-            onClick={() => handleFileModal(false)}
-            sx={{ mt: 2, width: "70%" }}
-          >
-            Close
-          </Button>
-        </Box>
-      </Modal>
-    </motion.div>
+            <Button
+              variant="contained"
+              onClick={() => handleFileModal(false)}
+              sx={{ mt: 2, width: "70%" }}
+            >
+              Close
+            </Button>
+          </Box>
+        </Modal>
+      </motion.div>
+    )
   );
 }

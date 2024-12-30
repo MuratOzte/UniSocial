@@ -18,7 +18,7 @@ const SearchedUsers = ({ profilePicture, name, surname, index,userId}) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -5 }}
       transition={{ duration: 0.5, delay: index * 0.15 }}
-      className="flex gap-4 my-4 text-xl bg-gray-500 text-gray-200 px-4 py-2 items-center cursor-pointer rounded-md"
+      className="flex gap-4 my-4 text-xl bg-main2 text-gray-700 px-4 py-2 items-center cursor-pointer rounded-md"
       onClick={GoToUserPage}
     >
       {profilePicture ? (
