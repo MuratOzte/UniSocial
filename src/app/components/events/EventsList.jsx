@@ -38,7 +38,7 @@ const EventsList = () => {
     }
     if (filteredEvents.length == 0) {
         return (
-            <p className="text-gray-200 text-xl bg-gray-500 px-4 py-2 rounded-md">
+            <p className="text-gray-200 text-xl bg-gray-500 px-4 py-2 rounded-md mt-8">
                 Bugun hiç event yok
             </p>
         );
