@@ -2,6 +2,7 @@ import eventSlice from "@/store/Slices/eventsSlice";
 import React, { useEffect, useState } from "react";
 import Loading from "../common/Loading";
 import { useCommunities } from "@/hooks/useCommunities";
+import ButtonLoading from "../common/ButtonLoading";
 const ClubCard = ({
   name,
   description,
@@ -76,7 +77,7 @@ const ClubCard = ({
         onClick={joinClub}
         disabled={isLoading}
       >
-        {isLoading ? <Loading /> : isJoined ? "Following" : "Follow"}
+        {isLoading ? <ButtonLoading/> : isJoined ? "Following" : "Follow"}
       </button>
     </div>
   );
