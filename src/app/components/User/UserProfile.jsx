@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { MdAccountCircle } from "react-icons/md";
 import { Tooltip } from "@mui/material";
 import Loading from "../common/Loading";
+import ButtonLoading from "../common/ButtonLoading";
 
 const getRandomGradient = () => {
   const colors = [
@@ -95,7 +96,7 @@ const UserProfileHeader = ({ uidata, userId }) => {
           className="absolute bg-green-500 px-4 py-2 rounded-md text-white font-semibold shadow-md bottom-4 right-4 hover:bg-green-600 transition duration-150"
           onClick={toggleFollow}
         >
-          {isLoading ? <Loading /> : isFollowed ? "Takip Et" : "Takipten Çık"}
+          {isLoading ? <ButtonLoading /> : isFollowed ? "Takip Et" : "Takipten Çık"}
         </button>
       </div>
     </div>
