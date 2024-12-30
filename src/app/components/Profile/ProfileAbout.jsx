@@ -15,6 +15,7 @@ import {
 } from 'react-icons/md';
 import Loading from '../common/Loading';
 import { useAbout } from '@/hooks/useProfile';
+import ButtonLoading from '../common/ButtonLoading';
 
 const ProfileAbout = () => {
     const [isEditing, setIsEditing] = useState(false);
@@ -110,7 +111,7 @@ const ProfileAbout = () => {
                     onClick={handleEditToggle}
                 >
                     {isLoading ? (
-                        <Loading />
+                        <ButtonLoading/>
                     ) : isEditing ? (
                         <AiOutlineSave size={20} />
                     ) : (
