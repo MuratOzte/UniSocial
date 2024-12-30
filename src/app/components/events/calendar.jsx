@@ -27,6 +27,12 @@ const Calendar = () => {
     "Aralık",
   ];
 
+  const formatDate = (year, month, day) => {
+    const formattedMonth = String(month).padStart(2, "0");
+    const formattedDay = String(day).padStart(2, "0");
+    return `${year}-${formattedMonth}-${formattedDay}`;
+  };
+
   const changeMonth = (direction) => {
     const newDate = new Date(currentDate);
     newDate.setMonth(newDate.getMonth() + direction);
@@ -34,11 +40,11 @@ const Calendar = () => {
   };
 
   const isEventDay = (day) =>
-    Reduxfeed.sharedEventsDate.includes(`${currentYear}-${currentMonth + 1}-${day}`);
+    Reduxfeed.sharedEventsDate.includes(formatDate(currentYear, currentMonth + 1, day));
 
   const handleDayClick = (day) => {
-    const selectedDate = `${currentYear}-${1 + currentMonth}-${day}`;
-    if (Reduxfeed.SelectedCalendarDate == selectedDate) {
+    const selectedDate = formatDate(currentYear, currentMonth + 1, day);
+    if (Reduxfeed.SelectedCalendarDate === selectedDate) {
       dispatch(feedSlice.actions.SelectedCalendarDateChangeHandler(null));
     } else {
       dispatch(
@@ -93,9 +99,7 @@ const Calendar = () => {
             dayNumber === currentDate.getDate() &&
             currentMonth === new Date().getMonth() &&
             currentYear === new Date().getFullYear();
-          const selectedDate = `${currentYear}-${
-            currentMonth + 1
-          }-${dayNumber}`;
+          const selectedDate = formatDate(currentYear, currentMonth + 1, dayNumber);
           const isSelected = Reduxfeed.SelectedCalendarDate === selectedDate;
 
           return (
@@ -108,8 +112,7 @@ const Calendar = () => {
                 isEventDay(dayNumber)
                   ? "border-2 border-red-400"
                   : "hover:bg-gray-200"
-              }${isSelected ? " bg-green-500 text-white" : ""}
-                            `}
+              }${isSelected ? " bg-green-500 text-white" : ""}`}
             >
               {dayNumber}
             </div>
