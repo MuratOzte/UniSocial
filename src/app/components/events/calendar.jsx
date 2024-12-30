@@ -55,7 +55,7 @@ const Calendar = () => {
   };
 
   return (
-    <div className="w-full mx-auto mt-6 bg-white shadow-lg rounded-lg p-4">
+    <div className="w-[350px] mx-auto mt-6 bg-white shadow-lg rounded-lg p-4">
       <div className="p-3 flex justify-between items-center">
         <button
           onClick={() => changeMonth(-1)}
