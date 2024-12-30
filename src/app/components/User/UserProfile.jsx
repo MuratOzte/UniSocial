@@ -99,6 +99,17 @@ const UserProfileHeader = ({ uidata, userId }) => {
           {isLoading ? <ButtonLoading /> : isFollowed ? "Takipten çık" : "Takip"}
         </button>
       </div>
+      
+      <div className="mt-8 flex justify-between px-4">
+        <div className="text-center">
+          <h4 className="text-xl font-bold text-gray-800">{uidata.totalFollowers}</h4>
+          <p className="text-gray-600">Takipçi</p>
+        </div>
+        <div className="text-center">
+          <h4 className="text-xl font-bold text-gray-800">{uidata.totalFollowing}</h4>
+          <p className="text-gray-600">Takip Edilen</p>
+        </div>
+      </div>
     </div>
   );
 };
