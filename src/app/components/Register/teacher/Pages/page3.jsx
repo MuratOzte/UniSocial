@@ -172,7 +172,7 @@ const Inputs3 = (props) => {
 
     localStorage.setItem("token", response.token);
     console.log(response);
-    router.replace("/feed");
+    router.replace("/login");
 
   };
 
