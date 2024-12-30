@@ -5,6 +5,7 @@ import feedSlice from "@/store/Slices/FeedSlice";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import Loading from "../common/Loading";
+import ButtonLoading from "../common/ButtonLoading";
 
 export default function ShareEvents() {
   const [isLoading, setIsLoading] = useState(false);
@@ -242,7 +243,7 @@ export default function ShareEvents() {
               onClick={handleSubmit}
               className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
             >
-              {isLoading ? <Loading /> : "Submit"}
+              {isLoading ? <ButtonLoading/> : "Submit"}
             </button>
           </form>
         </div>
