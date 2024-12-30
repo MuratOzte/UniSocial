@@ -4,6 +4,7 @@ import { MdAccountCircle } from "react-icons/md";
 import { Tooltip } from "@mui/material";
 import Loading from "../common/Loading";
 import ButtonLoading from "../common/ButtonLoading";
+import { useProfileHeader } from "@/hooks/useProfile";
 
 const getRandomGradient = () => {
   const colors = [
@@ -25,6 +26,8 @@ const UserProfileHeader = ({ uidata, userId }) => {
   const [token, setToken] = useState();
   const [error, setError] = useState();
   console.log(uidata);
+
+  const { refreshProfileHeader } = useProfileHeader(userId);
 
   useEffect(() => {
     if (uidata) {
@@ -54,6 +57,7 @@ const UserProfileHeader = ({ uidata, userId }) => {
     } catch (err) {
       setError(err.response?.data?.message || "An error occurred");
     } finally {
+      refreshProfileHeader();
       setIsLoading(false);
     }
   };
@@ -92,22 +96,31 @@ const UserProfileHeader = ({ uidata, userId }) => {
             <h3 className="text-lg opacity-80">{uidata.univercity}</h3>
           </div>
         </div>
-        <button
-          className="absolute bg-green-500 px-4 py-2 rounded-md text-white font-semibold shadow-md bottom-4 right-4 hover:bg-green-600 transition duration-150"
-          onClick={toggleFollow}
-        >
-          {isLoading ? <ButtonLoading /> : isFollowed ? "Takipten çık" : "Takip"}
-        </button>
-      </div>
-      
-      <div className="mt-8 flex justify-between px-4">
-        <div className="text-center">
-          <h4 className="text-xl font-bold text-gray-800">{uidata.totalFollowers}</h4>
-          <p className="text-gray-600">Takipçi</p>
-        </div>
-        <div className="text-center">
-          <h4 className="text-xl font-bold text-gray-800">{uidata.totalFollowing}</h4>
-          <p className="text-gray-600">Takip Edilen</p>
+        <div className="mt-8 flex justify-between px-4 absolute gap-6 text-white">
+          <div className="text-center">
+            <h4 className="text-xl font-bold text-white">
+              {uidata.totalFollowers}
+            </h4>
+            <p className="text-gray-300">Takipçi</p>
+          </div>
+          <div className="text-center">
+            <h4 className="text-xl font-bold text-white">
+              {uidata.totalFollowing}
+            </h4>
+            <p className="text-gray-300">Takip Edilen</p>
+          </div>
+          <button
+            className="bg-green-500 px-4 py-1 w-[120px] rounded-md text-white font-semibold shadow-md bottom-4 right-4 hover:bg-green-600 transition duration-150"
+            onClick={toggleFollow}
+          >
+            {isLoading ? (
+              <ButtonLoading />
+            ) : isFollowed ? (
+              "Takipten çık"
+            ) : (
+              "Takip"
+            )}
+          </button>
         </div>
       </div>
     </div>
