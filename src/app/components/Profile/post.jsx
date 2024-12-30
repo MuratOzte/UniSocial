@@ -38,17 +38,17 @@ const Post = ({ post }) => {
 
     if (isPostLoading) {
         return (
-            <div className="w-full min-h-[160px] max-w-lg bg-gray-800 text-white p-4 rounded-lg shadow-lg my-8 flex justify-center items-center">
+            <div className="w-full min-h-[160px] max-w-lg bg-gray-300 text-white p-4 rounded-lg shadow-lg my-8 flex justify-center items-center">
                 <Loading />
             </div>
         );
     }
 
     return (
-        <div className="bg-gray-800 text-white p-4 rounded-lg shadow-lg my-8 w-[350px]">
+        <div className="bg-gray-main2 text-white p-4 rounded-lg shadow-lg my-8 w-[350px] text-gray-700">
             <PostHeader post={post} time={time} isTeacher={isTeacher} />
 
-            <p className="mb-4">{post.content}</p>
+            <p className="mb-4 text-gray-800">{post.content}</p>
 
             {post.image && (
                 <img
@@ -57,7 +57,6 @@ const Post = ({ post }) => {
                     className="w-full rounded-lg mb-4"
                 />
             )}
-
             <PostFooter setShowModal={setShowModal} post={post} />
             <CommentModal
                 showModal={showModal}
