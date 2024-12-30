@@ -29,14 +29,14 @@ const Posts = () => {
     }
 
     return posts.length > 0 ? (
-        <>
+        <div className='mt-4'>
             {
                 feed.optimisticPost.isVisible && (
                     <OptimisticPost />
                 )
             }
             {posts.map((post) => <Post key={post.id} post={post} />)}
-        </>
+        </div>
     ) : (
         <Panda />
     );

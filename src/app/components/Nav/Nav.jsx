@@ -28,11 +28,11 @@ const Nav = () => {
     <nav className="flex items-center justify-between px-12 py-2 bg-main1 shadow-md">
       <div className="flex items-center h-[80px]">
         {ui.IsSettingsModalOpened && <SettingsModal />}
-        <Link href={"/feed"}>
+        <Link href={"/feed" } className="ml-12">
           <Image
             src={require("@/assets/logo/logo.png")}
             alt="UniSocial"
-            width={200}
+            width={250}
             height={80}
             className="object-cover object-center"
           />

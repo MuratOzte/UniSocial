@@ -46,7 +46,7 @@ const Post = ({ post }) => {
     }
 
     return (
-        <div className="w-full bg-main1 text-white p-4 rounded-xl shadow-lg my-8 min-w-96 relative">
+        <div className="w-full bg-main1 text-white p-4 rounded-xl shadow-lg my-4 min-w-96 relative">
             <PostHeader post={post} time={time} isTeacher={isTeacher} />
 
             <p className="mb-4 text-gray-700">{post.content}</p>
@@ -55,7 +55,7 @@ const Post = ({ post }) => {
                 <img
                     src={post.image}
                     alt="Post content"
-                    className="w-full rounded-lg mb-6 shadow-lg "
+                    className=" rounded-lg mb-6 shadow-lg w-[550px]"
                 />
             )}
 
