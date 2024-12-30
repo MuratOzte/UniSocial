@@ -31,6 +31,7 @@ import logo from "@/assets/logo/logo.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import uiSlice from "@/store/Slices/uiSlice";
+import ButtonLoading from "@/app/components/common/ButtonLoading";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -167,7 +168,7 @@ const LoginPage = () => {
                   marginY: 4,
                 }}
               >
-                {isRequestPending ? <Loading /> : "Sign In"}
+                {isRequestPending ? <ButtonLoading/> : "Sign In"}
               </Button>
             </motion.div>
             {isRequestError && (
