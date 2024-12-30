@@ -2,6 +2,7 @@ import { timeAgo } from '@/util/timeService';
 import React, { useEffect, useState } from 'react';
 import Loading from '../common/Loading';
 import { AiOutlineCheck } from 'react-icons/ai';
+import ButtonLoading from '../common/ButtonLoading';
 
 const EventCard = ({ event }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -101,7 +102,7 @@ const EventCard = ({ event }) => {
                         {isJoined ? (
                             <AiOutlineCheck size={24} />
                         ) : isLoading ? (
-                            <Loading />
+                            <ButtonLoading/>
                         ) : (
                             'JOIN'
                         )}
