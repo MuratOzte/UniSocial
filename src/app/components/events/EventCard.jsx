@@ -81,7 +81,7 @@ const EventCard = ({ event }) => {
                 </div>
                 <p className="text-sm text-gray-700">{event.description}</p>
                 {event.image && (
-                    <div className="w-[600px]">
+                    <div className="w-[400px] flex justify-center">
                         <img
                             src={event.image}
                             alt={event.title}
