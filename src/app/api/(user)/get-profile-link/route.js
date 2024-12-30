@@ -56,15 +56,16 @@ export async function GET(req) {
             },
         });
 
-        if (!socialMediaLinks) {
-            return NextResponse.json(
-                {
-                    message: 'Social media links not found for this user',
-                    status: 404,
-                },
-                { status: 404 }
-            );
-        }
+        
+        //if (!socialMediaLinks) {
+          //  return NextResponse.json(
+            //    {
+              //      message: 'Social media links not found for this user',
+                //    status: 404,
+                //},
+                //{ status: 404 }
+            //);
+        //}
 
         return NextResponse.json(
             {
