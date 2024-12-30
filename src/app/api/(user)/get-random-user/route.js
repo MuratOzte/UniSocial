@@ -45,17 +45,18 @@ export async function GET(req) {
 
         const users = await prisma.user.findMany({
             where: {
-                id: {
-                    not: userId,
-                },
-                followers: {
-                    none: {
-                        followerId: userId,
+                AND: [
+                    { id: { not: userId } }, 
+                    {
+                        following: {
+                            none: { followerId: userId }, 
+                        },
                     },
-                },
+                ],
             },
-            take: 5,
+            take: 5, 
         });
+        
 
         return NextResponse.json(
             {
